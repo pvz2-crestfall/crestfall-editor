@@ -5,6 +5,7 @@ import { saveLevel, loadLevelFile } from '@/lib/fileManager';
 import { levelState } from '@/lib/state';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@radix-ui/react-tabs';
 import { SidepanelGeneralTab } from './tabs/general';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export function SidePanel() {
     const state = levelState();
@@ -43,17 +44,19 @@ export function SidePanel() {
     );
 
     return (
-        <Card className="p-4 h-full">
-            <CardContent className="flex flex-col gap-3">
-                <TabSwitch
-                    tabs={[
-                        { label: 'General Properties', content: SidepanelGeneralTab() },
-                        { label: 'Settings', content: <p>Here are your settings.</p> },
-                        { label: 'Wave Manager', content: waveManagerTab },
-                        { label: 'Save/Load', content: exportAndImportTab },
-                    ]}
-                />
-            </CardContent>
+        <Card className="p-0 h-full">
+            <ScrollArea className="h-[100%] rounded-md border">
+                <CardContent className="flex flex-col gap-3">
+                    <TabSwitch
+                        tabs={[
+                            { label: 'General Properties', content: SidepanelGeneralTab() },
+                            { label: 'Level Modules', content: <p>Here are your settings.</p> },
+                            { label: 'Wave Manager', content: waveManagerTab },
+                            { label: 'Save/Load', content: exportAndImportTab },
+                        ]}
+                    />
+                </CardContent>
+            </ScrollArea>
         </Card>
     );
 }

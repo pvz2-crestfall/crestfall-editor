@@ -8,12 +8,21 @@ export interface LevelDefinitionObject {
     NormalPresentTable: 'egypt_normal_01';
     ShinyPresentTable: 'egypt_shiny_01';
     StartingSun?: number;
+    AddBonusStartingSun?: boolean;
     ForceToWorldMap?: boolean;
 }
 
 export interface SeedBankObject {
     SelectionMethod: SeedBankSelectionMethod;
-    PresetPlantList?: string[];
+    PresetPlantList?: SeedBankPlantObject[];
+    PlantExcludeList?: string[];
+    ExcludeListSunProducers?: boolean;
+    OverrideSeedSlotsCount?: number;
+}
+
+export interface SeedBankPlantObject {
+    PlantType: string;
+    Level: number;
 }
 
 export enum SeedBankSelectionMethod {
@@ -51,6 +60,14 @@ export interface SpawnZombiesJitteredWaveActionPropsObject {
     AdditionalPlantfood?: number;
     DynamicPlantfood?: boolean[];
     Zombies: { Type: string; Row?: number }[];
+}
+
+export enum SunDropperType {
+    Slowest = 'SlowestSunDropper',
+    Slow = 'SlowSunDropper',
+    Default = 'DefaultSunDropper',
+    Fast = 'FastSunDropper',
+    Fastest = 'FastestSunDropper',
 }
 
 export enum LawnMowerType {

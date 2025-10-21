@@ -5,7 +5,7 @@ import {
     type LevelDefinitionObject,
     type SeedBankObject,
 } from '@/types/PVZTypes';
-import type { PVZObject } from '@/types/PVZTypes';
+import { SunDropperType, type PVZObject } from '@/types/PVZTypes';
 import { SeedBank } from './levelModules';
 import { WaveManagerWrapper } from './waveManager';
 import { toRTID, RTIDTypes, fromRTID } from './utils';
@@ -13,9 +13,10 @@ import { toRTID, RTIDTypes, fromRTID } from './utils';
 export class LevelBuilder {
     private rawData: PVZObject[];
     private levelProperties: LevelDefinitionObject;
-    private seedBank: SeedBank;
     private waveManager: WaveManagerWrapper;
+    seedBank: SeedBank;
     lawnMower?: LawnMowerType;
+    sunDropper?: SunDropperType = SunDropperType.Default;
 
     constructor(data: PVZObject[]) {
         // save the raw level data in case it's needed for something later
@@ -26,20 +27,19 @@ export class LevelBuilder {
         if (!levelDefObj) levelDefObj = { objclass: 'LevelDefinition', objdata: {} } as PVZObject;
 
         const metadata = levelDefObj.objdata as LevelDefinitionObject;
-        this.levelProperties = metadata;
+        this.levelProperties = { ...metadata }; // clone the metadata object
 
-        this.levelProperties = {
-            Name: metadata['Name'] ?? '[EGYPT_LEVEL_NAME]',
-            Description: metadata['Description'] ?? '[PLAYERS_TRIP_TO_EGYPT]',
-            LevelNumber: metadata['LevelNumber'] ?? 1,
-            Loot: metadata['Loot'] ?? 'RTID(DefaultLoot@LevelModules)',
-            Modules: [],
-            StageModule: metadata['StageModule'] ?? toRTID(StageModuleType.Egypt, RTIDTypes.module),
-            NormalPresentTable: metadata['NormalPresentTable'] ?? 'egypt_normal_01',
-            ShinyPresentTable: metadata['ShinyPresentTable'] ?? 'egypt_shiny_01',
-        };
+        // fill in any missing fields
+        this.levelProperties.Name = metadata['Name'] ?? '[EGYPT_LEVEL_NAME]';
+        this.levelProperties.Description = metadata['Description'] ?? '[PLAYERS_TRIP_TO_EGYPT]';
+        this.levelProperties.LevelNumber = metadata['LevelNumber'] ?? 1;
+        this.levelProperties.Loot = metadata['Loot'] ?? 'RTID(DefaultLoot@LevelModules)';
+        this.levelProperties.StageModule = metadata['StageModule'] ?? toRTID(StageModuleType.Egypt, RTIDTypes.module);
+        this.levelProperties.NormalPresentTable = metadata['NormalPresentTable'] ?? 'egypt_normal_01';
+        this.levelProperties.ShinyPresentTable = metadata['ShinyPresentTable'] ?? 'egypt_shiny_01';
+        this.levelProperties.Modules = [];
 
-        // check for lawn mower type
+        // check for misc properties in the level modules
         if (metadata.Modules) {
             metadata.Modules.forEach((module) => {
                 const moduleRegex = /RTID\((.+)@(.+)\)/;
@@ -47,8 +47,16 @@ export class LevelBuilder {
 
                 if (match) {
                     const moduleName = match[1];
+
+                    // check for lawn mowers
                     if (Object.values(LawnMowerType).includes(moduleName as LawnMowerType)) {
                         this.lawnMower = moduleName as LawnMowerType;
+                    }
+
+                    // check for sun dropper type
+                    console.log(moduleName);
+                    if (Object.values(SunDropperType).includes(moduleName as SunDropperType)) {
+                        this.sunDropper = moduleName as SunDropperType;
                     }
                 }
 
@@ -60,9 +68,9 @@ export class LevelBuilder {
         const seedBankObj = data.filter((obj) => obj.objclass == 'SeedBankProperties')[0];
         if (seedBankObj) {
             const seedbank = seedBankObj.objdata as SeedBankObject;
-            this.seedBank = new SeedBank(seedbank.SelectionMethod, seedbank.PresetPlantList);
+            this.seedBank = new SeedBank(seedbank);
         } else {
-            this.seedBank = new SeedBank(SeedBankSelectionMethod.Chooser, []);
+            this.seedBank = new SeedBank({ SelectionMethod: SeedBankSelectionMethod.Chooser });
         }
 
         // initialize wave manager
@@ -73,12 +81,22 @@ export class LevelBuilder {
         const parsedRTID = fromRTID(this.levelProperties.StageModule);
         return parsedRTID.name as StageModuleType;
     }
-    setStageType(stage: StageModuleType) {
-        this.levelProperties.StageModule = toRTID(stage, RTIDTypes.level);
-        return this;
-    }
     set stageType(stage: StageModuleType) {
         this.levelProperties.StageModule = toRTID(stage, RTIDTypes.level);
+    }
+
+    get startingSun(): number {
+        return this.levelProperties.StartingSun ?? 50;
+    }
+    set startingSun(sun: number) {
+        this.levelProperties.StartingSun = sun;
+    }
+
+    get allowBonusSun(): boolean {
+        return this.levelProperties.AddBonusStartingSun ?? true;
+    }
+    set allowBonusSun(toggle: boolean) {
+        this.levelProperties.AddBonusStartingSun = toggle;
     }
 
     get name(): string {
@@ -106,23 +124,26 @@ export class LevelBuilder {
         const objects: PVZObject[] = [];
         const modules = [
             'RTID(StandardIntro@LevelModules)',
-            'RTID(DefaultSunDropper@LevelModules)',
             'RTID(ZombiesDeadWinCon@LevelModules)',
             'RTID(DefaultZombieWinCondition@LevelModules',
         ];
+
         const seedBankObj = this.seedBank.buildObject();
-        modules.push(`RTID(${seedBankObj.aliases![0]}@CurrentLevel)`);
-        if (this.lawnMower) modules.push(`RTID(${this.lawnMower}@LevelModules)`);
+        if (this.seedBank.enabled) {
+            modules.push(toRTID(seedBankObj.aliases![0], RTIDTypes.level));
+            objects.push(seedBankObj);
+        }
+
+        if (this.sunDropper) modules.push(toRTID(this.sunDropper, RTIDTypes.module));
+        if (this.lawnMower) modules.push(toRTID(this.lawnMower, RTIDTypes.module));
 
         modules.push(this.waveManager.getLevelModules());
-        this.levelProperties.Modules = modules;
 
-        objects.push({
+        this.levelProperties.Modules = modules;
+        objects.unshift({
             objclass: 'LevelDefinition',
             objdata: this.levelProperties,
         });
-        objects.push(seedBankObj);
-
         for (const obj of this.waveManager.getlevelObjects()) {
             objects.push(obj);
         }

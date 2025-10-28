@@ -6,6 +6,7 @@ import { levelState } from '@/lib/state';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@radix-ui/react-tabs';
 import { SidepanelGeneralTab } from './tabs/general';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { SidepanelModulesTab } from './tabs/modules';
 
 export function SidePanel() {
     const state = levelState();
@@ -50,7 +51,7 @@ export function SidePanel() {
                     <TabSwitch
                         tabs={[
                             { label: 'General Properties', content: SidepanelGeneralTab() },
-                            { label: 'Level Modules', content: <p>Here are your settings.</p> },
+                            { label: 'Level Modules', content: SidepanelModulesTab() },
                             { label: 'Wave Manager', content: waveManagerTab },
                             { label: 'Save/Load', content: exportAndImportTab },
                         ]}

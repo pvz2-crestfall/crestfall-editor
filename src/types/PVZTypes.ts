@@ -31,6 +31,29 @@ export enum SeedBankSelectionMethod {
     Preset = 'preset',
 }
 
+export interface ConveyorSeedBankPropertiesObject {
+    DropDelayConditions: { MaxPackets: number; Delay: number }[];
+    SpeedConditions: { MaxPackets: number; Speed: number }[];
+    InitialPlantList: ConveyorSeedBankPlantObject[];
+
+    ManualPacketSpawning?: boolean;
+    ResourceGroupNames?: string[];
+}
+
+export interface ConveyorSeedBankPlantObject {
+    PlantType: string;
+
+    Weight?: number;
+    Level?: number;
+    MaxDelivered?: number;
+    MaxCount?: number;
+    MaxWeightFactor?: number;
+    MinCount?: number;
+    MinWeightFactor?: number;
+    MaxCountCooldownSeconds?: number;
+    ForceBoosted?: boolean;
+}
+
 export interface WaveManagerPropertiesObject {
     FlagWaveInterval: number;
     WaveCount: number;

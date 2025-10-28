@@ -2,19 +2,22 @@ import {
     LawnMowerType,
     SeedBankSelectionMethod,
     StageModuleType,
+    type ConveyorSeedBankPropertiesObject,
     type LevelDefinitionObject,
     type SeedBankObject,
 } from '@/types/PVZTypes';
 import { SunDropperType, type PVZObject } from '@/types/PVZTypes';
-import { SeedBank } from './levelModules';
-import { WaveManagerWrapper } from './waveManager';
 import { toRTID, RTIDTypes, fromRTID } from './utils';
+import { SeedBank } from './levelModules/seedbank';
+import { ConveyorBelt } from './levelModules/conveyor';
+import { WaveManagerWrapper } from './levelModules/wavemanager';
 
 export class LevelBuilder {
     private rawData: PVZObject[];
     private levelProperties: LevelDefinitionObject;
     private waveManager: WaveManagerWrapper;
     seedBank: SeedBank;
+    conveyor: ConveyorBelt;
     lawnMower?: LawnMowerType;
     sunDropper?: SunDropperType = SunDropperType.Default;
 
@@ -73,6 +76,20 @@ export class LevelBuilder {
             this.seedBank = new SeedBank({ SelectionMethod: SeedBankSelectionMethod.Chooser });
         }
 
+        // conveyor properties
+        const conveyorObj = data.filter((obj) => obj.objclass == 'ConveyorSeedBankProperties')[0];
+        if (conveyorObj) {
+            const seedbank = conveyorObj.objdata as ConveyorSeedBankPropertiesObject;
+            this.conveyor = new ConveyorBelt(seedbank);
+            this.conveyor.enabled = true;
+        } else {
+            this.conveyor = new ConveyorBelt({
+                DropDelayConditions: [],
+                SpeedConditions: [],
+                InitialPlantList: [],
+            });
+        }
+
         // initialize wave manager
         this.waveManager = new WaveManagerWrapper(data);
     }
@@ -128,10 +145,16 @@ export class LevelBuilder {
             'RTID(DefaultZombieWinCondition@LevelModules',
         ];
 
-        const seedBankObj = this.seedBank.buildObject();
         if (this.seedBank.enabled) {
-            modules.push(toRTID(seedBankObj.aliases![0], RTIDTypes.level));
+            const seedBankObj = this.seedBank.buildObject();
+            modules.push(toRTID(this.seedBank.aliases[0], RTIDTypes.level));
             objects.push(seedBankObj);
+        }
+        if (this.conveyor && this.conveyor.enabled) {
+            this.conveyor.objdata.ManualPacketSpawning = this.seedBank.enabled || undefined;
+            const conveyorObj = this.conveyor.buildObject();
+            modules.push(toRTID(this.conveyor.aliases[0], RTIDTypes.level));
+            objects.push(conveyorObj);
         }
 
         if (this.sunDropper) modules.push(toRTID(this.sunDropper, RTIDTypes.module));

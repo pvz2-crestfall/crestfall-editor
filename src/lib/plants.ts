@@ -186,3 +186,13 @@ export const Plants: PlantType[] = [
     { codename: 'megagatling', displayName: 'Mega Gatling Pea' },
     { codename: 'levitater', displayName: 'Levitater' },
 ];
+
+export const PowerTiles: PlantType[] = [
+    { codename: 'tool_powertile_alpha', displayName: 'Power Tile: Alpha' },
+    { codename: 'tool_powertile_beta', displayName: 'Power Tile: Beta' },
+    { codename: 'tool_powertile_delta', displayName: 'Power Tile: Delta' },
+    { codename: 'tool_powertile_gamma', displayName: 'Power Tile: Gamma' },
+];
+
+export const PlantDisplayNames = Object.fromEntries(Plants.map((plant) => [plant.codename, plant.displayName]));
+export const PowerTilesDisplayNames = Object.fromEntries(PowerTiles.map((plant) => [plant.codename, plant.displayName]));

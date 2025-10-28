@@ -9,14 +9,16 @@ import { useState } from 'react';
 import { PlantSearchCombobox } from '../../../../components/ui/plant-search';
 
 export function PresetPlantList() {
-    const { levelBuilder, reloadComponents } = levelState();
+    const { levelBuilder } = levelState();
+
+    const [items, setItems] = useState(levelBuilder.seedBank.presetPlants);
 
     const setPlants = (plants: string[] | ((prev: string[]) => string[])) => {
         const prev = levelBuilder.seedBank.presetPlants;
         const values = typeof plants === 'function' ? plants(prev || []) : plants;
 
         levelBuilder.seedBank.presetPlants = values;
-        reloadComponents();
+        setItems(values);
     };
 
     const [newItem, setNewItem] = useState('');
@@ -62,9 +64,9 @@ export function PresetPlantList() {
 
             <div className="flex">
                 <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                    <SortableContext items={levelBuilder.seedBank.presetPlants} strategy={verticalListSortingStrategy}>
+                    <SortableContext items={items} strategy={verticalListSortingStrategy}>
                         <ul className="w-full">
-                            {levelBuilder.seedBank.presetPlants.map((id, index) => (
+                            {items.map((id, index) => (
                                 <SortablePlant
                                     key={id + index}
                                     id={id}

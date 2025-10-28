@@ -5,7 +5,7 @@ import { levelState } from '@/lib/state';
 import { useState } from 'react';
 
 export function OverrideSeedSlots() {
-    const { levelBuilder, reloadComponents } = levelState();
+    const { levelBuilder } = levelState();
 
     const startingState = levelBuilder.seedBank.objdata.OverrideSeedSlotsCount != undefined;
     const [enabled, _setEnabled] = useState(startingState);
@@ -13,14 +13,12 @@ export function OverrideSeedSlots() {
     const setEnabled = (isEnabled: boolean) => {
         if (!isEnabled) {
             levelBuilder.seedBank.objdata.OverrideSeedSlotsCount = undefined;
-            reloadComponents();
         }
         _setEnabled(isEnabled);
     };
 
     const overrideSeedSlots = (count: number) => {
         levelBuilder.seedBank.objdata.OverrideSeedSlotsCount = count;
-        reloadComponents();
     };
 
     return (

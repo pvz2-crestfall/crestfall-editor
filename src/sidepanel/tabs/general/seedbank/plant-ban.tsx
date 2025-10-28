@@ -8,31 +8,27 @@ import { X } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 
 export function ExcludePlantList() {
-    const { levelBuilder, reloadComponents } = levelState();
+    const { levelBuilder } = levelState();
 
+    const [items, setItems] = useState(levelBuilder.seedBank.excludeList);
     const [newItem, setNewItem] = useState('');
 
+    const setExcludeList = (plants: string[]) => {
+        levelBuilder.seedBank.excludeList = plants;
+        setItems(plants);
+    };
     const addItem = () => {
         if (!newItem.trim()) return;
         setExcludeList([...levelBuilder.seedBank.excludeList, newItem]);
         setNewItem('');
     };
-
     const removeItem = (id: string) => {
         setExcludeList(levelBuilder.seedBank.excludeList.filter((item) => item !== id));
     };
 
-    const setExcludeList = (plants: string[]) => {
-        levelBuilder.seedBank.excludeList = plants;
-        reloadComponents();
-    };
-
     const toggleExcludeSunProducers = (toggle: boolean) => {
         levelBuilder.seedBank.excludeSunProducers = toggle;
-        reloadComponents();
     };
-
-    const excludeList = levelBuilder.seedBank.excludeList;
 
     return (
         <div className="py-1 px-2 space-y-2">
@@ -55,8 +51,8 @@ export function ExcludePlantList() {
             </div>
 
             <div className="flex border rounded-md p-1 flex-wrap gap-2">
-                {excludeList.length > 0 ? (
-                    levelBuilder.seedBank.excludeList.map((plant) => (
+                {items.length > 0 ? (
+                    items.map((plant) => (
                         <div className="flex flex-col border bg-gray-200 rounded-sm px-1 py-1">
                             <div className="flex items-center gap-2">
                                 <span>{Plants.find((x) => x.codename == plant)?.displayName ?? plant}</span>

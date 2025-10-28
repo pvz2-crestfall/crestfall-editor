@@ -1,8 +1,8 @@
+import { PVZBase } from './base';
 import type { WaveManagerModulePropertiesObject, WaveManagerPropertiesObject } from '@/types/PVZTypes';
 import type { PVZObject } from '@/types/PVZTypes';
-import { WaveManager, WaveManagerModule } from './levelModules';
 import { type SpawnZombiesJitteredWaveActionPropsObject as BasicWaveSpawner } from '@/types/PVZTypes';
-import { toRTID, RTIDTypes } from './utils';
+import { RTIDTypes, toRTID } from '../utils';
 
 export class WaveManagerWrapper {
     waveManager: WaveManager;
@@ -55,6 +55,53 @@ export class WaveManagerWrapper {
 
     getlevelObjects(): PVZObject[] {
         return [this.waveManager, this.waveManagerModule, ...this.waveObjects];
+    }
+}
+
+export class WaveManager extends PVZBase {
+    aliases: string[] = ['WaveManagerProps'];
+    objclass: string = 'WaveManagerProperties';
+    objdata: WaveManagerPropertiesObject;
+
+    constructor(propertiesObject: WaveManagerPropertiesObject) {
+        super();
+        this.objdata = propertiesObject;
+    }
+
+    buildObject(): PVZObject {
+        return this;
+    }
+
+    addWave(waveAlias: string) {
+        const formatted = `RTID(${waveAlias}@CurrentLevel)`;
+        this.waves.push([formatted]);
+    }
+
+    hasWave(waveAlias: string): boolean {
+        const formatted = `RTID(${waveAlias}@CurrentLevel)`;
+        for (const wave of this.waves) {
+            if (wave.includes(formatted)) return true;
+        }
+        return false;
+    }
+
+    get waves() {
+        return this.objdata.Waves;
+    }
+}
+
+export class WaveManagerModule extends PVZBase {
+    aliases: string[] = ['NewWaves'];
+    objclass: string = 'WaveManagerModuleProperties';
+    objdata: WaveManagerModulePropertiesObject;
+
+    constructor(propertiesObject: WaveManagerModulePropertiesObject) {
+        super();
+        this.objdata = propertiesObject;
+    }
+
+    buildObject(): PVZObject {
+        return this;
     }
 }
 

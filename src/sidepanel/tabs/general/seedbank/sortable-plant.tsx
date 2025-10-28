@@ -35,7 +35,7 @@ export function SortablePlant({
                 variant="ghost"
                 size="icon"
                 onClick={() => onRemove(id)}
-                className="text-muted-foreground hover:text-destructive"
+                className="text-muted-foreground hover:text-destructive hover:bg-red-100"
             >
                 <Trash2 className="h-4 w-4" />
             </Button>

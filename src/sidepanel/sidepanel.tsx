@@ -3,24 +3,13 @@ import { Card, CardContent } from '@/components/ui/card';
 import { TabSwitch } from '@/components/ui/tabswitcher';
 import { saveLevel, loadLevelFile } from '@/lib/fileManager';
 import { levelState } from '@/lib/state';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@radix-ui/react-tabs';
 import { SidepanelGeneralTab } from './tabs/general';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SidepanelModulesTab } from './tabs/modules';
+import { WaveManagerTab } from './tabs/wavemanager';
 
 export function SidePanel() {
     const state = levelState();
-
-    const waveManagerTab = (
-        <Tabs defaultValue="account" className="w-[400px]">
-            <TabsList>
-                <TabsTrigger value="account">Account</TabsTrigger>
-                <TabsTrigger value="password">Password</TabsTrigger>
-            </TabsList>
-            <TabsContent value="account">Make changes to your account here.</TabsContent>
-            <TabsContent value="password">Change your password here.</TabsContent>
-        </Tabs>
-    );
 
     const exportAndImportTab = (
         <div className="flex flex-col gap-3">
@@ -46,13 +35,13 @@ export function SidePanel() {
 
     return (
         <Card className="p-0 h-full">
-            <ScrollArea className="h-[100%] rounded-md border">
+            <ScrollArea className="h-full rounded-md border">
                 <CardContent className="flex flex-col gap-3">
                     <TabSwitch
                         tabs={[
                             { label: 'General Properties', content: SidepanelGeneralTab() },
                             { label: 'Level Modules', content: SidepanelModulesTab() },
-                            { label: 'Wave Manager', content: waveManagerTab },
+                            { label: 'Wave Manager', content: WaveManagerTab() },
                             { label: 'Save/Load', content: exportAndImportTab },
                         ]}
                     />

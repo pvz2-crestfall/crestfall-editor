@@ -1,11 +1,10 @@
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { OptionalNumberInput } from '@/components/ui/optional-ninput';
 import { Separator } from '@/components/ui/separator';
 import { Switch } from '@/components/ui/switch';
 import { PlantDisplayNames } from '@/lib/plants';
 import { cn } from '@/lib/utils';
 import type { ConveyorSeedBankPlantObject } from '@/types/PVZTypes';
-import { useState, useEffect } from 'react';
 
 interface ConveyorPlantOptionsContentProps {
     plant: ConveyorSeedBankPlantObject;
@@ -31,8 +30,6 @@ export function ConveyorPlantOptionsContent({ plant, index, items, setPlants }: 
         field: keyof ConveyorSeedBankPlantObject;
     }) {
         const value = plant[field] as number;
-        console.log(label, field);
-        console.log(value);
         return (
             <div className={cn('flex flex-row items-center space-x-2 justify-center', className)}>
                 <Label className="w-[50%] text-nowrap">{label}</Label>
@@ -43,7 +40,9 @@ export function ConveyorPlantOptionsContent({ plant, index, items, setPlants }: 
 
     return (
         <div className="w-full space-y-1">
-            <h4 className="flex items-center justify-center font-semibold">{PlantDisplayNames[plant.PlantType]} Options</h4>
+            <h4 className="flex items-center justify-center font-semibold">
+                {PlantDisplayNames[plant.PlantType]} Options
+            </h4>
             <Separator className="my-4" />
             <div className="flex flex-row justify-between">
                 <EditableProperty label="Weight:" field="Weight" className="w-[48%]" />
@@ -70,38 +69,5 @@ export function ConveyorPlantOptionsContent({ plant, index, items, setPlants }: 
                 </div>
             </div>
         </div>
-    );
-}
-
-function OptionalNumberInput({
-    value,
-    onChange,
-    className,
-}: {
-    className?: string;
-    value?: number;
-    onChange: (val?: number) => void;
-}) {
-    const [localValue, setLocalValue] = useState(value ?? '');
-
-    useEffect(() => {
-        setLocalValue(value ?? '');
-    }, [value]);
-
-    return (
-        <Input
-            className={cn('w-20 text-center', className)}
-            placeholder="Default"
-            type="number"
-            value={localValue}
-            onChange={(e) => {
-                const val = e.target.value;
-                setLocalValue(val); // keep editing locally
-            }}
-            onBlur={(e) => {
-                const val = e.target.value.trim();
-                onChange(val === '' ? undefined : Number(val));
-            }}
-        />
     );
 }

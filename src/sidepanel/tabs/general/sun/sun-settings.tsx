@@ -1,7 +1,15 @@
 import { Input } from '@/components/ui/input';
 import { levelState } from '@/lib/state';
 import { SunDropperType } from '@/types/PVZTypes';
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectGroup, SelectLabel, SelectItem } from '@/components/ui/select';
+import {
+    Select,
+    SelectTrigger,
+    SelectValue,
+    SelectContent,
+    SelectGroup,
+    SelectLabel,
+    SelectItem,
+} from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 
@@ -45,7 +53,9 @@ export function SunSettingsComponent() {
 
                         <Select
                             value={levelBuilder.sunDropper ?? ''}
-                            onValueChange={(val) => setDropperType(val === 'disable' ? undefined : (val as SunDropperType))}
+                            onValueChange={(val) =>
+                                setDropperType(val === 'disable' ? undefined : (val as SunDropperType))
+                            }
                         >
                             <SelectTrigger className="w-[120px]">
                                 <SelectValue placeholder="Disabled" />

@@ -195,4 +195,6 @@ export const PowerTiles: PlantType[] = [
 ];
 
 export const PlantDisplayNames = Object.fromEntries(Plants.map((plant) => [plant.codename, plant.displayName]));
-export const PowerTilesDisplayNames = Object.fromEntries(PowerTiles.map((plant) => [plant.codename, plant.displayName]));
+export const PowerTilesDisplayNames = Object.fromEntries(
+    PowerTiles.map((plant) => [plant.codename, plant.displayName]),
+);

@@ -59,20 +59,29 @@ export interface WaveManagerPropertiesObject {
     WaveCount: number;
     Waves: string[][];
     SuppressFlagZombie?: boolean;
+    IgnoreFlagCarriers?: boolean;
+    ZombieCountdownFirstWaveSecs?: number;
     MinNextWaveHealthPercentage?: number;
     MaxNextWaveHealthPercentage?: number;
     WaveSpendingPoints?: number;
     WaveSpendingPointIncrement?: number;
     WavesAlwaysRandomized?: boolean;
+    SuppressedDynamicZombieWaves?: number[];
+    FlagWaveVeteranOverrideTypes?: number[];
+    SpawnColEnd?: number;
+    SpawnColStart?: number;
     LevelJam?: string;
+    ManualStartup?: boolean;
 }
 
 export interface WaveManagerModulePropertiesObject {
     DynamicZombies?: DynamicZombieWave[];
     WaveManagerProps: string; // 'RTID(WaveManagerProps@CurrentLevel)'
+    ManualStartup?: boolean;
 }
 
 export interface DynamicZombieWave {
+    MaxPoints?: number;
     PointIncrementPerWave: number;
     StartingPoints: number;
     StartingWave: number;
@@ -132,8 +141,8 @@ export interface Tile {
     type: string | null; // e.g. 'plant', 'zombie', 'obstacle'
 }
 
-export interface PVZObject {
+export interface PVZObject<T = unknown> {
     aliases?: string[];
     objclass: string;
-    objdata: unknown;
+    objdata: T;
 }

@@ -4,7 +4,12 @@ import { SortablePlant } from '@/sidepanel/tabs/general/seedbank/sortable-plant'
 import { Plants } from '@/lib/plants';
 import { levelState } from '@/lib/state';
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
+import {
+    arrayMove,
+    SortableContext,
+    sortableKeyboardCoordinates,
+    verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
 import { useState } from 'react';
 import { PlantSearchCombobox } from '../../../../components/ui/plant-search';
 
@@ -27,7 +32,7 @@ export function PresetPlantList() {
         useSensor(PointerSensor),
         useSensor(KeyboardSensor, {
             coordinateGetter: sortableKeyboardCoordinates,
-        })
+        }),
     );
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

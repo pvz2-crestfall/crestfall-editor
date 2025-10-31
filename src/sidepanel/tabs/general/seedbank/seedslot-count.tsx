@@ -25,7 +25,11 @@ export function OverrideSeedSlots() {
         <div className="flex flex-col w-full items-center px-4 py-2 gap-2">
             <div className="flex flex-row">
                 <Label className="px-4 py-1">Override Seed Slot Count</Label>
-                <Switch defaultChecked={enabled} onCheckedChange={setEnabled} className="data-[state=checked]:bg-blue-500" />
+                <Switch
+                    defaultChecked={enabled}
+                    onCheckedChange={setEnabled}
+                    className="data-[state=checked]:bg-blue-500"
+                />
             </div>
             {enabled && (
                 <div className="flex flex-row border rounded-md px-2 py-2">

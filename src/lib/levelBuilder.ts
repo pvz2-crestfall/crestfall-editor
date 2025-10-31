@@ -13,9 +13,9 @@ import { ConveyorBelt } from './levelModules/conveyor';
 import { WaveManagerWrapper } from './levelModules/wavemanager';
 
 export class LevelBuilder {
-    private rawData: PVZObject[];
+    rawData: PVZObject[];
     private levelProperties: LevelDefinitionObject;
-    private waveManager: WaveManagerWrapper;
+    waveManager: WaveManagerWrapper;
     seedBank: SeedBank;
     conveyor: ConveyorBelt;
     lawnMower?: LawnMowerType;

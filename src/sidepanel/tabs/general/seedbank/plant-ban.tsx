@@ -63,7 +63,9 @@ export function ExcludePlantList() {
                         </div>
                     ))
                 ) : (
-                    <h1 className="flex flex-row w-full items-center justify-center text-gray-500">No Plants Banned.</h1>
+                    <h1 className="flex flex-row w-full items-center justify-center text-gray-500">
+                        No Plants Banned.
+                    </h1>
                 )}
             </div>
         </div>

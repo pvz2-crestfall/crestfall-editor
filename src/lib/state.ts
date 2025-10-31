@@ -18,5 +18,5 @@ export const levelState = create<LevelState>()(
                 state.reload += 1;
             }),
         setBuilder: (builder) => set({ levelBuilder: builder }),
-    }))
+    })),
 );

@@ -5,11 +5,15 @@ export class PVZBase implements PVZObject {
     objclass: string = 'UndefinedClass';
     objdata: unknown;
 
-    buildObject(): PVZObject {
-        return {
+    buildObject<T = unknown>(): PVZObject<T> {
+        const result: PVZObject = {
             aliases: this.aliases,
             objclass: this.objclass,
             objdata: this.objdata,
         };
+
+        const copy: PVZObject<T> = Object.assign({}, result) as PVZObject<T>;
+
+        return copy;
     }
 }

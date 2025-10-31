@@ -27,7 +27,8 @@ export function loadLevelFile(file: File, state: LevelState) {
             const data = JSON.parse(event.target?.result as string);
             const objects: PVZObject[] = data['objects'].map((obj: unknown) => obj as PVZObject);
 
-            const levelData = objects.filter((obj) => obj.objclass == 'LevelDefinition')[0].objdata as LevelDefinitionObject;
+            const levelData = objects.filter((obj) => obj.objclass == 'LevelDefinition')[0]
+                .objdata as LevelDefinitionObject;
 
             state.setBuilder(new LevelBuilder(objects));
 

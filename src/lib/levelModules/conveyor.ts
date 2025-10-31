@@ -33,7 +33,9 @@ export class ConveyorBelt extends PVZBase {
 
         if (powerTilesIndexes.length > 0) {
             this.powertiles = this.objdata.InitialPlantList.filter((_, i) => powerTilesIndexes.includes(i));
-            this.objdata.InitialPlantList = this.objdata.InitialPlantList.filter((_, i) => !powerTilesIndexes.includes(i));
+            this.objdata.InitialPlantList = this.objdata.InitialPlantList.filter(
+                (_, i) => !powerTilesIndexes.includes(i),
+            );
         }
     }
 

@@ -2,12 +2,12 @@ import { PVZBase } from './base';
 import type { WaveManagerModulePropertiesObject, WaveManagerPropertiesObject } from '@/types/PVZTypes';
 import type { PVZObject } from '@/types/PVZTypes';
 import { type SpawnZombiesJitteredWaveActionPropsObject as BasicWaveSpawner } from '@/types/PVZTypes';
-import { RTIDTypes, toRTID } from '../utils';
+import { fromRTID, RTIDTypes, toRTID } from '../utils';
 
 export class WaveManagerWrapper {
     waveManager: WaveManager;
     waveManagerModule: WaveManagerModule;
-    waveObjects: BasicWave[] = [];
+    waveObjects: PVZObject[] = [];
 
     constructor(data: PVZObject[]) {
         const waveManagerObj = data.filter((obj) => obj.objclass == 'WaveManagerProperties')[0];
@@ -23,30 +23,26 @@ export class WaveManagerWrapper {
 
         const waveManagerModuleObj = data.filter((obj) => obj.objclass == 'WaveManagerModuleProperties')[0];
         if (waveManagerModuleObj) {
-            this.waveManagerModule = new WaveManagerModule(waveManagerModuleObj.objdata as WaveManagerModulePropertiesObject);
+            this.waveManagerModule = new WaveManagerModule(
+                waveManagerModuleObj.objdata as WaveManagerModulePropertiesObject,
+            );
         } else {
-            const formatted = `RTID(${this.waveManager.aliases[0]}@CurrentLevel)`;
-            this.waveManagerModule = new WaveManagerModule({ WaveManagerProps: formatted });
+            this.waveManagerModule = new WaveManagerModule({
+                WaveManagerProps: toRTID(this.waveManager.aliases[0], RTIDTypes.level),
+            });
         }
 
-        const basicWaves = data.filter((obj) => obj.objclass == 'SpawnZombiesJitteredWaveActionProps');
-        for (const wave of basicWaves) {
-            const waveObj = wave as BasicWave;
-            this.waveObjects.push(waveObj);
-        }
+        for (const wave of this.waveManager.waves) {
+            for (const waveAction of wave) {
+                const { name } = fromRTID(waveAction);
 
-        for (const wave of this.waveObjects) {
-            let alias;
-            if (wave.aliases && wave.aliases.length > 0) {
-                alias = wave.aliases[0];
-            }
-
-            if (alias && !this.waveManager.hasWave(alias)) {
-                this.waveManager.addWave(alias);
+                // attempt finding the wave action object
+                const match = data.filter((x) => x.aliases?.includes(name));
+                if (match.length > 0) {
+                    this.waveObjects.push(...match);
+                }
             }
         }
-
-        this.waveManager.objdata.WaveCount = this.waveManager.waves.length;
     }
 
     getLevelModules(): string {
@@ -54,7 +50,57 @@ export class WaveManagerWrapper {
     }
 
     getlevelObjects(): PVZObject[] {
-        return [this.waveManager, this.waveManagerModule, ...this.waveObjects];
+        const waveManagerObj = this.waveManager.buildObject<WaveManagerPropertiesObject>();
+        const waveManagerModuleObj = this.waveManagerModule.buildObject<WaveManagerModulePropertiesObject>();
+
+        if (!this.waveCount || this.waveCount == 0) {
+            waveManagerObj.objdata.WaveCount = waveManagerObj.objdata.Waves.length;
+        }
+        if (!this.flagInterval || this.flagInterval == 0) {
+            waveManagerObj.objdata.FlagWaveInterval = waveManagerObj.objdata.WaveCount;
+        }
+
+        return [waveManagerObj, waveManagerModuleObj, ...this.waveObjects];
+    }
+
+    get waveCount(): number {
+        return this.waveManager.objdata.WaveCount;
+    }
+
+    set waveCount(count: number) {
+        this.waveManager.objdata.WaveCount = count;
+    }
+
+    get flagInterval(): number {
+        return this.waveManager.objdata.FlagWaveInterval;
+    }
+
+    set flagInterval(interval: number) {
+        this.waveManager.objdata.FlagWaveInterval = interval;
+    }
+
+    get minWaveHealth() {
+        return this.waveManager.objdata.MinNextWaveHealthPercentage;
+    }
+
+    set minWaveHealth(val: number | undefined) {
+        this.waveManager.objdata.MinNextWaveHealthPercentage = val;
+    }
+
+    get maxWaveHealth() {
+        return this.waveManager.objdata.MaxNextWaveHealthPercentage;
+    }
+
+    set maxWaveHealth(val: number | undefined) {
+        this.waveManager.objdata.MaxNextWaveHealthPercentage = val;
+    }
+
+    get firstWaveTime() {
+        return this.waveManager.objdata.ZombieCountdownFirstWaveSecs;
+    }
+
+    set firstWaveTime(val: number | undefined) {
+        this.waveManager.objdata.ZombieCountdownFirstWaveSecs = val;
     }
 }
 
@@ -66,10 +112,6 @@ export class WaveManager extends PVZBase {
     constructor(propertiesObject: WaveManagerPropertiesObject) {
         super();
         this.objdata = propertiesObject;
-    }
-
-    buildObject(): PVZObject {
-        return this;
     }
 
     addWave(waveAlias: string) {
@@ -99,22 +141,14 @@ export class WaveManagerModule extends PVZBase {
         super();
         this.objdata = propertiesObject;
     }
-
-    buildObject(): PVZObject {
-        return this;
-    }
 }
 
-export class BasicWave implements PVZObject {
-    aliases?: string[];
+export class BasicWave extends PVZBase {
     objclass: string = 'SpawnZombiesJitteredWaveActionProps';
     objdata: BasicWaveSpawner;
 
     constructor(propertiesObject: BasicWaveSpawner) {
+        super();
         this.objdata = propertiesObject;
-    }
-
-    buildObject(): PVZObject {
-        return this;
     }
 }

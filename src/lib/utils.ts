@@ -29,7 +29,10 @@ export function fromRTID(input: string): { name: string; type: RTIDTypes } {
 export function useOnScreen<T extends HTMLElement = HTMLElement>(ref: React.RefObject<T | null>) {
     const [isIntersecting, setIntersecting] = React.useState(false);
 
-    const observer = React.useMemo(() => new IntersectionObserver(([entry]) => setIntersecting(entry.isIntersecting)), [ref]);
+    const observer = React.useMemo(
+        () => new IntersectionObserver(([entry]) => setIntersecting(entry.isIntersecting)),
+        [ref],
+    );
 
     React.useEffect(() => {
         const element = ref.current;

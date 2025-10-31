@@ -1,5 +1,13 @@
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import { levelState } from '@/lib/state';
 import { SeedBankSelectionMethod } from '@/types/PVZTypes';
 import { useState } from 'react';
@@ -19,7 +27,9 @@ export function PlantSelectionMethod() {
 
             <Select
                 value={selectionMethod ?? ''}
-                onValueChange={(val) => setSelectionMethod(val === 'disable' ? undefined : (val as SeedBankSelectionMethod))}
+                onValueChange={(val) =>
+                    setSelectionMethod(val === 'disable' ? undefined : (val as SeedBankSelectionMethod))
+                }
             >
                 <SelectTrigger className="w-[120px]">
                     <SelectValue placeholder="Disabled" />

@@ -40,7 +40,11 @@ export function ConveyorPowerTiles() {
         <div>
             <div className="flex items-center justify-between border rounded-md px-4 py-2">
                 <Label className="px-4 py-1">Enable Power Tiles</Label>
-                <Switch defaultChecked={enabled} onCheckedChange={setEnabled} className="data-[state=checked]:bg-blue-500" />
+                <Switch
+                    defaultChecked={enabled}
+                    onCheckedChange={setEnabled}
+                    className="data-[state=checked]:bg-blue-500"
+                />
             </div>
 
             {enabled && (

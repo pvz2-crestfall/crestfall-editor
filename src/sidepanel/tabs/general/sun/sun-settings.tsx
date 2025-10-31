@@ -54,7 +54,9 @@ export function SunSettingsComponent() {
                         <Select
                             value={levelBuilder.sunDropper ?? ''}
                             onValueChange={(val) =>
-                                setDropperType(val === 'disable' ? undefined : (val as SunDropperType))
+                                setDropperType(
+                                    val === 'disable' ? undefined : (val as SunDropperType),
+                                )
                             }
                         >
                             <SelectTrigger className="w-[120px]">

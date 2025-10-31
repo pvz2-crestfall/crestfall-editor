@@ -28,7 +28,9 @@ export function PlantSelectionMethod() {
             <Select
                 value={selectionMethod ?? ''}
                 onValueChange={(val) =>
-                    setSelectionMethod(val === 'disable' ? undefined : (val as SeedBankSelectionMethod))
+                    setSelectionMethod(
+                        val === 'disable' ? undefined : (val as SeedBankSelectionMethod),
+                    )
                 }
             >
                 <SelectTrigger className="w-[120px]">

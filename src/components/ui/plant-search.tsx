@@ -1,5 +1,12 @@
 import { Button } from '@/components/ui/button';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import {
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    CommandList,
+} from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Plants, type PlantType } from '@/lib/plants';
 import { cn } from '@/lib/utils';
@@ -30,7 +37,9 @@ export function PlantSearchCombobox({
                     aria-expanded={open}
                     className={cn('flex w-[240px] justify-between', className)}
                 >
-                    {value ? list.find((plant) => plant.codename === value)?.displayName : 'Add plant...'}
+                    {value
+                        ? list.find((plant) => plant.codename === value)?.displayName
+                        : 'Add plant...'}
                     <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
@@ -57,7 +66,9 @@ export function PlantSearchCombobox({
                                     }}
                                 >
                                     {plant.displayName}
-                                    {value === plant.codename && <CheckIcon className="mr-2 h-4 w-4" />}
+                                    {value === plant.codename && (
+                                        <CheckIcon className="mr-2 h-4 w-4" />
+                                    )}
                                 </CommandItem>
                             ))}
                         </CommandGroup>

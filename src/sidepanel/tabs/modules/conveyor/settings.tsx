@@ -52,9 +52,9 @@ export function ConveyorSettings() {
                                         className="text-center w-auto font-mono align-left"
                                         size={2}
                                         onChange={(e) =>
-                                            (levelBuilder.conveyor.delayConditions[index].MaxPackets = Number(
-                                                e.target.value,
-                                            ))
+                                            (levelBuilder.conveyor.delayConditions[
+                                                index
+                                            ].MaxPackets = Number(e.target.value))
                                         }
                                     />
                                     <Label>Delay: </Label>
@@ -65,9 +65,8 @@ export function ConveyorSettings() {
                                         className="text-center w-auto font-mono align-left"
                                         size={2}
                                         onChange={(e) =>
-                                            (levelBuilder.conveyor.delayConditions[index].Delay = Number(
-                                                e.target.value,
-                                            ))
+                                            (levelBuilder.conveyor.delayConditions[index].Delay =
+                                                Number(e.target.value))
                                         }
                                     />
                                 </div>

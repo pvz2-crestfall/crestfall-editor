@@ -1,4 +1,8 @@
-import type { ConveyorSeedBankPlantObject, ConveyorSeedBankPropertiesObject, PVZObject } from '@/types/PVZTypes';
+import type {
+    ConveyorSeedBankPlantObject,
+    ConveyorSeedBankPropertiesObject,
+    PVZObject,
+} from '@/types/PVZTypes';
 import { PVZBase } from './base';
 
 export class ConveyorBelt extends PVZBase {
@@ -26,13 +30,17 @@ export class ConveyorBelt extends PVZBase {
 
         // seperate powertiles from normal plants on loading
         const powerTilesIndexes: number[] = [];
-        const powerTileNames = ['alpha', 'beta', 'gamma', 'delta'].map((x) => 'tool_powertile_' + x);
+        const powerTileNames = ['alpha', 'beta', 'gamma', 'delta'].map(
+            (x) => 'tool_powertile_' + x,
+        );
         for (const [index, item] of this.objdata.InitialPlantList.entries()) {
             if (powerTileNames.includes(item.PlantType)) powerTilesIndexes.push(index);
         }
 
         if (powerTilesIndexes.length > 0) {
-            this.powertiles = this.objdata.InitialPlantList.filter((_, i) => powerTilesIndexes.includes(i));
+            this.powertiles = this.objdata.InitialPlantList.filter((_, i) =>
+                powerTilesIndexes.includes(i),
+            );
             this.objdata.InitialPlantList = this.objdata.InitialPlantList.filter(
                 (_, i) => !powerTilesIndexes.includes(i),
             );

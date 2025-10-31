@@ -37,8 +37,10 @@ export class LevelBuilder {
         this.levelProperties.Description = metadata['Description'] ?? '[PLAYERS_TRIP_TO_EGYPT]';
         this.levelProperties.LevelNumber = metadata['LevelNumber'] ?? 1;
         this.levelProperties.Loot = metadata['Loot'] ?? 'RTID(DefaultLoot@LevelModules)';
-        this.levelProperties.StageModule = metadata['StageModule'] ?? toRTID(StageModuleType.Egypt, RTIDTypes.module);
-        this.levelProperties.NormalPresentTable = metadata['NormalPresentTable'] ?? 'egypt_normal_01';
+        this.levelProperties.StageModule =
+            metadata['StageModule'] ?? toRTID(StageModuleType.Egypt, RTIDTypes.module);
+        this.levelProperties.NormalPresentTable =
+            metadata['NormalPresentTable'] ?? 'egypt_normal_01';
         this.levelProperties.ShinyPresentTable = metadata['ShinyPresentTable'] ?? 'egypt_shiny_01';
         this.levelProperties.Modules = [];
 

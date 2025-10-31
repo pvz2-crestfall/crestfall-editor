@@ -30,7 +30,11 @@ export function ConveyorPlants() {
     return (
         <div className="flex flex-col">
             <div className="flex gap-2 justify-between">
-                <PlantSearchCombobox className="w-[80%]" onChange={(val) => setNewItem(val)} value={newItem ?? ''} />
+                <PlantSearchCombobox
+                    className="w-[80%]"
+                    onChange={(val) => setNewItem(val)}
+                    value={newItem ?? ''}
+                />
                 <Button onClick={addItem}>Add</Button>
             </div>
             <ul className="w-full">

@@ -14,26 +14,30 @@ export function WaveManagerSettings() {
                     <Label>Wave Count</Label>
                     <Input
                         type="number"
-                        placeholder="Default"
+                        placeholder="Auto"
                         defaultValue={levelBuilder.waveManager.flagInterval || ''}
                         className="text-center w-auto font-mono align-left"
                         size={5}
-                        onChange={(e) => (levelBuilder.waveManager.waveCount = Number(e.target.value))}
+                        onChange={(e) =>
+                            (levelBuilder.waveManager.waveCount = Number(e.target.value))
+                        }
                     />
                 </div>
                 <div className="flex w-full items-center justify-between border rounded-md px-4 py-2">
                     <Label>Flag Interval</Label>
                     <Input
                         type="number"
-                        placeholder="Default"
+                        placeholder="Auto"
                         defaultValue={levelBuilder.waveManager.flagInterval || ''}
                         className="text-center w-auto font-mono align-left"
                         size={5}
-                        onChange={(e) => (levelBuilder.waveManager.flagInterval = Number(e.target.value))}
+                        onChange={(e) =>
+                            (levelBuilder.waveManager.flagInterval = Number(e.target.value))
+                        }
                     />
                 </div>
                 <div className="flex w-full items-center justify-between border rounded-md px-4 py-2">
-                    <Label>First Wave Countdown</Label>
+                    <Label>First Wave Delay</Label>
                     <OptionalNumberInput
                         value={levelBuilder.waveManager.firstWaveTime}
                         onChange={(val) => (levelBuilder.waveManager.firstWaveTime = val)}
@@ -61,9 +65,6 @@ export function WaveManagerSettings() {
 // export interface WaveManagerPropertiesObject {
 //     SuppressFlagZombie?: boolean;
 //     IgnoreFlagCarriers?: boolean;
-//     ZombieCountdownFirstWaveSecs?: number;
-//     WaveSpendingPoints?: number;
-//     WaveSpendingPointIncrement?: number;
 //     WavesAlwaysRandomized?: boolean;
 //     SuppressedDynamicZombieWaves?: number[];
 //     FlagWaveVeteranOverrideTypes?: number[];

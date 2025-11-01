@@ -13,12 +13,7 @@ interface ConveyorPlantOptionsContentProps {
     setPlants: (plants: ConveyorSeedBankPlantObject[]) => void;
 }
 
-export function ConveyorPlantOptionsContent({
-    plant,
-    index,
-    items,
-    setPlants,
-}: ConveyorPlantOptionsContentProps) {
+export function ConveyorPlantOptionsContent({ plant, index, items, setPlants }: ConveyorPlantOptionsContentProps) {
     const updatePlant = (field: keyof ConveyorSeedBankPlantObject, val?: number | boolean) => {
         const updated = [...items];
         updated[index] = { ...updated[index], [field]: val };
@@ -38,11 +33,7 @@ export function ConveyorPlantOptionsContent({
         return (
             <div className={cn('flex flex-row items-center space-x-2 justify-center', className)}>
                 <Label className="w-[50%] text-nowrap">{label}</Label>
-                <OptionalNumberInput
-                    className="w-[50%]"
-                    value={value}
-                    onChange={(val) => updatePlant(field, val)}
-                />
+                <OptionalNumberInput className="w-[50%]" value={value} onChange={(val) => updatePlant(field, val)} />
             </div>
         );
     }

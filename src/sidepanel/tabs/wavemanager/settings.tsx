@@ -15,12 +15,10 @@ export function WaveManagerSettings() {
                     <Input
                         type="number"
                         placeholder="Auto"
-                        defaultValue={levelBuilder.waveManager.flagInterval || ''}
+                        defaultValue={levelBuilder.waveManager.waveCount || ''}
                         className="text-center w-auto font-mono align-left"
                         size={5}
-                        onChange={(e) =>
-                            (levelBuilder.waveManager.waveCount = Number(e.target.value))
-                        }
+                        onChange={(e) => (levelBuilder.waveManager.waveCount = Number(e.target.value))}
                     />
                 </div>
                 <div className="flex w-full items-center justify-between border rounded-md px-4 py-2">
@@ -31,9 +29,7 @@ export function WaveManagerSettings() {
                         defaultValue={levelBuilder.waveManager.flagInterval || ''}
                         className="text-center w-auto font-mono align-left"
                         size={5}
-                        onChange={(e) =>
-                            (levelBuilder.waveManager.flagInterval = Number(e.target.value))
-                        }
+                        onChange={(e) => (levelBuilder.waveManager.flagInterval = Number(e.target.value))}
                     />
                 </div>
                 <div className="flex w-full items-center justify-between border rounded-md px-4 py-2">

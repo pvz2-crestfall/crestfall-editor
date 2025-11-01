@@ -29,10 +29,7 @@ export function SunCounter() {
             <div ref={parentRef} className="absolute w-1/4 h-1/8 flex items-center">
                 <div className="w-full h-full text-white flex items-center ">
                     <div className="left-[30%] absolute w-[50%] bg-black/60 rounded-md justify-center">
-                        <span
-                            style={{ fontSize }}
-                            className="pl-[40%] text-yellow-100 font-bold justify-center"
-                        >
+                        <span style={{ fontSize }} className="pl-[40%] text-yellow-100 font-bold justify-center">
                             {levelBuilder.startingSun}
                         </span>
                     </div>

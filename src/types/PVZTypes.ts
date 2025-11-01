@@ -88,12 +88,6 @@ export interface DynamicZombieWave {
     ZombiePool: string[];
 }
 
-export interface SpawnZombiesJitteredWaveActionPropsObject {
-    AdditionalPlantfood?: number;
-    DynamicPlantfood?: boolean[];
-    Zombies: { Type: string; Row?: number }[];
-}
-
 export enum SunDropperType {
     Slowest = 'SlowestSunDropper',
     Slow = 'SlowSunDropper',

@@ -6,9 +6,14 @@ export function OptionalNumberInput({
     value,
     onChange,
     className,
+    placeholder = 'Default',
+    ...attributes
 }: {
     className?: string;
     value?: number;
+    min?: number;
+    max?: number;
+    placeholder?: string;
     onChange: (val?: number) => void;
 }) {
     const [localValue, setLocalValue] = React.useState(value ?? '');
@@ -20,17 +25,19 @@ export function OptionalNumberInput({
     return (
         <Input
             className={cn('w-20 text-center', className)}
-            placeholder="Default"
+            placeholder={placeholder}
             type="number"
             value={localValue}
             onChange={(e) => {
                 const val = e.target.value;
-                setLocalValue(val); // keep editing locally
+                setLocalValue(val);
+                onChange(val === '' ? undefined : Number(val));
             }}
             onBlur={(e) => {
                 const val = e.target.value.trim();
                 onChange(val === '' ? undefined : Number(val));
             }}
+            {...attributes}
         />
     );
 }

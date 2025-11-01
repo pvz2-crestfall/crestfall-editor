@@ -3,14 +3,7 @@ import { Label } from '@/components/ui/label';
 import { SortablePlant } from '@/sidepanel/tabs/general/seedbank/sortable-plant';
 import { Plants } from '@/lib/plants';
 import { levelState } from '@/lib/state';
-import {
-    closestCenter,
-    DndContext,
-    KeyboardSensor,
-    PointerSensor,
-    useSensor,
-    useSensors,
-} from '@dnd-kit/core';
+import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import {
     arrayMove,
     SortableContext,
@@ -75,11 +68,7 @@ export function PresetPlantList() {
             </div>
 
             <div className="flex">
-                <DndContext
-                    sensors={sensors}
-                    collisionDetection={closestCenter}
-                    onDragEnd={handleDragEnd}
-                >
+                <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                     <SortableContext items={items} strategy={verticalListSortingStrategy}>
                         <ul className="w-full">
                             {items.map((id, index) => (

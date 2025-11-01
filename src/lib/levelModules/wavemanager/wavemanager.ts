@@ -1,23 +1,18 @@
-import { PVZBase } from './base';
-import type {
-    WaveManagerModulePropertiesObject,
-    WaveManagerPropertiesObject,
-} from '@/types/PVZTypes';
+import { PVZBase } from '../base';
+import type { WaveManagerModulePropertiesObject, WaveManagerPropertiesObject } from '@/types/PVZTypes';
 import type { PVZObject } from '@/types/PVZTypes';
-import { type SpawnZombiesJitteredWaveActionPropsObject as BasicWaveSpawner } from '@/types/PVZTypes';
-import { fromRTID, RTIDTypes, toRTID } from '../utils';
+import { fromRTID, RTIDTypes, toRTID } from '../../utils';
+import type { WaveAction } from './wavetypes';
 
 export class WaveManagerWrapper {
     waveManager: WaveManager;
     waveManagerModule: WaveManagerModule;
-    waveObjects: PVZObject[] = [];
+    waves: WaveAction[][] = [];
 
     constructor(data: PVZObject[]) {
         const waveManagerObj = data.filter((obj) => obj.objclass == 'WaveManagerProperties')[0];
         if (waveManagerObj) {
-            this.waveManager = new WaveManager(
-                waveManagerObj.objdata as WaveManagerPropertiesObject,
-            );
+            this.waveManager = new WaveManager(waveManagerObj.objdata as WaveManagerPropertiesObject);
         } else {
             this.waveManager = new WaveManager({
                 FlagWaveInterval: 0,
@@ -26,9 +21,7 @@ export class WaveManagerWrapper {
             });
         }
 
-        const waveManagerModuleObj = data.filter(
-            (obj) => obj.objclass == 'WaveManagerModuleProperties',
-        )[0];
+        const waveManagerModuleObj = data.filter((obj) => obj.objclass == 'WaveManagerModuleProperties')[0];
         if (waveManagerModuleObj) {
             this.waveManagerModule = new WaveManagerModule(
                 waveManagerModuleObj.objdata as WaveManagerModulePropertiesObject,
@@ -39,17 +32,29 @@ export class WaveManagerWrapper {
             });
         }
 
-        for (const wave of this.waveManager.waves) {
-            for (const waveAction of wave) {
-                const { name } = fromRTID(waveAction);
+        const waves: WaveAction[][] = [];
 
-                // attempt finding the wave action object
-                const match = data.filter((x) => x.aliases?.includes(name));
-                if (match.length > 0) {
-                    this.waveObjects.push(...match);
-                }
-            }
+        for (const wave of this.waveManager.objdata.Waves) {
+            waves.push(
+                wave
+                    .map((waveAction) => {
+                        const { name } = fromRTID(waveAction);
+
+                        // attempt finding the wave action object
+                        const match = data.filter((x) => x.aliases?.includes(name)).at(0);
+                        if (match) {
+                            return {
+                                type: match.objclass,
+                                data: match.objdata,
+                                name,
+                            };
+                        }
+                    })
+                    .filter((x) => x !== undefined),
+            );
         }
+
+        this.waves = waves;
     }
 
     getLevelModules(): string {
@@ -58,8 +63,7 @@ export class WaveManagerWrapper {
 
     getlevelObjects(): PVZObject[] {
         const waveManagerObj = this.waveManager.buildObject<WaveManagerPropertiesObject>();
-        const waveManagerModuleObj =
-            this.waveManagerModule.buildObject<WaveManagerModulePropertiesObject>();
+        const waveManagerModuleObj = this.waveManagerModule.buildObject<WaveManagerModulePropertiesObject>();
 
         if (!this.waveCount || this.waveCount == 0) {
             waveManagerObj.objdata.WaveCount = waveManagerObj.objdata.Waves.length;
@@ -68,18 +72,21 @@ export class WaveManagerWrapper {
             waveManagerObj.objdata.FlagWaveInterval = waveManagerObj.objdata.WaveCount;
         }
 
-        return [waveManagerObj, waveManagerModuleObj, ...this.waveObjects];
-    }
+        const waveObjects: PVZObject[] = [];
+        const waveNames = this.waves.map((wave, waveIndex) => {
+            return wave.map((action, actionIndex) => {
+                const alias = 'Wave' + (waveIndex + 1).toString() + 'Action' + actionIndex.toString();
 
-    get waves() {
-        const waves = this.waveManager.objdata.Waves;
-        return waves.map((wave) => wave.map((action) => fromRTID(action).name));
-    }
+                const obj = { aliases: [alias], objclass: action.type, objdata: action.data } as PVZObject;
+                waveObjects.push(obj);
 
-    set waves(waves: string[][]) {
-        this.waveManager.objdata.Waves = waves.map((wave) =>
-            wave.map((action) => toRTID(action, RTIDTypes.level)),
-        );
+                return toRTID(alias, RTIDTypes.level);
+            });
+        });
+
+        waveManagerObj.objdata.Waves = waveNames;
+
+        return [waveManagerObj, waveManagerModuleObj, ...waveObjects];
     }
 
     get waveCount(): number {
@@ -132,23 +139,6 @@ export class WaveManager extends PVZBase {
         super();
         this.objdata = propertiesObject;
     }
-
-    addWave(waveAlias: string) {
-        const formatted = `RTID(${waveAlias}@CurrentLevel)`;
-        this.waves.push([formatted]);
-    }
-
-    hasWave(waveAlias: string): boolean {
-        const formatted = `RTID(${waveAlias}@CurrentLevel)`;
-        for (const wave of this.waves) {
-            if (wave.includes(formatted)) return true;
-        }
-        return false;
-    }
-
-    get waves() {
-        return this.objdata.Waves;
-    }
 }
 
 export class WaveManagerModule extends PVZBase {
@@ -157,16 +147,6 @@ export class WaveManagerModule extends PVZBase {
     objdata: WaveManagerModulePropertiesObject;
 
     constructor(propertiesObject: WaveManagerModulePropertiesObject) {
-        super();
-        this.objdata = propertiesObject;
-    }
-}
-
-export class BasicWave extends PVZBase {
-    objclass: string = 'SpawnZombiesJitteredWaveActionProps';
-    objdata: BasicWaveSpawner;
-
-    constructor(propertiesObject: BasicWaveSpawner) {
         super();
         this.objdata = propertiesObject;
     }

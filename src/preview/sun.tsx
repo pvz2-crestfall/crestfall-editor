@@ -1,4 +1,4 @@
-import sunImage from '/assets/icons/sun.png';
+import sunImage from '/public/assets/icons/sun.png';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { levelState } from '@/lib/state';
 import { useRef, useState, useEffect } from 'react';

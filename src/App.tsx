@@ -5,6 +5,7 @@ import { LevelPreview } from './preview/preview';
 import { Button } from './components/ui/button';
 import { Switch } from './components/ui/switch';
 import { Label } from './components/ui/label';
+import { useState } from 'react';
 
 // JSON preview component
 function DataPreview() {
@@ -28,7 +29,7 @@ function DataPreview() {
 }
 
 export default function App() {
-    const { isDev, setIsDev } = levelState();
+    const [isDev, setIsDev] = useState(import.meta.env.PROD ? false : true);
 
     return (
         <div>

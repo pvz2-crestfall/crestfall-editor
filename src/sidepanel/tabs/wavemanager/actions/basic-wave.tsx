@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandList } from '@/components/ui/command';
 import { Label } from '@/components/ui/label';
 import { OptionalNumberInput } from '@/components/ui/optional-ninput';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';

@@ -32,13 +32,13 @@ export function OverrideSeedSlots() {
                 />
             </div>
             {enabled && (
-                <div className="flex flex-row border rounded-md px-2 py-2">
+                <div className="flex w-full flex-row justify-between border rounded-md px-2 py-2">
                     <Label className="px-4 py-1">Slot Count</Label>
                     <Input
                         type="number"
                         placeholder="0"
                         defaultValue={levelBuilder.seedBank.objdata.OverrideSeedSlotsCount}
-                        className="text-center w-auto font-mono align-left"
+                        className="text-center w-20 font-mono align-left"
                         size={5}
                         onChange={(e) => overrideSeedSlots(Number(e.target.value))}
                     />

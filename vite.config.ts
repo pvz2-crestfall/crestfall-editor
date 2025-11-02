@@ -10,13 +10,23 @@ const base = process.env.GITHUB_ACTIONS === 'true' ? `/${process.env.GITHUB_REPO
 console.log('Running in GitHub Actions:', process.env.GITHUB_ACTIONS === 'true');
 console.log('Base URL:', base);
 
+const isProduction = process.env.NODE_ENV === 'production';
+
+const profiling = isProduction && {
+    'react-dom/client': 'react-dom/profiling',
+};
+
 // https://vite.dev/config/
 export default defineConfig({
     plugins: [react(), tailwindcss(), ViteImageOptimizer()],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),
+            ...profiling,
         },
+    },
+    build: {
+        minify: true,
     },
 
     base,

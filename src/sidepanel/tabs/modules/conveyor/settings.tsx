@@ -34,7 +34,7 @@ export function ConveyorSettings() {
                             type="number"
                             placeholder="0"
                             defaultValue={levelBuilder.conveyor.speed}
-                            className="text-center w-auto font-mono align-left"
+                            className="text-center w-20 font-mono align-left"
                             size={5}
                             onChange={(e) => setSpeed(Number(e.target.value))}
                         />
@@ -49,7 +49,7 @@ export function ConveyorSettings() {
                                         type="number"
                                         placeholder="0"
                                         defaultValue={condition.MaxPackets}
-                                        className="text-center w-auto font-mono align-left"
+                                        className="text-center w-20 font-mono align-left"
                                         size={2}
                                         onChange={(e) =>
                                             (levelBuilder.conveyor.delayConditions[index].MaxPackets = Number(
@@ -62,7 +62,7 @@ export function ConveyorSettings() {
                                         type="number"
                                         placeholder="0"
                                         defaultValue={condition.Delay}
-                                        className="text-center w-auto font-mono align-left"
+                                        className="text-center w-20 font-mono align-left"
                                         size={2}
                                         onChange={(e) =>
                                             (levelBuilder.conveyor.delayConditions[index].Delay = Number(

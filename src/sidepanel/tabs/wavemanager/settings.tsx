@@ -16,7 +16,7 @@ export function WaveManagerSettings() {
                         type="number"
                         placeholder="Auto"
                         defaultValue={levelBuilder.waveManager.waveCount || ''}
-                        className="text-center w-auto font-mono align-left"
+                        className="text-center w-20 font-mono align-left"
                         size={5}
                         onChange={(e) => (levelBuilder.waveManager.waveCount = Number(e.target.value))}
                     />
@@ -27,7 +27,7 @@ export function WaveManagerSettings() {
                         type="number"
                         placeholder="Auto"
                         defaultValue={levelBuilder.waveManager.flagInterval || ''}
-                        className="text-center w-auto font-mono align-left"
+                        className="text-center w-20 font-mono align-left"
                         size={5}
                         onChange={(e) => (levelBuilder.waveManager.flagInterval = Number(e.target.value))}
                     />

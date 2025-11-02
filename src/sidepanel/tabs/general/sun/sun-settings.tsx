@@ -12,23 +12,28 @@ import {
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
+import { useState } from 'react';
 
 export function SunSettingsComponent() {
-    const { levelBuilder, reloadComponents } = levelState();
+    const { levelBuilder } = levelState();
 
-    const setStartingSun = (sun: number) => {
-        levelBuilder.startingSun = sun;
-        reloadComponents();
+    const [startingSun, _setStartingSun] = useState(levelBuilder.startingSun);
+    const [bonusSunAllowed, _allowBonusSun] = useState(levelBuilder.allowBonusSun);
+    const [sunDropperType, _setDropperType] = useState(levelBuilder.sunDropper);
+
+    const setStartingSun = (val: number) => {
+        levelBuilder.startingSun = val;
+        _setStartingSun(val);
     };
 
     const allowBonusSun = (toggle: boolean) => {
         levelBuilder.allowBonusSun = toggle;
-        reloadComponents();
+        _allowBonusSun(toggle);
     };
 
     const setDropperType = (type?: SunDropperType) => {
         levelBuilder.sunDropper = type;
-        reloadComponents();
+        _setDropperType(type);
     };
 
     return (
@@ -40,8 +45,8 @@ export function SunSettingsComponent() {
                     <Input
                         type="number"
                         placeholder="0"
-                        defaultValue={levelBuilder.startingSun}
-                        className="text-center w-auto font-mono align-left"
+                        defaultValue={startingSun}
+                        className="text-center w-20 font-mono align-left"
                         size={5}
                         onChange={(e) => setStartingSun(Number(e.target.value))}
                     />
@@ -52,7 +57,7 @@ export function SunSettingsComponent() {
                         <Label className="px-4 py-1">Sun Dropper</Label>
 
                         <Select
-                            value={levelBuilder.sunDropper ?? ''}
+                            value={sunDropperType ?? ''}
                             onValueChange={(val) =>
                                 setDropperType(val === 'disable' ? undefined : (val as SunDropperType))
                             }
@@ -79,7 +84,7 @@ export function SunSettingsComponent() {
                     <Label className="px-4 py-1">Allow Bonus Sun</Label>
                     <Switch
                         id="bonus-sun-toggle"
-                        defaultChecked={levelBuilder.allowBonusSun}
+                        defaultChecked={bonusSunAllowed}
                         onCheckedChange={allowBonusSun}
                         className="data-[state=checked]:bg-blue-500"
                     />

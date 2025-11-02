@@ -7,20 +7,14 @@ import type { SpawnZombiesJitteredWaveActionPropsObject, WaveAction } from '@/li
 import { cn, fromRTID, RTIDTypes, toRTID } from '@/lib/utils';
 import { ZombieDisplayNames, Zombies } from '@/lib/zombies';
 import { Trash2 } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { VirtualizedCommandList } from '@/components/ui/virtual-command-list';
 
 export function BasicWaveAction({ waveaction }: { waveaction: WaveAction<SpawnZombiesJitteredWaveActionPropsObject> }) {
     const [plantFoodCount, _setPFCount] = useState(waveaction.data.AdditionalPlantfood);
     const [zombies, _setZombies] = useState(waveaction.data.Zombies);
-    const [zombieSearchOpen, setZombieSearchOpen] = useState(false);
-    const [search, setSearch] = useState('');
 
-    const filteredList = useMemo(() => {
-        const s = search.toLowerCase().trim();
-        if (!s) return Zombies;
-        return Zombies.filter((p) => `${p.displayName} ${p.codename}`.toLowerCase().includes(s));
-    }, [Zombies, search]);
+    console.log('BasicWaveAction render');
 
     const setZombies = (val: { Type: string; row?: number }[]) => {
         waveaction.data.Zombies = val;
@@ -32,9 +26,9 @@ export function BasicWaveAction({ waveaction }: { waveaction: WaveAction<SpawnZo
         _setPFCount(val);
     };
 
-    const addNewZombie = (zombie: string) => {
+    const addNewZombie = useCallback((zombie: string) => {
         setZombies([...zombies, { Type: toRTID(zombie, RTIDTypes.zombie) }]);
-    };
+    }, []);
 
     const removeZombie = (index: number) => {
         const newZombies = [...zombies];
@@ -83,39 +77,54 @@ export function BasicWaveAction({ waveaction }: { waveaction: WaveAction<SpawnZo
                         </Button>
                     </li>
                 ))}
-                <Popover open={zombieSearchOpen} onOpenChange={setZombieSearchOpen}>
-                    <PopoverTrigger className="w-full mt-2">
-                        <li
-                            key="+"
-                            className={cn(
-                                'flex items-center justify-between rounded-md border p-2 bg-background shadow-sm ',
-                                'hover:bg-gray-200 transition-colors duration-300',
-                            )}
-                        >
-                            <div className="w-full h-8 flex items-center justify-center gap-2">
-                                <Label>Add Zombie</Label>
-                            </div>
-                        </li>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                        <Command shouldFilter={false}>
-                            <CommandInput value={search} onValueChange={setSearch} placeholder="Search Zombies..." />
-                            <CommandList>
-                                <CommandEmpty>No zombie found.</CommandEmpty>
-                                <CommandGroup>
-                                    <VirtualizedCommandList
-                                        items={filteredList}
-                                        onSelect={(zombie) => {
-                                            addNewZombie(zombie);
-                                            setZombieSearchOpen(false);
-                                        }}
-                                    />
-                                </CommandGroup>
-                            </CommandList>
-                        </Command>
-                    </PopoverContent>
-                </Popover>
+                <AddZombieButton onSelect={addNewZombie} />
             </ul>
         </div>
+    );
+}
+
+function AddZombieButton({ onSelect }: { onSelect: (zombie: string) => void }) {
+    const [zombieSearchOpen, setZombieSearchOpen] = useState(false);
+    const [search, setSearch] = useState('');
+
+    const filteredList = useMemo(() => {
+        const s = search.toLowerCase().trim();
+        if (!s) return Zombies;
+        return Zombies.filter((p) => `${p.displayName} ${p.codename}`.toLowerCase().includes(s));
+    }, [Zombies, search]);
+
+    return (
+        <Popover open={zombieSearchOpen} onOpenChange={setZombieSearchOpen}>
+            <PopoverTrigger className="w-full mt-2">
+                <li
+                    key="+"
+                    className={cn(
+                        'flex items-center justify-between rounded-md border p-2 bg-background shadow-sm ',
+                        'hover:bg-gray-200 transition-colors duration-300',
+                    )}
+                >
+                    <div className="w-full h-8 flex items-center justify-center gap-2">
+                        <Label>Add Zombie</Label>
+                    </div>
+                </li>
+            </PopoverTrigger>
+            <PopoverContent>
+                <Command shouldFilter={false}>
+                    <CommandInput value={search} onValueChange={setSearch} placeholder="Search Zombies..." />
+                    <CommandList>
+                        <CommandEmpty>No zombie found.</CommandEmpty>
+                        <CommandGroup>
+                            <VirtualizedCommandList
+                                items={filteredList}
+                                onSelect={(zombie) => {
+                                    onSelect(zombie);
+                                    setZombieSearchOpen(false);
+                                }}
+                            />
+                        </CommandGroup>
+                    </CommandList>
+                </Command>
+            </PopoverContent>
+        </Popover>
     );
 }

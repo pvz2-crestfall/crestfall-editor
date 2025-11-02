@@ -14,7 +14,7 @@ import { WaveManagerWrapper } from './levelModules/wavemanager/wavemanager';
 
 export class LevelBuilder {
     rawData: PVZObject[];
-    private levelProperties: LevelDefinitionObject;
+    levelProperties: LevelDefinitionObject;
     waveManager: WaveManagerWrapper;
     seedBank: SeedBank;
     conveyor: ConveyorBelt;

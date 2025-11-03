@@ -20,7 +20,6 @@ export function WaveActionList({
 }) {
     const { levelBuilder } = levelState();
 
-    // Hooks must always be called
     const [wave, setWaveState] = useState<WaveAction[]>([]);
 
     const validIndex = waveIndex ?? -1;

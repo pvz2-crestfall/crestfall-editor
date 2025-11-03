@@ -29,7 +29,7 @@ export function WaveList({
             {
                 name: 'NewWave' + (waves.length + 1).toString(),
                 type: 'SpawnZombiesJitteredWaveActionProps',
-                data: Actions['SpawnZombiesJitteredWaveActionProps'].defaultData,
+                data: Object.create(Actions['SpawnZombiesJitteredWaveActionProps'].defaultData),
             },
         ];
         setWaves([...waves, defaultWave]);
@@ -42,7 +42,7 @@ export function WaveList({
             newWaves.splice(index, 1);
             setWaves(newWaves);
             setRemovingIndex(null);
-        }, 300); // match your CSS animation duration
+        }, 300); // match the CSS animation duration
     };
 
     return (

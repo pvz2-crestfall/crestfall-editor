@@ -142,7 +142,7 @@ export class LevelBuilder {
         const modules = [
             'RTID(StandardIntro@LevelModules)',
             'RTID(ZombiesDeadWinCon@LevelModules)',
-            'RTID(DefaultZombieWinCondition@LevelModules',
+            'RTID(DefaultZombieWinCondition@LevelModules)',
         ];
 
         if (this.seedBank.enabled) {

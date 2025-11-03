@@ -1,12 +1,12 @@
-import { AddZombieButton } from '@/components/ui/wave-editor/add-zombie-button';
 import { Label } from '@/components/ui/label';
 import { OptionalNumberInput } from '@/components/ui/optional-ninput';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { WaveEditorZombieList } from '@/components/ui/wave-editor/zombie-list';
 import { StormType, type StormZombieSpawnerProps, type WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
 import { RTIDTypes, toRTID } from '@/lib/utils';
 import { useState } from 'react';
 import { SliderWithInputs } from '@/components/ui/slider-with-inputs';
+import { WaveEditorZombieList } from '@/components/wave-editor/zombie-list';
+import { AddZombieButton } from '@/components/wave-editor/add-zombie-button';
 
 export function ZombieStormAction({ waveaction }: { waveaction: WaveAction<StormZombieSpawnerProps> }) {
     const [groupSize, _setGroupSize] = useState(waveaction.data.GroupSize);
@@ -98,7 +98,7 @@ export function ZombieStormAction({ waveaction }: { waveaction: WaveAction<Storm
                 </RadioGroup>
             </div>
             <div className="mt-2"></div>
-            <WaveEditorZombieList list={waveaction.data.Zombies} enableRow onRemove={removeZombie}>
+            <WaveEditorZombieList list={waveaction.data.Zombies} disableRow onRemove={removeZombie}>
                 <AddZombieButton onSelect={addNewZombie} />
             </WaveEditorZombieList>
         </div>

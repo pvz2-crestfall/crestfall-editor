@@ -18,7 +18,7 @@ export const Actions: Record<string, ActionInterface<any>> = {
         defaultData: { Zombies: [] },
     },
     StormZombieSpawnerProps: {
-        name: 'Zombie Storm Spawner',
+        name: 'Storm Zombies Spawner',
         component: ZombieStormAction,
         defaultData: {
             ColumnStart: 7,
@@ -30,7 +30,7 @@ export const Actions: Record<string, ActionInterface<any>> = {
         },
     },
     SpawnZombiesFromGroundSpawnerProps: {
-        name: 'Spawn Zombies from Ground',
+        name: 'Ground Zombies Spawner',
         component: SpawnZombiesFromGroundAction,
         defaultData: {
             ColumnStart: 7,

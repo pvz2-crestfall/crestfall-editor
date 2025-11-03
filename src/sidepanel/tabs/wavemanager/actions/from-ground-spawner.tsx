@@ -1,11 +1,11 @@
-import { AddZombieButton } from '@/components/ui/wave-editor/add-zombie-button';
-import { WaveEditorZombieList } from '@/components/ui/wave-editor/zombie-list';
 import { type SpawnZombiesFromGroundSpawnerProps, type WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
 import { RTIDTypes, toRTID } from '@/lib/utils';
 import { useState } from 'react';
 import { SliderWithInputs } from '@/components/ui/slider-with-inputs';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
+import { WaveEditorZombieList } from '@/components/wave-editor/zombie-list';
+import { AddZombieButton } from '@/components/wave-editor/add-zombie-button';
 
 export function SpawnZombiesFromGroundAction({
     waveaction,

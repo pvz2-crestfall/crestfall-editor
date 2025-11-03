@@ -2,7 +2,7 @@ import { levelState } from '@/lib/state';
 import { animationDuration } from './waves';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { ChevronsRight } from 'lucide-react';
+import { ChevronsRight, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { RenderWaveAction } from './actions/render-action';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -45,14 +45,22 @@ export function WaveActionList({
             const newAction = {
                 type,
                 name: `NewWaveAction${wave.length}`,
-                data: Actions[type].defaultData,
+                data: Object.create(Actions[type].defaultData),
             };
             setWave([...wave, newAction]);
         },
         [wave],
     );
 
-    // ⬇️ Conditional rendering is fine *after* hooks
+    const removeAction = useCallback(
+        (index: number) => {
+            const newWave = [...wave];
+            newWave.splice(index, 1);
+            setWave(newWave);
+        },
+        [wave],
+    );
+
     if (waveIndex == null) {
         return <div className="p-4 text-muted-foreground">Select a wave to edit its actions</div>;
     }
@@ -76,12 +84,21 @@ export function WaveActionList({
                 {/*content*/}
                 <div className="flex flex-col items-center justify-between gap-2">
                     {wave &&
-                        wave.map((action) => (
+                        wave.map((action, index) => (
                             <div
                                 key={action.type + waveIndex}
                                 className="flex items-center rounded-md justify-center border shadow-sm p-2 w-full"
                             >
-                                <RenderWaveAction waveaction={action} />
+                                <RenderWaveAction waveaction={action}>
+                                    <Button
+                                        variant="ghost"
+                                        size="icon"
+                                        onClick={() => removeAction(index)}
+                                        className="text-muted-foreground hover:text-destructive hover:bg-red-100"
+                                    >
+                                        <Trash2 className="h-4 w-4" />
+                                    </Button>
+                                </RenderWaveAction>
                             </div>
                         ))}
 
@@ -97,7 +114,7 @@ function AddActionButton({ className, onSelect }: { className?: string; onSelect
     const [search, setSearch] = useState('');
 
     const actionList = useMemo(() => {
-        const AddButtonExceptions = ['SpawnZombiesJitteredWaveActionProps', 'UnknownAction'];
+        const AddButtonExceptions = ['UnknownAction'];
         return Object.entries(Actions).filter(([key, _]) => !AddButtonExceptions.includes(key));
     }, [Actions]);
 

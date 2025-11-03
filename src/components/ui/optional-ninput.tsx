@@ -12,6 +12,7 @@ export function OptionalNumberInput({
     optional = true,
     ...attributes
 }: {
+    disabled?: boolean;
     className?: string;
     value?: number;
     min?: number;

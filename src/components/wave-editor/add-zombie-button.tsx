@@ -1,10 +1,10 @@
 import { Zombies } from '@/lib/zombies';
 import { useMemo, useState } from 'react';
-import { Popover, PopoverContent, PopoverTrigger } from '../popover';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { cn } from '@/lib/utils';
-import { Label } from '../label';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandList } from '../command';
-import { VirtualizedCommandList } from '../virtual-command-list';
+import { Label } from '../ui/label';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandList } from '../ui/command';
+import { VirtualizedCommandList } from '../ui/virtual-command-list';
 
 export function AddZombieButton({ className, onSelect }: { className?: string; onSelect: (zombie: string) => void }) {
     const [zombieSearchOpen, setZombieSearchOpen] = useState(false);

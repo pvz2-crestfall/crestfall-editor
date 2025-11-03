@@ -6,7 +6,13 @@ import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { Actions } from './actions';
 
-export function RenderWaveAction<T = unknown>({ waveaction }: { waveaction: WaveAction<T> }) {
+export function RenderWaveAction<T = unknown>({
+    children,
+    waveaction,
+}: {
+    children?: React.ReactNode;
+    waveaction: WaveAction<T>;
+}) {
     const [isOpen, setIsOpen] = useState(false);
     const action = Actions[waveaction.type] ?? Actions['UnknownAction'];
 
@@ -14,6 +20,7 @@ export function RenderWaveAction<T = unknown>({ waveaction }: { waveaction: Wave
         <div className="flex flex-col justify-between gap-2 w-full">
             <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
                 <div className="flex flex-row items-center justify-between px-4">
+                    {children}
                     <h4 className="text-sm">{action.name}</h4>
                     <CollapsibleTrigger>
                         <Button variant="ghost" size="icon" className="size-8">

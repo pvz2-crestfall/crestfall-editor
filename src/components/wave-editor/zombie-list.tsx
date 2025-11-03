@@ -1,20 +1,20 @@
 import type { WaveZombie } from '@/lib/levelModules/wavemanager/wavetypes';
-import { useState, type ReactNode } from 'react';
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../collapsible';
-import { ChevronRight, Trash2 } from 'lucide-react';
-import { Button } from '../button';
 import { cn, fromRTID } from '@/lib/utils';
-import { OptionalNumberInput } from '../optional-ninput';
 import { ZombieDisplayNames } from '@/lib/zombies';
+import { ChevronRight, Trash2 } from 'lucide-react';
+import { useState, type ReactNode } from 'react';
+import { Button } from '../ui/button';
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
+import { OptionalNumberInput } from '../ui/optional-ninput';
 
 export function WaveEditorZombieList({
     list,
-    enableRow,
+    disableRow,
     onRemove,
     children,
 }: {
     list: WaveZombie[];
-    enableRow?: boolean;
+    disableRow?: boolean;
     onRemove: (index: number) => void;
     children?: ReactNode;
 }) {
@@ -39,16 +39,15 @@ export function WaveEditorZombieList({
                             key={index}
                             className="flex items-center justify-between rounded-md border p-2 bg-background shadow-sm"
                         >
-                            {enableRow && (
-                                <OptionalNumberInput
-                                    className="w-18"
-                                    value={zombie.Row}
-                                    min={1}
-                                    max={5}
-                                    placeholder="Row"
-                                    onChange={(val) => (zombie.Row = val)}
-                                />
-                            )}
+                            <OptionalNumberInput
+                                disabled={disableRow}
+                                className={cn('w-18', disableRow && 'opacity-50 cursor-not-allowed')}
+                                value={zombie.Row}
+                                min={1}
+                                max={5}
+                                placeholder="Row"
+                                onChange={(val) => (zombie.Row = val)}
+                            />
 
                             <div className="flex flex-row items-center justify-between gap">
                                 <span className="break-all">

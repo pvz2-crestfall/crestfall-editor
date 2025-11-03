@@ -1,10 +1,10 @@
 import { Label } from '@/components/ui/label';
 import { OptionalNumberInput } from '@/components/ui/optional-ninput';
+import { AddZombieButton } from '@/components/wave-editor/add-zombie-button';
+import { WaveEditorZombieList } from '@/components/wave-editor/zombie-list';
 import type { SpawnZombiesJitteredWaveActionProps, WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
 import { RTIDTypes, toRTID } from '@/lib/utils';
 import { useState } from 'react';
-import { AddZombieButton } from '@/components/ui/wave-editor/add-zombie-button';
-import { WaveEditorZombieList } from '@/components/ui/wave-editor/zombie-list';
 
 export function BasicZombieSpawner({ waveaction }: { waveaction: WaveAction<SpawnZombiesJitteredWaveActionProps> }) {
     const [plantFoodCount, _setPFCount] = useState(waveaction.data.AdditionalPlantfood);

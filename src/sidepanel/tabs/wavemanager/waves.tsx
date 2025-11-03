@@ -9,7 +9,7 @@ export function WaveManagerWaves() {
     const [selectedWave, setSelectedWave] = useState<number | null>(null);
 
     return (
-        <div className="flex flex-col gap-2 items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full overflow-hidden relative">
+        <div className="flex flex-col gap-2 items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-96 overflow-hidden relative">
             <Label className="text-md mb-2">Waves</Label>
 
             {/* Animation container */}

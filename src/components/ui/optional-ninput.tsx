@@ -7,12 +7,16 @@ export function OptionalNumberInput({
     onChange,
     className,
     placeholder = 'Default',
+    min,
+    max,
+    optional = true,
     ...attributes
 }: {
     className?: string;
     value?: number;
     min?: number;
     max?: number;
+    optional?: boolean;
     placeholder?: string;
     onChange: (val?: number) => void;
 }) {
@@ -29,12 +33,20 @@ export function OptionalNumberInput({
             type="number"
             value={localValue}
             onChange={(e) => {
-                const val = e.target.value;
+                let val = e.target.value;
+
+                if (max && max < Number(val)) val = max.toString();
+
                 setLocalValue(val);
                 onChange(val === '' ? undefined : Number(val));
             }}
             onBlur={(e) => {
-                const val = e.target.value.trim();
+                let val = e.target.value;
+                if (val != '' || !optional) {
+                    if (min && min > Number(val)) val = min.toString();
+                    if (max && max < Number(val)) val = max.toString();
+                }
+
                 onChange(val === '' ? undefined : Number(val));
             }}
             {...attributes}

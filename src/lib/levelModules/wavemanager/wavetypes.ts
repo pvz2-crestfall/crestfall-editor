@@ -4,13 +4,40 @@ export interface WaveAction<T = unknown> {
     data: T;
 }
 
-export interface SpawnZombiesJitteredWaveActionPropsObject {
-    AdditionalPlantfood?: number;
-    DynamicPlantfood?: boolean[];
-    Zombies: Zombie[];
+export interface StormZombieSpawnerProps {
+    ColumnEnd: number;
+    ColumnStart: number;
+    GroupSize: number;
+    TimeBetweenGroups: number;
+    Type: StormType;
+    Zombies: WaveZombie[];
+    Waves?: string;
+    ForcedCondition?: { Condition: string };
 }
 
-interface Zombie {
+export enum StormType {
+    SANDSTORM = 'sandstorm',
+    SNOWSTORM = 'snowstorm',
+}
+
+export interface SpawnZombiesJitteredWaveActionProps {
+    AdditionalPlantfood?: number;
+    DynamicPlantfood?: boolean[];
+    Zombies: WaveZombie[];
+}
+
+export interface SunDropperWaveActionProps {
+    SunAmountToDrop: number;
+}
+
+export interface SpawnZombiesFromGroundSpawnerProps {
+    ColumnEnd: number;
+    ColumnStart: number;
+    WaveStartMessage?: string;
+    Zombies: WaveZombie[];
+}
+
+export interface WaveZombie {
     Type: string;
     Row?: number;
 }

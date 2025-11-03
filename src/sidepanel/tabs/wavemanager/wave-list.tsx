@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import type { WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
 import { Label } from '@/components/ui/label';
+import { Actions } from './actions/actions';
 
 export function WaveList({
     waveIndex,
@@ -28,9 +29,7 @@ export function WaveList({
             {
                 name: 'NewWave' + (waves.length + 1).toString(),
                 type: 'SpawnZombiesJitteredWaveActionProps',
-                data: {
-                    Zombies: [],
-                },
+                data: Actions['SpawnZombiesJitteredWaveActionProps'].defaultData,
             },
         ];
         setWaves([...waves, defaultWave]);

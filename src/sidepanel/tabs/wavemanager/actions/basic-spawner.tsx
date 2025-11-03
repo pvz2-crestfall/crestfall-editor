@@ -37,7 +37,7 @@ export function BasicZombieSpawner({ waveaction }: { waveaction: WaveAction<Spaw
                 <OptionalNumberInput value={plantFoodCount} onChange={setPlantFoodCount} />
             </div>
 
-            <WaveEditorZombieList list={waveaction.data.Zombies} enableRow onRemove={removeZombie}>
+            <WaveEditorZombieList list={waveaction.data.Zombies} onRemove={removeZombie}>
                 <AddZombieButton onSelect={addNewZombie} />
             </WaveEditorZombieList>
         </div>

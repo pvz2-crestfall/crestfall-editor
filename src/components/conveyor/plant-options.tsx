@@ -5,6 +5,7 @@ import { Switch } from '@/components/ui/switch';
 import { PlantDisplayNames } from '@/lib/plants';
 import { cn } from '@/lib/utils';
 import type { ConveyorSeedBankPlantObject } from '@/types/PVZTypes';
+import React from 'react';
 
 interface ConveyorPlantOptionsContentProps {
     plant: ConveyorSeedBankPlantObject;
@@ -20,7 +21,7 @@ export function ConveyorPlantOptionsContent({ plant, index, items, setPlants }: 
         setPlants(updated);
     };
 
-    function EditableProperty({
+    const EditableProperty = React.memo(function EditableProperty({
         label,
         field,
         className,
@@ -33,10 +34,15 @@ export function ConveyorPlantOptionsContent({ plant, index, items, setPlants }: 
         return (
             <div className={cn('flex flex-row items-center space-x-2 justify-center', className)}>
                 <Label className="w-[50%] text-nowrap">{label}</Label>
-                <OptionalNumberInput className="w-[50%]" value={value} onChange={(val) => updatePlant(field, val)} />
+                <OptionalNumberInput
+                    onlySubmitOnBlur
+                    className="w-[50%]"
+                    value={value}
+                    onChange={(val) => updatePlant(field, val)}
+                />
             </div>
         );
-    }
+    });
 
     return (
         <div className="w-full space-y-1">

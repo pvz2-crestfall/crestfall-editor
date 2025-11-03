@@ -10,6 +10,7 @@ export function OptionalNumberInput({
     min,
     max,
     optional = true,
+    onlySubmitOnBlur,
     ...attributes
 }: {
     disabled?: boolean;
@@ -19,6 +20,7 @@ export function OptionalNumberInput({
     max?: number;
     optional?: boolean;
     placeholder?: string;
+    onlySubmitOnBlur?: boolean;
     onChange: (val?: number) => void;
 }) {
     const [localValue, setLocalValue] = React.useState(value ?? '');
@@ -39,7 +41,9 @@ export function OptionalNumberInput({
                 if (max && max < Number(val)) val = max.toString();
 
                 setLocalValue(val);
-                onChange(val === '' ? undefined : Number(val));
+                if (!onlySubmitOnBlur) {
+                    onChange(val === '' ? undefined : Number(val));
+                }
             }}
             onBlur={(e) => {
                 let val = e.target.value;

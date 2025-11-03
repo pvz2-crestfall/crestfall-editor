@@ -1,14 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { PlantSearchCombobox } from '@/components/ui/plant-search';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Switch } from '@/components/ui/switch';
 import { levelState } from '@/lib/state';
 import type { ConveyorSeedBankPlantObject } from '@/types/PVZTypes';
 import { useState } from 'react';
-import { ConveyorPlantOptionsContent } from './plant-options';
-import { Settings, Trash2 } from 'lucide-react';
 import { PowerTiles, PowerTilesDisplayNames } from '@/lib/plants';
+import { ConveyorPlantList } from '@/components/conveyor/plant-list';
 
 export function ConveyorPowerTiles() {
     const { levelBuilder } = levelState();
@@ -58,36 +56,12 @@ export function ConveyorPowerTiles() {
                         />
                         <Button onClick={addItem}>Add</Button>
                     </div>
-                    {items.map((plant, index) => (
-                        <li className="flex items-center justify-between rounded-md border p-2 bg-background shadow-sm">
-                            <div className="flex items-center gap-2">
-                                <Popover>
-                                    <PopoverTrigger>
-                                        <Button variant="ghost" size="icon" className="group">
-                                            <Settings className="h-4 w-4 transform transition-transform duration-700 group-hover:rotate-120" />
-                                        </Button>
-                                    </PopoverTrigger>
-                                    <PopoverContent className="w-112">
-                                        <ConveyorPlantOptionsContent
-                                            plant={plant}
-                                            index={index}
-                                            items={items}
-                                            setPlants={setPlants}
-                                        />
-                                    </PopoverContent>
-                                </Popover>
-                                <span>{PowerTilesDisplayNames[plant.PlantType]}</span>
-                            </div>
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => removeItem(plant)}
-                                className="text-muted-foreground hover:text-destructive hover:bg-red-100"
-                            >
-                                <Trash2 className="h-4 w-4" />
-                            </Button>
-                        </li>
-                    ))}
+                    <ConveyorPlantList
+                        list={items}
+                        displayNames={PowerTilesDisplayNames}
+                        setPlants={setPlants}
+                        onRemove={removeItem}
+                    />
                 </div>
             )}
         </div>

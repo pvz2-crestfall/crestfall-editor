@@ -1,3 +1,5 @@
+import type { ConveyorSeedBankPlantObject } from '@/types/PVZTypes';
+
 export interface WaveAction<T = unknown> {
     type: string;
     name: string;
@@ -35,6 +37,11 @@ export interface SpawnZombiesFromGroundSpawnerProps {
     ColumnStart: number;
     WaveStartMessage?: string;
     Zombies: WaveZombie[];
+}
+
+export interface ModifyConveyorWaveActionProps {
+    Add: ConveyorSeedBankPlantObject[];
+    Remove: ConveyorSeedBankPlantObject[];
 }
 
 export interface WaveZombie {

@@ -6,6 +6,7 @@ import { useState, type ReactNode } from 'react';
 import { Button } from '../ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
 import { OptionalNumberInput } from '../ui/optional-ninput';
+import { Label } from '../ui/label';
 
 export function WaveEditorZombieList({
     list,
@@ -22,16 +23,16 @@ export function WaveEditorZombieList({
 
     return (
         <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full w-max-128">
-            <CollapsibleTrigger className="w-full flex flex-row items-center justify-center">
-                <h4 className="text-sm">Zombie List</h4>
-                <CollapsibleTrigger>
+            <div className="w-full flex flex-row items-center justify-center">
+                <CollapsibleTrigger className="flex flex-row">
+                    <Label className="text-sm">Zombie List</Label>
                     <Button variant="ghost" size="icon" className="size-8">
                         <ChevronRight
                             className={cn('transition-transform duration-200 ease-in-out', isOpen ? 'rotate-90' : '')}
                         />
                     </Button>
                 </CollapsibleTrigger>
-            </CollapsibleTrigger>
+            </div>
             <CollapsibleContent className="flex flex-col">
                 <ul className="w-full">
                     {list.map((zombie, index) => (

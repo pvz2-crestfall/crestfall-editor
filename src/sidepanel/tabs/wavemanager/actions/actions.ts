@@ -4,6 +4,7 @@ import { SunDropperWaveAction } from './sun-dropper';
 import { UnknownAction } from './unknown';
 import { ZombieStormAction } from './zombie-storm';
 import { SpawnZombiesFromGroundAction } from './from-ground-spawner';
+import { ModifyConveyorAction } from './modify-conveyor';
 
 interface ActionInterface<T> {
     name: string;
@@ -18,7 +19,7 @@ export const Actions: Record<string, ActionInterface<any>> = {
         defaultData: { Zombies: [] },
     },
     StormZombieSpawnerProps: {
-        name: 'Storm Zombies Spawner',
+        name: 'Storm Zombie Spawner',
         component: ZombieStormAction,
         defaultData: {
             ColumnStart: 7,
@@ -30,12 +31,20 @@ export const Actions: Record<string, ActionInterface<any>> = {
         },
     },
     SpawnZombiesFromGroundSpawnerProps: {
-        name: 'Ground Zombies Spawner',
+        name: 'Ground Zombie Spawner',
         component: SpawnZombiesFromGroundAction,
         defaultData: {
             ColumnStart: 7,
             ColumnEnd: 9,
             Zombies: [],
+        },
+    },
+    ModifyConveyorWaveActionProps: {
+        name: 'Modify Conveyor Belt',
+        component: ModifyConveyorAction,
+        defaultData: {
+            Add: [],
+            Remove: [],
         },
     },
     SunDropperWaveActionProps: {

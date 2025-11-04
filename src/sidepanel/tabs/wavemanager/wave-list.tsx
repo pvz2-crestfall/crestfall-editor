@@ -25,11 +25,12 @@ export function WaveList({
     };
 
     const addNewWave = () => {
+        const defaultWaveType = 'SpawnZombiesJitteredWaveActionProps';
         const defaultWave: WaveAction[] = [
             {
                 name: 'NewWave' + (waves.length + 1).toString(),
-                type: 'SpawnZombiesJitteredWaveActionProps',
-                data: Object.create(Actions['SpawnZombiesJitteredWaveActionProps'].defaultData),
+                type: defaultWaveType,
+                data: structuredClone(Actions[defaultWaveType]?.defaultData ?? {}),
             },
         ];
         setWaves([...waves, defaultWave]);

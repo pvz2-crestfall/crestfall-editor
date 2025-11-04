@@ -44,7 +44,7 @@ export function WaveActionList({
             const newAction = {
                 type,
                 name: `NewWaveAction${wave.length}`,
-                data: Object.create(Actions[type].defaultData),
+                data: structuredClone(Actions[type]?.defaultData ?? {}),
             };
             setWave([...wave, newAction]);
         },

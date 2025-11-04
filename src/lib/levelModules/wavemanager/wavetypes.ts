@@ -44,6 +44,20 @@ export interface ModifyConveyorWaveActionProps {
     Remove: ConveyorSeedBankPlantObject[];
 }
 
+export interface DinoWaveActionProps {
+    DinoType: DinoType;
+    DinoRow: number;
+    DinoWaveDuration?: number;
+}
+
+export enum DinoType {
+    RAPTOR = 'raptor',
+    STEGOSAURUS = 'stego',
+    PTEROSAUR = 'ptero',
+    TYRANNOSAURUS = 'tyranno',
+    ANKLYOSAURUS = 'anklyo',
+}
+
 export interface WaveZombie {
     Type: string;
     Row?: number;

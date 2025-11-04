@@ -5,6 +5,7 @@ import { UnknownAction } from './unknown';
 import { ZombieStormAction } from './zombie-storm';
 import { SpawnZombiesFromGroundAction } from './from-ground-spawner';
 import { ModifyConveyorAction } from './modify-conveyor';
+import { SummonDinoAction } from './summon-dino';
 
 interface ActionInterface<T> {
     name: string;
@@ -52,6 +53,14 @@ export const Actions: Record<string, ActionInterface<any>> = {
         component: SunDropperWaveAction,
         defaultData: {
             SunAmountToDrop: 50,
+        },
+    },
+    DinoWaveActionProps: {
+        name: 'Summon Dinosaur',
+        component: SummonDinoAction,
+        defaultData: {
+            DinoType: 'raptor',
+            DinoRow: 0,
         },
     },
     UnknownAction: {

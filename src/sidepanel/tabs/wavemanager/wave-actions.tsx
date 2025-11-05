@@ -65,7 +65,7 @@ export function WaveActionList({
     }
 
     return (
-        <div className="w-full flex-shrink-0">
+        <div className="w-full shrink-0">
             <div
                 className={cn(
                     `flex flex-col ease-out transition-opacity duration-${animationDuration}`,

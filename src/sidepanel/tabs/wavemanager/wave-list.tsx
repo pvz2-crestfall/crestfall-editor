@@ -49,7 +49,7 @@ export function WaveList({
     return (
         <div
             className={cn(
-                `w-full min-h-120 flex-shrink-0 transition-opacity ease-out duration-${animationDuration}`,
+                `w-full min-h-120 shrink-0 transition-opacity ease-out duration-${animationDuration}`,
                 waveIndex == null ? 'opacity-100' : 'opacity-0',
             )}
         >

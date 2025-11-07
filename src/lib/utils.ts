@@ -45,7 +45,7 @@ export function useOnScreen<T extends HTMLElement = HTMLElement>(ref: React.RefO
 }
 
 export enum RTIDTypes {
-    level = 'CurrentLevel',
+    current = 'CurrentLevel',
     module = 'LevelModules',
     zombie = 'ZombieTypes',
 }

@@ -28,7 +28,7 @@ export class WaveManagerWrapper {
             );
         } else {
             this.waveManagerModule = new WaveManagerModule({
-                WaveManagerProps: toRTID(this.waveManager.aliases[0], RTIDTypes.level),
+                WaveManagerProps: toRTID(this.waveManager.aliases[0], RTIDTypes.current),
             });
         }
 
@@ -57,8 +57,12 @@ export class WaveManagerWrapper {
         this.waves = waves;
     }
 
-    getLevelModules(): string {
-        return toRTID(this.waveManagerModule.aliases[0], RTIDTypes.level);
+    build(): [string[], PVZObject[]] {
+        return [this.getLevelModules(), this.getlevelObjects()];
+    }
+
+    getLevelModules(): string[] {
+        return [toRTID(this.waveManagerModule.aliases[0], RTIDTypes.current)];
     }
 
     getlevelObjects(): PVZObject[] {
@@ -80,7 +84,7 @@ export class WaveManagerWrapper {
                 const obj = { aliases: [alias], objclass: action.type, objdata: action.data } as PVZObject;
                 waveObjects.push(obj);
 
-                return toRTID(alias, RTIDTypes.level);
+                return toRTID(alias, RTIDTypes.current);
             });
         });
 

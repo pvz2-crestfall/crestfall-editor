@@ -3,6 +3,7 @@ import { StageModuleType } from '@/types/PVZTypes';
 
 // Automatically import all .png files in this folder
 const lawnImages = import.meta.glob('/assets/lawns/*.png', {
+    base: '/assets/lawns/',
     eager: true,
     import: 'default',
 }) as Record<string, string>;
@@ -11,21 +12,21 @@ console.log(lawnImages);
 
 // Map StageModuleType -> bundled URLs
 const backgroundImages = {
-    [StageModuleType.Tutorial]: lawnImages['/assets/lawns/Frontlawn.png'],
-    [StageModuleType.FrontLawn]: lawnImages['/assets/lawns/Frontlawn.png'],
-    [StageModuleType.Egypt]: lawnImages['/assets/lawns/EgyptLawn.png'],
-    [StageModuleType.Pirate]: lawnImages['/assets/lawns/PirateLawn.png'],
-    [StageModuleType.WildWest]: lawnImages['/assets/lawns/WildWestLawn.png'],
-    [StageModuleType.Frostbite]: lawnImages['/assets/lawns/FrostbiteCavesLawn.png'],
-    [StageModuleType.LostCity]: lawnImages['/assets/lawns/LostCityLawn.png'],
-    [StageModuleType.Future]: lawnImages['/assets/lawns/FarFutureLawn.png'],
-    [StageModuleType.DarkAges]: lawnImages['/assets/lawns/DarkAgesLawn.png'],
-    [StageModuleType.NMT]: lawnImages['/assets/lawns/NMTLawn.png'],
-    [StageModuleType.Jurassic]: lawnImages['/assets/lawns/JurassicLawn.png'],
-    [StageModuleType.BWB]: lawnImages['/assets/lawns/BeachLawn.png'],
-    [StageModuleType.Modern]: lawnImages['/assets/lawns/Frontlawn.png'],
-    [StageModuleType.BattleZ]: lawnImages['/assets/lawns/JoustLawn.png'],
-    [StageModuleType.Rift]: lawnImages['/assets/lawns/RiftLawn.png'],
+    [StageModuleType.Tutorial]: lawnImages['./Frontlawn.png'],
+    [StageModuleType.FrontLawn]: lawnImages['./Frontlawn.png'],
+    [StageModuleType.Egypt]: lawnImages['./EgyptLawn.png'],
+    [StageModuleType.Pirate]: lawnImages['./PirateLawn.png'],
+    [StageModuleType.WildWest]: lawnImages['./WildWestLawn.png'],
+    [StageModuleType.Frostbite]: lawnImages['./FrostbiteCavesLawn.png'],
+    [StageModuleType.LostCity]: lawnImages['./LostCityLawn.png'],
+    [StageModuleType.Future]: lawnImages['./FarFutureLawn.png'],
+    [StageModuleType.DarkAges]: lawnImages['./DarkAgesLawn.png'],
+    [StageModuleType.NMT]: lawnImages['./NMTLawn.png'],
+    [StageModuleType.Jurassic]: lawnImages['./JurassicLawn.png'],
+    [StageModuleType.BWB]: lawnImages['./BeachLawn.png'],
+    [StageModuleType.Modern]: lawnImages['./Frontlawn.png'],
+    [StageModuleType.BattleZ]: lawnImages['./JoustLawn.png'],
+    [StageModuleType.Rift]: lawnImages['./RiftLawn.png'],
 };
 
 export function LevelBackground() {

@@ -1,5 +1,6 @@
 import { levelState } from '@/lib/state';
 import { StageModuleType } from '@/types/PVZTypes';
+import { RenderTileSprites } from './render-tile';
 
 interface GridAlignment {
     startX: number;
@@ -46,36 +47,49 @@ export function LevelGrid() {
     const rows = 5;
     const cols = 9;
 
-    const handleClick = (r: number, c: number) => {
-        console.log(`Clicked cell (${r}, ${c})`);
-        // levelState.setState((s) => s.levelBuilder.setTile(r, c, ...))
-    };
+    const alignment = Alignments[levelBuilder.stageType];
 
-    const { startX, startY, endX, endY } = Alignments[levelBuilder.stageType];
+    const widthPct = alignment.endX - alignment.startX;
+    const heightPct = alignment.endY - alignment.startY;
+    const cellWidth = widthPct / cols;
+    const cellHeight = heightPct / rows;
 
     return (
-        <div
-            className="absolute grid"
-            style={{
-                top: `${startY}%`,
-                left: `${startX}%`,
-                width: `${endX - startX}%`,
-                height: `${endY - startY}%`,
-                gridTemplateRows: `repeat(${rows}, 1fr)`,
-                gridTemplateColumns: `repeat(${cols}, 1fr)`,
-            }}
-        >
-            {Array.from({ length: rows * cols }).map((_, i) => {
-                const r = Math.floor(i / cols);
-                const c = i % cols;
-                return (
-                    <div
-                        key={`${r}-${c}`}
-                        className="border border-black/20 hover:bg-black/10 transition-colors cursor-pointer"
-                        onClick={() => handleClick(r, c)}
-                    />
-                );
-            })}
+        <div className="absolute inset-0">
+            {/* Base grid */}
+            <div
+                className="absolute grid"
+                style={{
+                    top: `${alignment.startY}%`,
+                    left: `${alignment.startX}%`,
+                    width: `${alignment.endX - alignment.startX}%`,
+                    height: `${alignment.endY - alignment.startY}%`,
+                    gridTemplateRows: `repeat(${rows}, 1fr)`,
+                    gridTemplateColumns: `repeat(${cols}, 1fr)`,
+                }}
+            >
+                {Array.from({ length: rows * cols }).map((_, i) => {
+                    const r = Math.floor(i / cols);
+                    const c = i % cols;
+
+                    return (
+                        <div
+                            key={`${r}-${c}`}
+                            className="border border-black/20 hover:bg-black/10 transition-colors cursor-pointer"
+                            onClick={() => levelState.getState().triggerGridClick(r, c)}
+                        >
+                            <RenderTileSprites
+                                width={cellWidth}
+                                height={cellHeight}
+                                row={r}
+                                column={c}
+                                stageType={levelBuilder.stageType}
+                                tileManager={levelBuilder.tileManager}
+                            />
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 }

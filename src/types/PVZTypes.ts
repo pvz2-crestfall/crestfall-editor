@@ -25,12 +25,6 @@ export interface SeedBankPlantObject {
     Level: number;
 }
 
-export enum SeedBankSelectionMethod {
-    Chooser = 'chooser',
-    Beghouled = 'beghouled',
-    Preset = 'preset',
-}
-
 export interface ConveyorSeedBankPropertiesObject {
     DropDelayConditions: { MaxPackets: number; Delay: number }[];
     SpeedConditions: { MaxPackets: number; Speed: number }[];
@@ -86,6 +80,23 @@ export interface DynamicZombieWave {
     StartingPoints: number;
     StartingWave: number;
     ZombiePool: string[];
+}
+
+export interface GravestonePropertiesObject {
+    ForceSpawnData: {
+        GridX: number;
+        GridY: number;
+        TypeName?: string;
+    }[];
+    GravestoneCount?: number;
+    SpawnColumnEnd?: number;
+    SpawnColumnStart?: number;
+}
+
+export enum SeedBankSelectionMethod {
+    Chooser = 'chooser',
+    Beghouled = 'beghouled',
+    Preset = 'preset',
 }
 
 export enum SunDropperType {

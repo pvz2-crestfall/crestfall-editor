@@ -1,15 +1,16 @@
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { TabSwitch } from '@/components/ui/tabswitcher';
+import { GravestoneEditor } from './editor';
 
-export function ConveyorLevelModule() {
+export function GraveStonesModule() {
     return (
         <Card className="py-4 h-full">
-            <CardTitle className="flex items-center justify-center">Title Placeholder</CardTitle>
+            <CardTitle className="flex items-center justify-center">Gravestones Module</CardTitle>
             <CardContent className="flex flex-col">
                 <TabSwitch
                     tabs={[
-                        { label: 'Options', content: <p>Not implemented</p> },
-                        { label: 'Plants', content: <p>Not implemented</p> },
+                        { label: 'Initial Graves', content: <GravestoneEditor /> },
+                        { label: 'Dynamic Graves', content: <p>Not implemented</p> },
                     ]}
                 />
             </CardContent>

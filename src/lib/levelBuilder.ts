@@ -11,11 +11,13 @@ import { toRTID, RTIDTypes, fromRTID } from './utils';
 import { SeedBank } from './levelModules/seedbank';
 import { ConveyorBelt } from './levelModules/conveyor';
 import { WaveManagerWrapper } from './levelModules/wavemanager/wavemanager';
+import { TileManager } from './levelModules/tilemanager/tilemanager';
 
 export class LevelBuilder {
     rawData: PVZObject[];
     levelProperties: LevelDefinitionObject;
     waveManager: WaveManagerWrapper;
+    tileManager: TileManager;
     seedBank: SeedBank;
     conveyor: ConveyorBelt;
     lawnMower?: LawnMowerType;
@@ -62,8 +64,6 @@ export class LevelBuilder {
                         this.sunDropper = moduleName as SunDropperType;
                     }
                 }
-
-                console.log(match);
             });
         }
 
@@ -92,6 +92,7 @@ export class LevelBuilder {
 
         // initialize wave manager
         this.waveManager = new WaveManagerWrapper(data);
+        this.tileManager = new TileManager(data);
     }
 
     get stageType(): StageModuleType {
@@ -99,7 +100,7 @@ export class LevelBuilder {
         return parsedRTID.name as StageModuleType;
     }
     set stageType(stage: StageModuleType) {
-        this.levelProperties.StageModule = toRTID(stage, RTIDTypes.level);
+        this.levelProperties.StageModule = toRTID(stage, RTIDTypes.module);
     }
 
     get startingSun(): number {
@@ -147,29 +148,32 @@ export class LevelBuilder {
 
         if (this.seedBank.enabled) {
             const seedBankObj = this.seedBank.buildObject();
-            modules.push(toRTID(this.seedBank.aliases[0], RTIDTypes.level));
+            modules.push(toRTID(this.seedBank.aliases[0], RTIDTypes.current));
             objects.push(seedBankObj);
         }
         if (this.conveyor && this.conveyor.enabled) {
             this.conveyor.objdata.ManualPacketSpawning = this.seedBank.enabled || undefined;
             const conveyorObj = this.conveyor.buildObject();
-            modules.push(toRTID(this.conveyor.aliases[0], RTIDTypes.level));
+            modules.push(toRTID(this.conveyor.aliases[0], RTIDTypes.current));
             objects.push(conveyorObj);
         }
 
         if (this.sunDropper) modules.push(toRTID(this.sunDropper, RTIDTypes.module));
         if (this.lawnMower) modules.push(toRTID(this.lawnMower, RTIDTypes.module));
 
-        modules.push(this.waveManager.getLevelModules());
+        const [tileModules, tileObjects] = this.tileManager.build();
+        modules.push(...tileModules);
+        objects.push(...tileObjects);
+
+        const [waveModules, waveObjects] = this.waveManager.build();
+        modules.push(...waveModules);
+        objects.push(...waveObjects);
 
         this.levelProperties.Modules = modules;
         objects.unshift({
             objclass: 'LevelDefinition',
             objdata: this.levelProperties,
         });
-        for (const obj of this.waveManager.getlevelObjects()) {
-            objects.push(obj);
-        }
 
         return objects;
     }

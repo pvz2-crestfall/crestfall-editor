@@ -1,4 +1,4 @@
-import type { GravestonePropertiesObject, PVZObject } from '@/types/PVZTypes';
+import type { GravestonePropertiesObject, PVZObject, Tile } from '@/types/PVZTypes';
 import { PVZBase } from '../base';
 import { RTIDTypes, toRTID } from '@/lib/utils';
 
@@ -71,12 +71,18 @@ export class TileManager {
         return [modules, objects];
     }
 
-    setTile(row: number, col: number, layer: 'ground' | 'obstacle', type: string, variant?: string) {
-        if (layer === 'ground') {
-            this.groundLayer[row][col] = { type, variant };
-        } else {
-            this.obstacleLayer[row][col] = { type, variant };
-        }
+    setTile(position: { row: number; col: number }, data: TileData) {
+        const { row, col } = position;
+        if (data.type == 'gravestone') this.obstacleLayer[row][col] = data;
+        if (data.type == 'plant') this.plantLayer[row][col] = data;
+        if (data.type == 'tile') this.groundLayer[row][col] = data;
+    }
+
+    removeTile(position: { row: number; col: number }, data: TileData) {
+        const { row, col } = position;
+        if (data.type == 'gravestone') delete this.obstacleLayer[row][col];
+        if (data.type == 'plant') delete this.plantLayer[row][col];
+        if (data.type == 'tile') delete this.groundLayer[row][col];
     }
 
     getAllAt(row: number, col: number): TileData[] {

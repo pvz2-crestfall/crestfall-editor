@@ -1,6 +1,6 @@
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { TabSwitch } from '@/components/ui/tabswitcher';
-import { GravestoneEditor } from './editor';
+import { GravestoneEditor } from './gravestone-editor';
 
 export function GraveStonesModule() {
     return (

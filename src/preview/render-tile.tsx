@@ -1,4 +1,5 @@
 import type { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
+import { defaultGrave } from '@/lib/levelModules/tilemanager/types';
 import { StageModuleType } from '@/types/PVZTypes';
 import type { CSSProperties } from 'react';
 
@@ -7,24 +8,6 @@ const gravestonePaths = import.meta.glob('/assets/gravestones/*.png', {
     eager: true,
     import: 'default',
 }) as Record<string, string>;
-
-const defaultGrave = {
-    [StageModuleType.Tutorial]: 'gravestone_tutorial',
-    [StageModuleType.FrontLawn]: 'gravestone_tutorial',
-    [StageModuleType.Egypt]: 'gravestone_egypt',
-    [StageModuleType.Pirate]: 'gravestone_pirate',
-    [StageModuleType.WildWest]: 'gravestone_cowboy',
-    [StageModuleType.Frostbite]: 'gravestone_egypt',
-    [StageModuleType.LostCity]: 'gravestone_egypt',
-    [StageModuleType.Future]: 'gravestone_future',
-    [StageModuleType.DarkAges]: 'gravestone_dark',
-    [StageModuleType.NMT]: 'gravestone_egypt',
-    [StageModuleType.Jurassic]: 'gravestone_egypt',
-    [StageModuleType.BWB]: 'gravestone_egypt',
-    [StageModuleType.Modern]: 'gravestone_tutorial',
-    [StageModuleType.BattleZ]: 'gravestone_dark',
-    [StageModuleType.Rift]: 'gravestone_tutorial',
-};
 
 function getGravestoneImage(stageType: StageModuleType, variant: string | undefined) {
     if (variant == 'default' || variant == undefined) {
@@ -72,7 +55,7 @@ export function RenderTileSprites({ column, row, stageType, tileManager, width, 
 
                 // Render different tile types accordingly
                 if (tile.type == 'gravestone') {
-                    const scale = 1.5;
+                    const scale = 1.6;
                     imageProps.src = getGravestoneImage(stageType, tile.variant);
                     imageStyle.transform = `translate(-50%, -65%) scale(${scale})`;
                 }

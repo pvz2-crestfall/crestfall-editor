@@ -28,27 +28,44 @@ function DataPreview() {
     );
 }
 
+import { useEffect } from 'react';
+
+export function ThemeToggle() {
+    const [isDark, setIsDark] = useState(false);
+
+    useEffect(() => {
+        document.documentElement.classList.toggle('dark', isDark);
+    }, [isDark]);
+
+    return (
+        <button onClick={() => setIsDark((prev) => !prev)} className="px-3 py-1 rounded-md border">
+            {isDark ? '☀️ Light Mode' : '🌙 Dark Mode'}
+        </button>
+    );
+}
+
 export default function App() {
     const [isDev, setIsDev] = useState(import.meta.env.PROD ? false : true);
 
     return (
         <div>
-            <div className="flex h-screen bg-neutral-100 p-4 gap-4">
+            <div className="flex h-screen p-4 gap-4">
                 <div className="flex-1 flex flex-col items-center justify-center gap-4">
                     <LevelPreview />
-                    <div className="flex-1 flex flex-row items-center justify-center gap-4 bg-neutral-100">
+                    <div className="flex-1 flex flex-row items-center justify-center gap-4">
                         <Label>Toggle Dev Mode</Label>
                         <Switch defaultChecked={isDev} onCheckedChange={setIsDev} />
+                        <ThemeToggle />
                     </div>
                 </div>
 
-                <div className="w-128">
+                <div className="w-lg">
                     <SidePanel />
                 </div>
             </div>
 
             {isDev && (
-                <div className="flex-1 flex flex-col items-center justify-center gap-4 bg-neutral-100">
+                <div className="flex-1 flex flex-col items-center justify-center gap-4">
                     <DataPreview />
                 </div>
             )}

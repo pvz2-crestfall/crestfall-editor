@@ -77,7 +77,7 @@ export function FloatingWindow({
         return (
             <div ref={setNodeRef} style={style} className="rounded-lg border bg-background shadow-lg">
                 {/* Header with isolated drag handle */}
-                <div className="flex items-center justify-between border-b bg-muted">
+                <div className="flex items-center justify-between border-b bg-muted rounded-t-md">
                     {/* Drag handle */}
                     <div {...listeners} {...attributes} className="flex-1 px-3 py-2 cursor-move select-none">
                         <h4 className="text-sm font-semibold">{title}</h4>

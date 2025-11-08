@@ -1,6 +1,7 @@
 import { levelState } from '@/lib/state';
 import { StageModuleType } from '@/types/PVZTypes';
 import { RenderTileSprites } from './render-tile';
+import { useState } from 'react';
 
 interface GridAlignment {
     startX: number;
@@ -42,7 +43,10 @@ const Alignments = {
 };
 
 export function LevelGrid() {
+    const [refreshCount, setRefreshCount] = useState(0);
+
     const { levelBuilder } = levelState();
+    const gridListener = levelState((s) => s.gridListener);
 
     const rows = 5;
     const cols = 9;
@@ -54,9 +58,16 @@ export function LevelGrid() {
     const cellWidth = widthPct / cols;
     const cellHeight = heightPct / rows;
 
+    const triggerGridClick = (r: number, c: number) => {
+        const listener = gridListener;
+        if (listener) {
+            listener(r, c);
+            setRefreshCount(refreshCount + 1);
+        }
+    };
+
     return (
         <div className="absolute inset-0">
-            {/* Base grid */}
             <div
                 className="absolute grid"
                 style={{
@@ -76,7 +87,7 @@ export function LevelGrid() {
                         <div
                             key={`${r}-${c}`}
                             className="border border-black/20 hover:bg-black/10 transition-colors cursor-pointer"
-                            onClick={() => levelState.getState().triggerGridClick(r, c)}
+                            onClick={() => triggerGridClick(r, c)}
                         >
                             <RenderTileSprites
                                 width={cellWidth}

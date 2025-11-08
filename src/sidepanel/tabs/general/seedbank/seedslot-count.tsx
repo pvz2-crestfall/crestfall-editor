@@ -28,7 +28,6 @@ export function OverrideSeedSlots() {
                 <Switch
                     defaultChecked={enabled}
                     onCheckedChange={setEnabled}
-                    className="data-[state=checked]:bg-blue-500"
                 />
             </div>
             {enabled && (

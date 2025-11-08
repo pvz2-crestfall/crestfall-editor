@@ -41,7 +41,6 @@ export function ExcludePlantList() {
                 <Switch
                     defaultChecked={levelBuilder.seedBank.excludeSunProducers}
                     onCheckedChange={toggleExcludeSunProducers}
-                    className="data-[state=checked]:bg-blue-500"
                 />
             </div>
 

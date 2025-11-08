@@ -70,7 +70,6 @@ export function ConveyorPlantOptionsContent({ plant, index, items, setPlants }: 
                         id="bonus-sun-toggle"
                         checked={!!plant.ForceBoosted}
                         onCheckedChange={(val) => updatePlant('ForceBoosted', val)}
-                        className="data-[state=checked]:bg-blue-500"
                     />
                 </div>
             </div>

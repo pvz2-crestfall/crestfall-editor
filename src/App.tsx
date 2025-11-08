@@ -5,7 +5,7 @@ import { LevelPreview } from './preview/preview';
 import { Button } from './components/ui/button';
 import { Switch } from './components/ui/switch';
 import { Label } from './components/ui/label';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // JSON preview component
 function DataPreview() {
@@ -20,7 +20,7 @@ function DataPreview() {
                         Build
                     </Button>
                 </div>
-                <pre className="bg-gray-100 p-4 rounded-md text-sm overflow-auto h-full">
+                <pre className="bg-background p-4 rounded-md text-sm overflow-auto h-full">
                     {JSON.stringify(levelBuilder.build(), null, 2)}
                 </pre>
             </CardContent>
@@ -28,17 +28,18 @@ function DataPreview() {
     );
 }
 
-import { useEffect } from 'react';
-
-export function ThemeToggle() {
-    const [isDark, setIsDark] = useState(false);
+function ThemeToggle() {
+    const storedTheme = localStorage.getItem('darkTheme');
+    const theme = storedTheme ?? window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const [isDark, setIsDark] = useState(JSON.parse(theme.toString()));
 
     useEffect(() => {
         document.documentElement.classList.toggle('dark', isDark);
+        localStorage.setItem('darkTheme', JSON.stringify(isDark));
     }, [isDark]);
 
     return (
-        <button onClick={() => setIsDark((prev) => !prev)} className="px-3 py-1 rounded-md border">
+        <button onClick={() => setIsDark((prev: any) => !prev)} className="px-3 py-1 rounded-md border">
             {isDark ? '☀️ Light Mode' : '🌙 Dark Mode'}
         </button>
     );

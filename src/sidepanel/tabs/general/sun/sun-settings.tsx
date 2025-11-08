@@ -86,7 +86,6 @@ export function SunSettingsComponent() {
                         id="bonus-sun-toggle"
                         defaultChecked={bonusSunAllowed}
                         onCheckedChange={allowBonusSun}
-                        className="data-[state=checked]:bg-blue-500"
                     />
                 </div>
             </div>

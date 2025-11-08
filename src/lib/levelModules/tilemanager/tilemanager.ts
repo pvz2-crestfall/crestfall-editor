@@ -1,4 +1,4 @@
-import type { GravestonePropertiesObject, PVZObject, Tile } from '@/types/PVZTypes';
+import type { GravestonePropertiesObject, PVZObject } from '@/types/PVZTypes';
 import { PVZBase } from '../base';
 import { RTIDTypes, toRTID } from '@/lib/utils';
 

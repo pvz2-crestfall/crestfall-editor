@@ -38,7 +38,7 @@ export function WaveEditorZombieList({
                     {list.map((zombie, index) => (
                         <li
                             key={index}
-                            className="flex items-center justify-between rounded-md border p-2 bg-background shadow-sm"
+                            className="flex items-center justify-between rounded-md border p-2 bg-primary-foreground shadow-sm"
                         >
                             <OptionalNumberInput
                                 disabled={disableRow}

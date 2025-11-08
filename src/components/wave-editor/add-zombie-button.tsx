@@ -22,8 +22,8 @@ export function AddZombieButton({ className, onSelect }: { className?: string; o
                 <li
                     key="+"
                     className={cn(
-                        'flex items-center justify-between rounded-md border p-2 bg-background shadow-sm ',
-                        'hover:bg-gray-200 transition-colors duration-300',
+                        'flex items-center justify-between rounded-md border p-2 shadow-sm ',
+                        'hover:bg-primary/10 transition-colors duration-300',
                         className,
                     )}
                 >

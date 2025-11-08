@@ -58,7 +58,7 @@ export function WaveList({
                     <li
                         key={index}
                         className={cn(
-                            'flex items-center justify-between rounded-md border p-2 bg-background shadow-sm',
+                            'flex items-center justify-between rounded-md border p-2',
 
                             removingIndex === index
                                 ? 'transition-all duration-300 ease-out opacity-0 translate-x-4 scale-95 max-h-0 py-0 mb-0'
@@ -89,8 +89,8 @@ export function WaveList({
                     key="+"
                     onClick={addNewWave}
                     className={cn(
-                        'flex items-center justify-between rounded-md border p-2 bg-background shadow-sm ',
-                        'hover:bg-gray-200 transition-colors duration-300',
+                        'flex items-center justify-between rounded-md border p-2 shadow-sm ',
+                        'hover:bg-primary/10 transition-colors duration-300',
                     )}
                 >
                     <div className="w-full h-8 flex items-center justify-center gap-2">

@@ -53,7 +53,7 @@ export function ExcludePlantList() {
             <div className="flex border rounded-md p-1 flex-wrap gap-2">
                 {items.length > 0 ? (
                     items.map((plant) => (
-                        <div className="flex flex-col border bg-gray-200 rounded-sm px-1 py-1">
+                        <div className="flex flex-col border bg-primary-foreground rounded-sm px-1 py-1">
                             <div className="flex items-center gap-2">
                                 <span>{Plants.find((x) => x.codename == plant)?.displayName ?? plant}</span>
                                 <Button variant="ghost" size="sm" onClick={() => removeItem(plant)}>

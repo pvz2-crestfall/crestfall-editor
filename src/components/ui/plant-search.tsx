@@ -36,7 +36,7 @@ export function PlantSearchCombobox({
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className={cn('flex w-[240px] justify-between', className)}
+                    className={cn('flex w-60 justify-between', className)}
                 >
                     {value ? list.find((plant) => plant.codename === value)?.displayName : 'Add plant...'}
                     <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />

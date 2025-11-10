@@ -6,6 +6,7 @@ import { ZombieStormAction } from './zombie-storm';
 import { SpawnZombiesFromGroundAction } from './from-ground-spawner';
 import { ModifyConveyorAction } from './modify-conveyor';
 import { SummonDinoAction } from './summon-dino';
+import { SpawnGravestonesWaveAction } from './spawn-gravestones-action';
 
 interface ActionInterface<T> {
     name: string;
@@ -61,6 +62,16 @@ export const Actions: Record<string, ActionInterface<any>> = {
         defaultData: {
             DinoType: 'raptor',
             DinoRow: 0,
+        },
+    },
+    SpawnGravestonesWaveActionProps: {
+        name: 'Spawn Gravestones',
+        component: SpawnGravestonesWaveAction,
+        defaultData: {
+            GravestonePool: [],
+            SpawnPositionsPool: [],
+            SpawnEffectAnimID: 'POPANIM_EFFECTS_TOMBSTONE_DARK_SPAWN_EFFECT',
+            SpawnSoundID: 'Play_Zomb_Egypt_TombRaiser_Grave_Rise',
         },
     },
     UnknownAction: {

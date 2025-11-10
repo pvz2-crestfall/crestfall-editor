@@ -2,7 +2,7 @@ import type { GravestonePropertiesObject, PVZObject } from '@/types/PVZTypes';
 import { PVZBase } from '../base';
 import { RTIDTypes, toRTID } from '@/lib/utils';
 
-interface TileData {
+export interface TileData {
     type: string;
     variant?: string;
 }

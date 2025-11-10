@@ -47,6 +47,7 @@ export function LevelGrid() {
 
     const { levelBuilder } = levelState();
     const gridListener = levelState((s) => s.gridListener);
+    const gridData = levelState((s) => s.gridData);
 
     const rows = 5;
     const cols = 9;
@@ -65,6 +66,8 @@ export function LevelGrid() {
             setRefreshCount(refreshCount + 1);
         }
     };
+
+    const tileManager = gridData ?? levelBuilder.tileManager;
 
     return (
         <div className="absolute inset-0">
@@ -95,7 +98,7 @@ export function LevelGrid() {
                                 row={r}
                                 column={c}
                                 stageType={levelBuilder.stageType}
-                                tileManager={levelBuilder.tileManager}
+                                tileManager={tileManager}
                             />
                         </div>
                     );

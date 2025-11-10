@@ -58,6 +58,27 @@ export enum DinoType {
     ANKLYOSAURUS = 'anklyo',
 }
 
+export interface SpawnGravestonesWaveActionProps {
+    GravestonePool: GravestonePool[];
+    SpawnPositionsPool: { mX: number; mY: number }[];
+    SpawnEffectAnimID: string;
+    SpawnSoundID: string;
+
+    DisplacePlants?: boolean;
+    RandomPlacement?: boolean;
+    GridClassesToDestroy?: string[];
+    maxX?: number;
+    minX?: number;
+    SpawnPositionsRect?: { mX: number; mY: number; mWidth: number; mHeight: number };
+    ShakeScreen?: boolean;
+    SpawnEffectAnimPlay?: string;
+}
+
+export interface GravestonePool {
+    Count: number;
+    Type: string;
+}
+
 export interface WaveZombie {
     Type: string;
     Row?: number;

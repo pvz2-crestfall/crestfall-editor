@@ -23,7 +23,7 @@ export function AddPlantButton({ className, onSelect }: { className?: string; on
                     key="+"
                     className={cn(
                         'flex items-center justify-between rounded-md border p-2 bg-background shadow-sm ',
-                        'hover:bg-gray-200 transition-colors duration-300',
+                        'hover:bg-primary/10 transition-colors duration-300',
                         className,
                     )}
                 >

@@ -73,14 +73,19 @@ export class TileManager {
 
     setTile(position: { row: number; col: number }, data: TileData) {
         const { row, col } = position;
-        if (data.type == 'gravestone') this.obstacleLayer[row][col] = data;
-        if (data.type == 'plant') this.plantLayer[row][col] = data;
+        if (data.type == 'gravestone' || data.type == 'portal') this.obstacleLayer[row][col] = data;
+        if (data.type == 'plant') {
+            this.plantLayer[row][col] = data;
+            if (this.obstacleLayer[row][col]) {
+                delete this.obstacleLayer[row][col];
+            }
+        }
         if (data.type == 'tile') this.groundLayer[row][col] = data;
     }
 
     removeTile(position: { row: number; col: number }, data: TileData) {
         const { row, col } = position;
-        if (data.type == 'gravestone') delete this.obstacleLayer[row][col];
+        if (data.type == 'gravestone' || data.type == 'portal') delete this.obstacleLayer[row][col];
         if (data.type == 'plant') delete this.plantLayer[row][col];
         if (data.type == 'tile') delete this.groundLayer[row][col];
     }

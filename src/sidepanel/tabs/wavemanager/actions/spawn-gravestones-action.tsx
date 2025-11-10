@@ -155,13 +155,18 @@ function GravestonePoolList({
     return (
         <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full w-max-128">
             <div className="w-full flex flex-row items-center justify-center">
-                <CollapsibleTrigger className="flex flex-row">
-                    <Label className="text-sm">Grave Counts</Label>
-                    <Button variant="ghost" size="icon" className="size-8">
-                        <ChevronRight
-                            className={cn('transition-transform duration-200 ease-in-out', isOpen ? 'rotate-90' : '')}
-                        />
-                    </Button>
+                <CollapsibleTrigger asChild className="flex flex-row">
+                    <div>
+                        <Label className="text-sm">Grave Counts</Label>
+                        <Button variant="ghost" size="icon">
+                            <ChevronRight
+                                className={cn(
+                                    'transition-transform duration-200 ease-in-out',
+                                    isOpen ? 'rotate-90' : '',
+                                )}
+                            />
+                        </Button>
+                    </div>
                 </CollapsibleTrigger>
             </div>
             <CollapsibleContent className="flex flex-col">

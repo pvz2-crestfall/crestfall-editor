@@ -1,10 +1,10 @@
 import type { WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { Button } from '@/components/ui/button';
 import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { Actions } from './actions';
+import { Button } from '@/components/ui/button';
 
 export function RenderWaveAction<T = unknown>({
     children,
@@ -22,8 +22,8 @@ export function RenderWaveAction<T = unknown>({
                 <div className="flex flex-row items-center justify-between px-4">
                     {children}
                     <h4 className="text-sm">{action.name}</h4>
-                    <CollapsibleTrigger>
-                        <Button variant="ghost" size="icon" className="size-8">
+                    <CollapsibleTrigger asChild>
+                        <Button variant="ghost" size="icon">
                             <ChevronRight
                                 className={cn(
                                     'transition-transform duration-200 ease-in-out',

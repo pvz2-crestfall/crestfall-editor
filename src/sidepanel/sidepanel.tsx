@@ -26,7 +26,7 @@ export function SidePanel() {
                     }}
                 />
 
-                <div className="flex items-center justify-center p-2 border rounded-md hover:bg-gray-100 transition">
+                <div className="flex items-center justify-center p-2 border rounded-md hover:bg-primary/10 transition">
                     📂 Load Level
                 </div>
             </label>

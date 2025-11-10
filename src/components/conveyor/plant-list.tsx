@@ -28,16 +28,18 @@ export function ConveyorPlantList({
         return (
             <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full w-max-128">
                 <div className="w-full flex flex-row items-center justify-center">
-                    <CollapsibleTrigger className="flex flex-row">
-                        <Label className="text-sm">{collapsibleLabel}</Label>
-                        <Button variant="ghost" size="icon" className="size-8">
-                            <ChevronRight
-                                className={cn(
-                                    'transition-transform duration-200 ease-in-out',
-                                    isOpen ? 'rotate-90' : '',
-                                )}
-                            />
-                        </Button>
+                    <CollapsibleTrigger asChild className="flex flex-row">
+                        <div>
+                            <Label className="text-sm">{collapsibleLabel}</Label>
+                            <Button variant="ghost" size="icon">
+                                <ChevronRight
+                                    className={cn(
+                                        'transition-transform duration-200 ease-in-out',
+                                        isOpen ? 'rotate-90' : '',
+                                    )}
+                                />
+                            </Button>
+                        </div>
                     </CollapsibleTrigger>
                 </div>
                 <CollapsibleContent className="flex flex-col">
@@ -62,12 +64,12 @@ function ConveyorPlantsListContent({
                 <li className="flex items-center justify-between rounded-md border p-2 bg-background shadow-sm">
                     <div className="flex items-center gap-2">
                         <Popover>
-                            <PopoverTrigger disabled={disableSettings}>
+                            <PopoverTrigger asChild disabled={disableSettings}>
                                 <Button disabled={disableSettings} variant="ghost" size="icon" className="group">
                                     <Settings className="h-4 w-4 transform transition-transform duration-700 group-hover:rotate-120" />
                                 </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="w-112">
+                            <PopoverContent className="w-md">
                                 <ConveyorPlantOptionsContent
                                     plant={plant}
                                     index={index}

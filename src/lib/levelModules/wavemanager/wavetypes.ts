@@ -79,6 +79,79 @@ export interface GravestonePool {
     Type: string;
 }
 
+export interface SpawnModernPortalsWaveActionProps {
+    PortalColumn: number;
+    PortalRow: number;
+    PortalType: ModernPortalType;
+    SpawnEffectAnimID: string;
+    SpawnSoundID: string;
+}
+
+export enum ModernPortalType {
+    // misc portals
+    Circus = 'circus1',
+    Rome = 'rome',
+    Chicken = 'chicken',
+
+    // world portals
+    Egypt = 'egypt',
+    EgyptAlt = 'egypt_2',
+    Pirate = 'pirate',
+    WildWest = 'west',
+    FarFuture = 'future',
+    FarFutureAlt = 'future_2',
+    DarkAges = 'dark',
+    BigWaveBeach = 'beach',
+    FrostbiteCaves = 'iceage',
+    LostCity = 'lostcity',
+    NeonMixtapeTour = 'eighties',
+    JurassicMarsh = 'dino',
+    ModernDay = 'modern',
+
+    // danger rooms
+    dangerroom_egypt = 'dangerroom_egypt',
+    dangerroom_pirate = 'dangerroom_pirate',
+    dangerroom_west = 'dangerroom_west',
+    dangerroom_future = 'dangerroom_future',
+    dangerroom_dark = 'dangerroom_dark',
+    dangerroom_beach = 'dangerroom_beach',
+    dangerroom_iceage = 'dangerroom_iceage',
+    dangerroom_lostcity = 'dangerroom_lostcity',
+    dangerroom_eighties = 'dangerroom_eighties',
+    dangerroom_dino = 'dangerroom_dino',
+}
+
+export const PortalTypes = {
+    [ModernPortalType.Circus]: 'modern',
+    [ModernPortalType.Rome]: 'rift1a',
+    [ModernPortalType.Chicken]: 'west',
+
+    [ModernPortalType.Egypt]: 'egypt',
+    [ModernPortalType.EgyptAlt]: 'egypt',
+    [ModernPortalType.Pirate]: 'pirate',
+    [ModernPortalType.WildWest]: 'west',
+    [ModernPortalType.FarFuture]: 'future',
+    [ModernPortalType.FarFutureAlt]: 'future',
+    [ModernPortalType.DarkAges]: 'dark',
+    [ModernPortalType.BigWaveBeach]: 'beach',
+    [ModernPortalType.FrostbiteCaves]: 'iceage',
+    [ModernPortalType.LostCity]: 'lostcity',
+    [ModernPortalType.NeonMixtapeTour]: 'eighties',
+    [ModernPortalType.JurassicMarsh]: 'dino',
+    [ModernPortalType.ModernDay]: 'modern',
+
+    [ModernPortalType.dangerroom_egypt]: 'egypt',
+    [ModernPortalType.dangerroom_pirate]: 'pirate',
+    [ModernPortalType.dangerroom_west]: 'west',
+    [ModernPortalType.dangerroom_future]: 'future',
+    [ModernPortalType.dangerroom_dark]: 'dark',
+    [ModernPortalType.dangerroom_beach]: 'beach',
+    [ModernPortalType.dangerroom_iceage]: 'iceage',
+    [ModernPortalType.dangerroom_lostcity]: 'lostcity',
+    [ModernPortalType.dangerroom_eighties]: 'eighties',
+    [ModernPortalType.dangerroom_dino]: 'dino',
+};
+
 export interface WaveZombie {
     Type: string;
     Row?: number;

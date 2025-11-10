@@ -7,6 +7,7 @@ import { SpawnZombiesFromGroundAction } from './from-ground-spawner';
 import { ModifyConveyorAction } from './modify-conveyor';
 import { SummonDinoAction } from './summon-dino';
 import { SpawnGravestonesWaveAction } from './spawn-gravestones-action';
+import { SpawnModernPortalAction } from './spawn-modern-portal';
 
 interface ActionInterface<T> {
     name: string;
@@ -72,6 +73,17 @@ export const Actions: Record<string, ActionInterface<any>> = {
             SpawnPositionsPool: [],
             SpawnEffectAnimID: 'POPANIM_EFFECTS_TOMBSTONE_DARK_SPAWN_EFFECT',
             SpawnSoundID: 'Play_Zomb_Egypt_TombRaiser_Grave_Rise',
+        },
+    },
+    SpawnModernPortalsWaveActionProps: {
+        name: 'Spawn Modern Day Portal',
+        component: SpawnModernPortalAction,
+        defaultData: {
+            PortalColumn: 7,
+            PortalRow: 2,
+            PortalType: 'egypt',
+            SpawnEffectAnimID: '',
+            SpawnSoundID: '',
         },
     },
     UnknownAction: {

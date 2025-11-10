@@ -43,6 +43,7 @@ export function RenderTileSprites({ column, row, stageType, tileManager, width, 
                     src: '',
                     alt: tile.type,
                     className: 'absolute transition-transform',
+                    draggable: false,
                 };
                 const imageStyle: CSSProperties = {
                     top: `${top}%`,

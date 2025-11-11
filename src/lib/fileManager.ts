@@ -1,12 +1,9 @@
 import type { LevelDefinitionObject } from '@/types/PVZTypes';
 import type { PVZObject } from '../types/PVZTypes';
-import { levelState } from './state';
 import { LevelBuilder } from './levelBuilder';
 
 // Save grid as a downloadable JSON file
-export function saveLevel() {
-    const levelBuilder = levelState((s) => s.levelBuilder);
-
+export function saveLevel(levelBuilder: LevelBuilder) {
     const data = {
         objects: levelBuilder.build(),
         version: 1,
@@ -22,10 +19,9 @@ export function saveLevel() {
 }
 
 // Load grid JSON from a file input element
-export function loadLevelFile(file: File) {
-    const setBuilder = levelState((s) => s.setBuilder);
-
+export function loadLevelFile(file: File, setBuilder: (levelBuilder: LevelBuilder) => void) {
     const reader = new FileReader();
+
     reader.onload = (event) => {
         try {
             const data = JSON.parse(event.target?.result as string);

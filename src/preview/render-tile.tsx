@@ -58,7 +58,6 @@ export function RenderTileSprites({ column, row, stageType, tileManager, width, 
                 const left = ((column + 0.5) / 9) * 100;
 
                 const imageProps = {
-                    key: `${row}-${column}-${tile.type}`,
                     src: '',
                     alt: tile.type,
                     className: 'absolute transition-transform pointer-events-none',
@@ -97,7 +96,7 @@ export function RenderTileSprites({ column, row, stageType, tileManager, width, 
                     `;
                 }
 
-                return <img {...imageProps} style={imageStyle} />;
+                return <img key={`${row}-${column}-${tile.type}`} {...imageProps} style={imageStyle} />;
             })}
         </>
     );

@@ -6,12 +6,16 @@ import { SidepanelGeneralTab } from './tabs/general';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SidepanelModulesTab } from './tabs/modules';
 import { WaveManagerTab } from './tabs/wavemanager';
+import { levelState } from '@/lib/state';
 
 export function SidePanel() {
+    const levelBuilder = levelState((s) => s.levelBuilder);
+    const setBuilder = levelState((s) => s.setBuilder);
+
     const exportAndImportTab = (
         <div className="flex flex-col gap-3">
             <h2 className="text-lg font-semibold mb-2">File</h2>
-            <Button onClick={() => saveLevel()}>💾 Save Level</Button>
+            <Button onClick={() => saveLevel(levelBuilder)}>💾 Save Level</Button>
             <label className="cursor-pointer">
                 <input
                     type="file"
@@ -19,7 +23,7 @@ export function SidePanel() {
                     className="hidden"
                     onChange={(e) => {
                         const file = e.target.files?.[0];
-                        if (file) loadLevelFile(file);
+                        if (file) loadLevelFile(file, setBuilder);
                     }}
                 />
 

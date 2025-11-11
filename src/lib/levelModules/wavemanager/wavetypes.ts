@@ -152,6 +152,16 @@ export const PortalTypes = {
     [ModernPortalType.dangerroom_dino]: 'dino',
 };
 
+export interface SpawnZombiesFromGridItemSpawnerProps {
+    AdditionalPlantfood: number;
+    GridTypes: string[];
+    Zombies: WaveZombie[];
+
+    WaveStartMessage?: string;
+    ZombieSpawnWaitTime?: number;
+    SuppressActionIfNoGridItemsFound?: boolean;
+}
+
 export interface WaveZombie {
     Type: string;
     Row?: number;

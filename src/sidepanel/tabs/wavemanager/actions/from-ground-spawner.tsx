@@ -48,8 +48,9 @@ export function SpawnZombiesFromGroundAction({
                 />
             </div>
             <div className="flex flex-col w-full items-center justify-between border rounded-md px-4 py-2 gap-4">
-                <Label>Wave Starting Message</Label>
+                <Label>Wave Start Message</Label>
                 <Input
+                    className="text-center"
                     value={waveStartMessage}
                     placeholder="Leave empty for no message."
                     onChange={(e) => {

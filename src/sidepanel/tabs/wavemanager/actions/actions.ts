@@ -8,6 +8,7 @@ import { ModifyConveyorAction } from './modify-conveyor';
 import { SummonDinoAction } from './summon-dino';
 import { SpawnGravestonesWaveAction } from './spawn-gravestones-action';
 import { SpawnModernPortalAction } from './spawn-modern-portal';
+import { SpawnZombiesFromGriditemsAction } from './from-griditems-spawner';
 
 interface ActionInterface<T> {
     name: string;
@@ -36,34 +37,22 @@ export const Actions: Record<string, ActionInterface<any>> = {
     SpawnZombiesFromGroundSpawnerProps: {
         name: 'Ground Zombie Spawner',
         component: SpawnZombiesFromGroundAction,
-        defaultData: {
-            ColumnStart: 7,
-            ColumnEnd: 9,
-            Zombies: [],
-        },
+        defaultData: { ColumnStart: 7, ColumnEnd: 9, Zombies: [] },
     },
     ModifyConveyorWaveActionProps: {
         name: 'Modify Conveyor Belt',
         component: ModifyConveyorAction,
-        defaultData: {
-            Add: [],
-            Remove: [],
-        },
+        defaultData: { Add: [], Remove: [] },
     },
     SunDropperWaveActionProps: {
         name: 'Drop Extra Sun',
         component: SunDropperWaveAction,
-        defaultData: {
-            SunAmountToDrop: 50,
-        },
+        defaultData: { SunAmountToDrop: 50 },
     },
     DinoWaveActionProps: {
         name: 'Summon Dinosaur',
         component: SummonDinoAction,
-        defaultData: {
-            DinoType: 'raptor',
-            DinoRow: 0,
-        },
+        defaultData: { DinoType: 'raptor', DinoRow: 0 },
     },
     SpawnGravestonesWaveActionProps: {
         name: 'Spawn Gravestones',
@@ -85,6 +74,11 @@ export const Actions: Record<string, ActionInterface<any>> = {
             SpawnEffectAnimID: '',
             SpawnSoundID: '',
         },
+    },
+    SpawnZombiesFromGridItemSpawnerProps: {
+        name: 'Spawn Zombies from Grid Items',
+        component: SpawnZombiesFromGriditemsAction,
+        defaultData: { AdditionalPlantfood: 0, GridTypes: [], Zombies: [] },
     },
     UnknownAction: {
         name: 'Unknown Action',

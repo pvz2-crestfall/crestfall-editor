@@ -2,19 +2,20 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { levelState } from '@/lib/state';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function ConveyorSettings() {
-    const { levelBuilder } = levelState();
-    const [enabled, _setEnabled] = useState(levelBuilder.conveyor.enabled);
+    const levelBuilder = levelState((s) => s.levelBuilder);
+    const [enabled, setEnabled] = useState(levelBuilder.conveyor.enabled);
+    const [speed, setSpeed] = useState(levelBuilder.conveyor.speed);
 
-    const setSpeed = (speed: number) => {
+    useEffect(() => {
         levelBuilder.conveyor.speed = speed;
-    };
-    const setEnabled = (val: boolean) => {
-        levelBuilder.conveyor.enabled = val;
-        _setEnabled(val);
-    };
+    }, [speed]);
+
+    useEffect(() => {
+        levelBuilder.conveyor.enabled = enabled;
+    }, [enabled]);
 
     return (
         <div>

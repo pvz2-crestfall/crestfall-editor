@@ -4,7 +4,7 @@ import { LevelBuilder } from './levelBuilder';
 import type { TileManager } from './levelModules/tilemanager/tilemanager';
 
 export interface LevelState {
-    reload: number;
+    backgroundReloads: number;
     levelBuilder: LevelBuilder;
     gridListener: ((row: number, column: number) => void) | undefined;
     gridData: TileManager | undefined;
@@ -12,13 +12,14 @@ export interface LevelState {
     setGridData: (data: TileManager | undefined) => void;
     setGridListener: (listener?: (row: number, column: number) => void) => void;
     triggerGridClick: (row: number, column: number) => void;
-    reloadComponents: () => void;
+    reloadBackground: () => void;
+    reloadLevelBuilder: () => void;
     setBuilder: (builder: LevelBuilder) => void;
 }
 
 export const levelState = create<LevelState>()(
     immer((set, get) => ({
-        reload: 0,
+        backgroundReloads: 0,
         levelBuilder: new LevelBuilder([]),
         gridListener: undefined,
         gridData: undefined,
@@ -30,10 +31,15 @@ export const levelState = create<LevelState>()(
             if (listener) listener(r, c);
         },
 
-        reloadComponents: () =>
+        reloadBackground: () =>
             set((state) => {
-                state.reload += 1;
+                state.backgroundReloads += 1;
             }),
+        reloadLevelBuilder: () =>
+            set((state) => {
+                state.levelBuilder = new LevelBuilder(state.levelBuilder.build());
+            }),
+
         setBuilder: (builder) => set({ levelBuilder: builder }),
     })),
 );

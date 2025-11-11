@@ -10,21 +10,17 @@ import {
     sortableKeyboardCoordinates,
     verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlantSearchCombobox } from '../../../../components/ui/plant-search';
 
 export function PresetPlantList() {
-    const { levelBuilder } = levelState();
+    const levelBuilder = levelState((s) => s.levelBuilder);
 
-    const [items, setItems] = useState(levelBuilder.seedBank.presetPlants);
+    const [presetPlants, setPlants] = useState(levelBuilder.seedBank.presetPlants);
 
-    const setPlants = (plants: string[] | ((prev: string[]) => string[])) => {
-        const prev = levelBuilder.seedBank.presetPlants;
-        const values = typeof plants === 'function' ? plants(prev || []) : plants;
-
-        levelBuilder.seedBank.presetPlants = values;
-        setItems(values);
-    };
+    useEffect(() => {
+        levelBuilder.seedBank.presetPlants = presetPlants;
+    }, [presetPlants]);
 
     const [newItem, setNewItem] = useState('');
 
@@ -50,12 +46,12 @@ export function PresetPlantList() {
 
     const addItem = () => {
         if (!newItem.trim()) return;
-        setPlants([...levelBuilder.seedBank.presetPlants, newItem]);
+        setPlants([...presetPlants, newItem]);
         setNewItem('');
     };
 
     const removeItem = (id: string) => {
-        setPlants(levelBuilder.seedBank.presetPlants.filter((item) => item !== id));
+        setPlants(presetPlants.filter((item) => item !== id));
     };
 
     return (
@@ -69,9 +65,9 @@ export function PresetPlantList() {
 
             <div className="flex">
                 <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                    <SortableContext items={items} strategy={verticalListSortingStrategy}>
+                    <SortableContext items={presetPlants} strategy={verticalListSortingStrategy}>
                         <ul className="w-full">
-                            {items.map((id, index) => (
+                            {presetPlants.map((id, index) => (
                                 <SortablePlant
                                     key={id + index}
                                     id={id}

@@ -4,44 +4,39 @@ import { PlantSearchCombobox } from '@/components/ui/plant-search';
 import { Switch } from '@/components/ui/switch';
 import { levelState } from '@/lib/state';
 import type { ConveyorSeedBankPlantObject } from '@/types/PVZTypes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PowerTiles, PowerTilesDisplayNames } from '@/lib/plants';
 import { ConveyorPlantList } from '@/components/conveyor/plant-list';
 
 export function ConveyorPowerTiles() {
-    const { levelBuilder } = levelState();
-    const [enabled, _setEnabled] = useState(levelBuilder.conveyor.enablePowerTiles);
+    const levelBuilder = levelState((s) => s.levelBuilder);
+    const [enabled, setEnabled] = useState(levelBuilder.conveyor.enablePowerTiles);
 
-    const setEnabled = (val: boolean) => {
-        levelBuilder.conveyor.enablePowerTiles = val;
-        _setEnabled(val);
-    };
+    useEffect(() => {
+        levelBuilder.conveyor.enablePowerTiles = enabled;
+    }, [enabled]);
 
-    const [items, setItems] = useState(levelBuilder.conveyor.powertiles);
+    const [powertiles, setPowertiles] = useState(levelBuilder.conveyor.powertiles);
 
-    const setPlants = (powertiles: ConveyorSeedBankPlantObject[]) => {
+    useEffect(() => {
         levelBuilder.conveyor.powertiles = powertiles;
-        setItems(powertiles);
-    };
+    }, [powertiles]);
 
     const [newItem, setNewItem] = useState('');
     const addItem = () => {
         if (!newItem.trim()) return;
-        setPlants([...items, { PlantType: newItem, Weight: 50 }]);
+        setPowertiles([...powertiles, { PlantType: newItem, Weight: 50 }]);
         setNewItem('');
     };
     const removeItem = (plant: ConveyorSeedBankPlantObject) => {
-        setPlants(items.filter((item) => item.PlantType !== plant.PlantType));
+        setPowertiles(powertiles.filter((item) => item.PlantType !== plant.PlantType));
     };
 
     return (
         <div>
             <div className="flex items-center justify-between border rounded-md px-4 py-2">
                 <Label className="px-4 py-1">Enable Power Tiles</Label>
-                <Switch
-                    defaultChecked={enabled}
-                    onCheckedChange={setEnabled}
-                />
+                <Switch defaultChecked={enabled} onCheckedChange={setEnabled} />
             </div>
 
             {enabled && (
@@ -56,9 +51,9 @@ export function ConveyorPowerTiles() {
                         <Button onClick={addItem}>Add</Button>
                     </div>
                     <ConveyorPlantList
-                        list={items}
+                        list={powertiles}
                         displayNames={PowerTilesDisplayNames}
-                        setPlants={setPlants}
+                        setPlants={setPowertiles}
                         onRemove={removeItem}
                     />
                 </div>

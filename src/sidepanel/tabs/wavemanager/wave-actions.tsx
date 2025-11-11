@@ -18,7 +18,7 @@ export function WaveActionList({
     waveIndex: number | null;
     setIndex: (index: number | null) => void;
 }) {
-    const { levelBuilder } = levelState();
+    const levelBuilder = levelState((s) => s.levelBuilder);
 
     const [wave, setWaveState] = useState<WaveAction[]>([]);
 

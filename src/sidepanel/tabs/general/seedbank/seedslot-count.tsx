@@ -2,33 +2,23 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { levelState } from '@/lib/state';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function OverrideSeedSlots() {
-    const { levelBuilder } = levelState();
+    const levelBuilder = levelState((s) => s.levelBuilder);
 
-    const startingState = levelBuilder.seedBank.objdata.OverrideSeedSlotsCount != undefined;
-    const [enabled, _setEnabled] = useState(startingState);
+    const [enabled, setEnabled] = useState(levelBuilder.seedBank.objdata.OverrideSeedSlotsCount != undefined);
+    const [slotCount, setSlotCount] = useState(levelBuilder.seedBank.objdata.OverrideSeedSlotsCount ?? 0);
 
-    const setEnabled = (isEnabled: boolean) => {
-        if (!isEnabled) {
-            levelBuilder.seedBank.objdata.OverrideSeedSlotsCount = undefined;
-        }
-        _setEnabled(isEnabled);
-    };
-
-    const overrideSeedSlots = (count: number) => {
-        levelBuilder.seedBank.objdata.OverrideSeedSlotsCount = count;
-    };
+    useEffect(() => {
+        levelBuilder.seedBank.objdata.OverrideSeedSlotsCount = enabled ? slotCount : undefined;
+    }, [enabled, slotCount]);
 
     return (
         <div className="flex flex-col w-full items-center px-4 py-2 gap-2">
             <div className="flex flex-row">
                 <Label className="px-4 py-1">Override Seed Slot Count</Label>
-                <Switch
-                    defaultChecked={enabled}
-                    onCheckedChange={setEnabled}
-                />
+                <Switch defaultChecked={enabled} onCheckedChange={setEnabled} />
             </div>
             {enabled && (
                 <div className="flex w-full flex-row justify-between border rounded-md px-2 py-2">
@@ -36,10 +26,10 @@ export function OverrideSeedSlots() {
                     <Input
                         type="number"
                         placeholder="0"
-                        defaultValue={levelBuilder.seedBank.objdata.OverrideSeedSlotsCount}
+                        defaultValue={slotCount}
                         className="text-center w-20 font-mono align-left"
                         size={5}
-                        onChange={(e) => overrideSeedSlots(Number(e.target.value))}
+                        onChange={(e) => setSlotCount(Number(e.target.value))}
                     />
                 </div>
             )}

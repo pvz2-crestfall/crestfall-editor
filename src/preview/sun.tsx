@@ -4,10 +4,10 @@ import { levelState } from '@/lib/state';
 import { useRef, useState, useEffect } from 'react';
 
 export function SunCounter() {
+    const levelBuilder = levelState((s) => s.levelBuilder);
+
     const parentRef = useRef<HTMLDivElement>(null);
     const [fontSize, setFontSize] = useState('1rem'); // Default font size
-    const { levelBuilder } = levelState();
-
     useEffect(() => {
         const handleResize = () => {
             if (parentRef.current) {

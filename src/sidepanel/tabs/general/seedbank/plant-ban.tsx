@@ -1,22 +1,22 @@
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { levelState } from '@/lib/state';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlantSearchCombobox } from '../../../../components/ui/plant-search';
 import { Plants } from '@/lib/plants';
 import { X } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 
 export function ExcludePlantList() {
-    const { levelBuilder } = levelState();
+    const levelBuilder = levelState((s) => s.levelBuilder);
 
-    const [items, setItems] = useState(levelBuilder.seedBank.excludeList);
+    const [excludeList, setExcludeList] = useState(levelBuilder.seedBank.excludeList);
     const [newItem, setNewItem] = useState('');
 
-    const setExcludeList = (plants: string[]) => {
-        levelBuilder.seedBank.excludeList = plants;
-        setItems(plants);
-    };
+    useEffect(() => {
+        levelBuilder.seedBank.excludeList = excludeList;
+    }, [excludeList]);
+
     const addItem = () => {
         if (!newItem.trim()) return;
         setExcludeList([...levelBuilder.seedBank.excludeList, newItem]);
@@ -50,8 +50,8 @@ export function ExcludePlantList() {
             </div>
 
             <div className="flex border rounded-md p-1 flex-wrap gap-2">
-                {items.length > 0 ? (
-                    items.map((plant) => (
+                {excludeList.length > 0 ? (
+                    excludeList.map((plant) => (
                         <div className="flex flex-col border bg-primary-foreground rounded-sm px-1 py-1">
                             <div className="flex items-center gap-2">
                                 <span>{Plants.find((x) => x.codename == plant)?.displayName ?? plant}</span>

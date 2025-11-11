@@ -12,29 +12,26 @@ import {
 } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function SunSettingsComponent() {
-    const { levelBuilder } = levelState();
+    const levelBuilder = levelState((s) => s.levelBuilder);
 
-    const [startingSun, _setStartingSun] = useState(levelBuilder.startingSun);
-    const [bonusSunAllowed, _allowBonusSun] = useState(levelBuilder.allowBonusSun);
-    const [sunDropperType, _setDropperType] = useState(levelBuilder.sunDropper);
+    const [startingSun, setStartingSun] = useState(levelBuilder.startingSun);
+    const [bonusSunAllowed, allowBonusSun] = useState(levelBuilder.allowBonusSun);
+    const [sunDropperType, setDropperType] = useState(levelBuilder.sunDropper);
 
-    const setStartingSun = (val: number) => {
-        levelBuilder.startingSun = val;
-        _setStartingSun(val);
-    };
+    useEffect(() => {
+        levelBuilder.startingSun = startingSun;
+    }, [startingSun]);
 
-    const allowBonusSun = (toggle: boolean) => {
-        levelBuilder.allowBonusSun = toggle;
-        _allowBonusSun(toggle);
-    };
+    useEffect(() => {
+        levelBuilder.allowBonusSun = bonusSunAllowed;
+    }, [bonusSunAllowed]);
 
-    const setDropperType = (type?: SunDropperType) => {
-        levelBuilder.sunDropper = type;
-        _setDropperType(type);
-    };
+    useEffect(() => {
+        levelBuilder.sunDropper = sunDropperType;
+    }, [sunDropperType]);
 
     return (
         <div className="flex flex-col gap-2 items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
@@ -82,11 +79,7 @@ export function SunSettingsComponent() {
 
                 <div className="flex items-center justify-between border rounded-md px-4 py-2">
                     <Label className="px-4 py-1">Allow Bonus Sun</Label>
-                    <Switch
-                        id="bonus-sun-toggle"
-                        defaultChecked={bonusSunAllowed}
-                        onCheckedChange={allowBonusSun}
-                    />
+                    <Switch id="bonus-sun-toggle" defaultChecked={bonusSunAllowed} onCheckedChange={allowBonusSun} />
                 </div>
             </div>
         </div>

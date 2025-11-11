@@ -4,7 +4,7 @@ import { OptionalNumberInput } from '@/components/ui/optional-ninput';
 import { levelState } from '@/lib/state';
 
 export function WaveManagerSettings() {
-    const { levelBuilder } = levelState();
+    const levelBuilder = levelState((s) => s.levelBuilder);
 
     return (
         <div className="flex flex-col gap-2 items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">

@@ -10,16 +10,16 @@ import {
 } from '@/components/ui/select';
 import { levelState } from '@/lib/state';
 import { SeedBankSelectionMethod } from '@/types/PVZTypes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function PlantSelectionMethod() {
-    const { levelBuilder } = levelState();
+    const levelBuilder = levelState((s) => s.levelBuilder);
 
-    const [selectionMethod, _setMethod] = useState(levelBuilder.seedBank.selectionMethod);
-    const setSelectionMethod = (method?: SeedBankSelectionMethod) => {
-        levelBuilder.seedBank.selectionMethod = method;
-        _setMethod(method);
-    };
+    const [selectionMethod, setSelectionMethod] = useState(levelBuilder.seedBank.selectionMethod);
+
+    useEffect(() => {
+        levelBuilder.seedBank.selectionMethod = selectionMethod;
+    }, [selectionMethod]);
 
     return (
         <div className="flex w-full items-center justify-between">

@@ -10,19 +10,22 @@ import {
 } from '@/components/ui/select';
 import { levelState } from '@/lib/state';
 import { StageModuleType } from '@/types/PVZTypes';
+import { useEffect, useState } from 'react';
 
 export function WorldTypeSelector() {
-    const { levelBuilder, reloadComponents } = levelState();
+    const levelBuilder = levelState((s) => s.levelBuilder);
+    const reloadBackground = levelState((s) => s.reloadBackground);
+    const [stageType, setStageType] = useState(levelBuilder.stageType);
 
-    const setStage = (stage: StageModuleType) => {
-        levelBuilder.stageType = stage;
-        reloadComponents();
-    };
+    useEffect(() => {
+        levelBuilder.stageType = stageType;
+        reloadBackground();
+    }, [stageType]);
 
     return (
         <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
             <Label>World Type</Label>
-            <Select value={levelBuilder.stageType ?? undefined} onValueChange={setStage}>
+            <Select value={stageType ?? undefined} onValueChange={(val) => setStageType(val as StageModuleType)}>
                 <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Stage Type" />
                 </SelectTrigger>

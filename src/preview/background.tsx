@@ -30,7 +30,8 @@ const backgroundImages = {
 };
 
 export function LevelBackground() {
-    const { levelBuilder } = levelState();
+    levelState((s) => s.backgroundReloads);
+    const levelBuilder = levelState((s) => s.levelBuilder);
 
     return (
         <img

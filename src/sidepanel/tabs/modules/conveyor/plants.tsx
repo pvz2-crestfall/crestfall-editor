@@ -2,27 +2,26 @@ import { Button } from '@/components/ui/button';
 import { PlantSearchCombobox } from '@/components/ui/plant-search';
 import { levelState } from '@/lib/state';
 import type { ConveyorSeedBankPlantObject } from '@/types/PVZTypes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { PlantDisplayNames } from '@/lib/plants';
 import { ConveyorPlantList } from '@/components/conveyor/plant-list';
 
 export function ConveyorPlants() {
-    const { levelBuilder } = levelState();
-    const [items, setItems] = useState(levelBuilder.conveyor.plants);
+    const levelBuilder = levelState((s) => s.levelBuilder);
+    const [plants, setPlants] = useState(levelBuilder.conveyor.plants);
 
-    const setPlants = (plants: ConveyorSeedBankPlantObject[]) => {
+    useEffect(() => {
         levelBuilder.conveyor.plants = plants;
-        setItems(plants);
-    };
+    }, [plants]);
 
     const [newItem, setNewItem] = useState('');
     const addItem = () => {
         if (!newItem.trim()) return;
-        setPlants([...items, { PlantType: newItem, Weight: 50 }]);
+        setPlants([...plants, { PlantType: newItem, Weight: 50 }]);
         setNewItem('');
     };
     const removeItem = (plant: ConveyorSeedBankPlantObject) => {
-        setPlants(items.filter((item) => item.PlantType !== plant.PlantType));
+        setPlants(plants.filter((item) => item.PlantType !== plant.PlantType));
     };
 
     return (
@@ -32,7 +31,7 @@ export function ConveyorPlants() {
                 <Button onClick={addItem}>Add</Button>
             </div>
             <ConveyorPlantList
-                list={items}
+                list={plants}
                 displayNames={PlantDisplayNames}
                 setPlants={setPlants}
                 onRemove={removeItem}

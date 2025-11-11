@@ -9,14 +9,15 @@ import { useState, useEffect } from 'react';
 
 // JSON preview component
 function DataPreview() {
-    const { levelBuilder, reloadComponents } = levelState();
+    const levelBuilder = levelState((s) => s.levelBuilder);
+    const reloadLevelBuilder = levelState((s) => s.reloadLevelBuilder);
 
     return (
         <Card className="w-full max-w-3xl h-full">
             <CardContent className="p-4 h-full overflow-auto">
                 <div className="flex flex-row justify-between">
                     <h2 className="text-lg font-semibold mb-2">Level Data Preview</h2>
-                    <Button size={'lg'} onClick={() => reloadComponents()}>
+                    <Button size={'lg'} onClick={() => reloadLevelBuilder()}>
                         Build
                     </Button>
                 </div>

@@ -101,7 +101,7 @@ export function SpawnModernPortalAction({ waveaction }: { waveaction: WaveAction
         setPortalColumn(col);
     };
 
-    const memoizedPortalSelector = useMemo(() => PortalSelector({ PortalType, setPortalType }), []);
+    const memoizedPortalSelector = useMemo(() => PortalSelector({ PortalType, setPortalType }), [PortalType]);
 
     return (
         <div className="flex flex-col w-full items-center justify-center gap-2">

@@ -15,7 +15,7 @@ export function WaveList({
     waveIndex: number | null;
     setIndex: (index: number | null) => void;
 }) {
-    const { levelBuilder } = levelState();
+    const levelBuilder = levelState((s) => s.levelBuilder);
     const [waves, _setWaves] = useState(levelBuilder.waveManager.waves);
     const [removingIndex, setRemovingIndex] = useState<number | null>(null);
 

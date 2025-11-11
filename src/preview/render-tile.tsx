@@ -24,7 +24,7 @@ const portalPaths = import.meta.glob('/assets/portals/*.png', {
     import: 'default',
 }) as Record<string, string>;
 
-function getPortalImage(variant: string | undefined) {
+export function getPortalImage(variant: string | undefined) {
     if (variant == 'default' || variant == undefined) variant = 'blank';
 
     if (variant == 'outline') return portalPaths[`./portal_outline.png`];

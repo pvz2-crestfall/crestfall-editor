@@ -13,18 +13,20 @@ import {
 import { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
 import {
     ModernPortalType,
+    PortalTypes,
     type SpawnModernPortalsWaveActionProps,
     type WaveAction,
 } from '@/lib/levelModules/wavemanager/wavetypes';
 import { levelState } from '@/lib/state';
+import { getPortalImage } from '@/preview/render-tile';
 import { useEffect, useMemo, useState } from 'react';
 
 const PortalSelectorGroups = [
     {
         name: 'Main World Portals',
         items: [
-            { value: ModernPortalType.EgyptAlt, label: 'Egypt Alt' },
             { value: ModernPortalType.Egypt, label: 'Egypt' },
+            { value: ModernPortalType.EgyptAlt, label: 'Egypt Alt' },
             { value: ModernPortalType.Pirate, label: 'Pirate Seas' },
             { value: ModernPortalType.WildWest, label: 'Wild West' },
             { value: ModernPortalType.FarFuture, label: 'Far Future' },
@@ -136,11 +138,31 @@ function PortalSelector({ PortalType, setPortalType }: { PortalType: ModernPorta
                     <SelectGroup>
                         <SelectLabel>{group.name}</SelectLabel>
                         {group.items.map((item) => (
-                            <SelectItem value={item.value}>{item.label}</SelectItem>
+                            <SelectItem value={item.value}>
+                                <div className="flex flex-row items-center gap-2">
+                                    <PortalIcon type={PortalTypes[item.value]} size={5} />
+                                    {item.label}
+                                </div>
+                            </SelectItem>
                         ))}
                     </SelectGroup>
                 ))}
             </SelectContent>
         </Select>
+    );
+}
+
+interface PortalIconProps {
+    size?: number;
+    type: string;
+}
+
+export function PortalIcon({ size = 5, type }: PortalIconProps) {
+    const imageSrc = getPortalImage(type);
+
+    return (
+        <div style={{ width: `calc(var(--spacing) * ${size})` }}>
+            <img src={imageSrc} alt={type} className="h-full w-full object-contain" />
+        </div>
     );
 }

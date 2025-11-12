@@ -1,6 +1,6 @@
 import type { WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronRight, Eye, EyeClosed, EyeOff, EyeOffIcon, Trash2 } from 'lucide-react';
+import { ChevronRight, Eye, EyeOff, Trash2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { Actions, getActionId } from './actions';

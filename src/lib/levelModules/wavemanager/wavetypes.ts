@@ -162,6 +162,12 @@ export interface SpawnZombiesFromGridItemSpawnerProps {
     SuppressActionIfNoGridItemsFound?: boolean;
 }
 
+export interface RaidingPartyZombieSpawnerProps {
+    GroupSize: number;
+    SwashbucklerCount: number;
+    TimeBetweenGroups: number;
+}
+
 export interface WaveZombie {
     Type: string;
     Row?: number;

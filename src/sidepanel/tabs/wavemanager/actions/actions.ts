@@ -11,6 +11,7 @@ import { SpawnGravestonesWaveAction } from './spawn-gravestones-action';
 import { SpawnModernPortalAction } from './spawn-modern-portal';
 import { SpawnZombiesFromGriditemsAction } from './from-griditems-spawner';
 import { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
+import { PirateRaidWaveAction } from './pirate-raid-action';
 
 let currentId = 1;
 const actionIdMap = new WeakMap();
@@ -114,6 +115,11 @@ export const Actions: Record<string, ActionInterface<any>> = {
         name: 'Spawn from Grid Items',
         component: SpawnZombiesFromGriditemsAction,
         defaultData: { AdditionalPlantfood: 0, GridTypes: [], Zombies: [] },
+    },
+    RaidingPartyZombieSpawnerProps: {
+        name: 'Pirate Seas Pirate Raid',
+        component: PirateRaidWaveAction,
+        defaultData: { GroupSize: 5, SwashbucklerCount: 5, TimeBetweenGroups: 1 },
     },
     UnknownAction: {
         name: 'Unknown Action',

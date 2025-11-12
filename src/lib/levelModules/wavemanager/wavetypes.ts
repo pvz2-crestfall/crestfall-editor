@@ -172,6 +172,30 @@ export interface TidalChangeWaveActionProps {
     TidalChange: { ChangeAmount: number; ChangeType: 'absolute' };
 }
 
+export interface ParachuteRainZombieSpawnerProps {
+    ColumnEnd: number;
+    ColumnStart: number;
+    GroupSize: number;
+    SpiderCount: number;
+    SpiderZombieName: string;
+    TimeBeforeFullSpawn: number;
+    TimeBetweenGroups: number;
+    WaveStartMessage: string;
+    ZombieFallTime: number;
+}
+
+export interface SpiderRainZombieSpawnerProps {
+    ColumnEnd: number;
+    ColumnStart: number;
+    GroupSize: number;
+    SpiderCount: number;
+    SpiderZombieName: string;
+    TimeBeforeFullSpawn: number;
+    TimeBetweenGroups: number;
+    WaveStartMessage: string;
+    ZombieFallTime: number;
+}
+
 export interface WaveZombie {
     Type: string;
     Row?: number;

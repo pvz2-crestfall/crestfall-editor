@@ -13,6 +13,7 @@ import { SpawnZombiesFromGriditemsAction } from './from-griditems-spawner';
 import { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
 import { PirateRaidWaveAction } from './pirate-raid-action';
 import { TideChangeWaveAction } from './tide-change-action';
+import { ZombieRainWaveAction } from './zombie-rain-action';
 
 let currentId = 1;
 const actionIdMap = new WeakMap();
@@ -126,6 +127,36 @@ export const Actions: Record<string, ActionInterface<any>> = {
         name: 'Tide Change',
         component: TideChangeWaveAction,
         defaultData: { TidalChange: { ChangeAmount: 5, ChangeType: 'absolute' } },
+    },
+    ParachuteRainZombieSpawnerProps: {
+        name: 'Parachute Rain Event',
+        component: ZombieRainWaveAction,
+        defaultData: {
+            ColumnEnd: 6,
+            ColumnStart: 4,
+            GroupSize: 2,
+            SpiderCount: 4,
+            SpiderZombieName: 'lostcity_lostpilot',
+            TimeBeforeFullSpawn: 1,
+            TimeBetweenGroups: 0.5,
+            WaveStartMessage: '[WARNING_PARACHUTERAIN]',
+            ZombieFallTime: 1.5,
+        },
+    },
+    SpiderRainZombieSpawnerProps: {
+        name: 'Spider Rain Event',
+        component: ZombieRainWaveAction,
+        defaultData: {
+            ColumnEnd: 6,
+            ColumnStart: 4,
+            GroupSize: 2,
+            SpiderCount: 4,
+            SpiderZombieName: 'future_imp',
+            TimeBeforeFullSpawn: 1,
+            TimeBetweenGroups: 0.5,
+            WaveStartMessage: '[WARNING_SPIDERRAIN]',
+            ZombieFallTime: 1.5,
+        },
     },
     UnknownAction: {
         name: 'Unknown Action',

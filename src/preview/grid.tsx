@@ -1,4 +1,5 @@
-import { gridState, levelState } from '@/lib/state';
+import { gridState } from '@/lib/state/gridstate';
+import { levelState } from '@/lib/state/levelstate';
 import { StageModuleType } from '@/types/PVZTypes';
 import { RenderTileSprites } from './render-tile';
 import { useState } from 'react';

@@ -1,5 +1,5 @@
 import { Input } from '@/components/ui/input';
-import { levelState } from '@/lib/state';
+import { levelState } from '@/lib/state/levelstate';
 import { SunDropperType } from '@/types/PVZTypes';
 import {
     Select,

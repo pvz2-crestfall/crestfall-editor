@@ -8,7 +8,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { levelState } from '@/lib/state';
+import { levelState } from '@/lib/state/levelstate';
 import { SeedBankSelectionMethod } from '@/types/PVZTypes';
 import { useEffect, useState } from 'react';
 

@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { PlantSearchCombobox } from '@/components/ui/plant-search';
-import { levelState } from '@/lib/state';
+import { levelState } from '@/lib/state/levelstate';
 import type { ConveyorSeedBankPlantObject } from '@/types/PVZTypes';
 import { useEffect, useState } from 'react';
 import { PlantDisplayNames } from '@/lib/plants';

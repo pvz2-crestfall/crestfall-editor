@@ -10,7 +10,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { gridState } from '@/lib/state';
+import { gridState } from '@/lib/state/gridstate';
 import { PencilLine, PencilOff, Eraser } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { gravestoneList } from './grave-list';

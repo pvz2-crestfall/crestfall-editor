@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { SortablePlant } from '@/sidepanel/tabs/general/seedbank/sortable-plant';
 import { Plants } from '@/lib/plants';
-import { levelState } from '@/lib/state';
+import { levelState } from '@/lib/state/levelstate';
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import {
     arrayMove,

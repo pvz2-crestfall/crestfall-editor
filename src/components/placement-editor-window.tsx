@@ -1,4 +1,5 @@
-import { gridState, windowManagerState } from '@/lib/state';
+import { gridState } from '@/lib/state/gridstate';
+import { windowManagerState } from '@/lib/state/windowmanagerstate';
 import { useState, useEffect } from 'react';
 import { FloatingWindow } from './ui/floating-window';
 import { createPortal } from 'react-dom';

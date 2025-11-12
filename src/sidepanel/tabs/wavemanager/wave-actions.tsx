@@ -1,4 +1,6 @@
-import { gridState, levelState, windowManagerState } from '@/lib/state';
+import { gridState } from '@/lib/state/gridstate';
+import { levelState } from '@/lib/state/levelstate';
+import { windowManagerState } from '@/lib/state/windowmanagerstate';
 import { animationDuration } from './waves';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
@@ -11,6 +13,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Actions, getActionId } from './actions/actions';
 import type { WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
 import { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
+import { componentState } from '@/lib/state/componentstate';
 
 export function WaveActionList({
     waveIndex,
@@ -19,6 +22,7 @@ export function WaveActionList({
     waveIndex: number | null;
     setIndex: (index: number | null) => void;
 }) {
+    const actionToggles = componentState((s) => s.previewToggles);
     const levelBuilder = levelState((s) => s.levelBuilder);
     const setDefaultGrid = gridState((s) => s.setDefaultGrid);
     const openWindows = windowManagerState((s) => s.order);
@@ -65,38 +69,29 @@ export function WaveActionList({
 
     useEffect(() => {
         if (waveIndex == null) return;
+
         const forcedTiles = [];
-        console.log(openWindows.length);
-        if (openWindows.length != 0) {
-            for (const action of wave) {
-                const actionId = getActionId(action);
-                if (openWindows.includes(actionId)) {
-                    const actionInfo = Actions[action.type];
-                    if (actionInfo.getPreviewData != undefined) {
-                        const tileManager = actionInfo.getPreviewData(action);
-                        forcedTiles.push(...tileManager.getAll());
-                    }
-                }
+        for (const action of wave) {
+            const actionId = getActionId(action);
+            const actionInfo = Actions[action.type];
+            if (
+                ((openWindows.length == 0 && actionToggles[actionId]) ||
+                    (openWindows.length != 0 && openWindows.includes(actionId))) &&
+                actionInfo.getPreviewData != undefined
+            ) {
+                const tileManager = actionInfo.getPreviewData(action);
+                forcedTiles.push(...tileManager.getAll());
             }
-        }
-        if (openWindows.length == 0) {
-            for (const action of wave) {
-                const actionInfo = Actions[action.type];
-                if (actionInfo.getPreviewData != undefined) {
-                    const tileManager = actionInfo.getPreviewData(action);
-                    forcedTiles.push(...tileManager.getAll());
-                }
-            }
+            console.log(actionToggles[actionId]);
         }
 
         const preview = new TileManager([]);
         preview.forced = forcedTiles;
         console.log(forcedTiles);
         setDefaultGrid(preview);
-        return () => {
-            setDefaultGrid(undefined);
-        };
-    }, [waveIndex, wave, openWindows, shouldUpdate]);
+
+        return () => setDefaultGrid(undefined);
+    }, [waveIndex, wave, openWindows, shouldUpdate, actionToggles]);
 
     if (waveIndex == null) {
         return <div className="p-4 text-muted-foreground">Select a wave to edit its actions</div>;

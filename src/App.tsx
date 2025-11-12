@@ -1,5 +1,5 @@
 import { Card, CardContent } from '@/components/ui/card';
-import { levelState } from './lib/state';
+import { levelState } from './lib/state/levelstate';
 import { SidePanel } from './sidepanel/sidepanel';
 import { LevelPreview } from './preview/preview';
 import { Button } from './components/ui/button';

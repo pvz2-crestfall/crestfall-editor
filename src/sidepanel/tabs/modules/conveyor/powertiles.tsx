@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { PlantSearchCombobox } from '@/components/ui/plant-search';
 import { Switch } from '@/components/ui/switch';
-import { levelState } from '@/lib/state';
+import { levelState } from '@/lib/state/levelstate';
 import type { ConveyorSeedBankPlantObject } from '@/types/PVZTypes';
 import { useEffect, useState } from 'react';
 import { PowerTiles, PowerTilesDisplayNames } from '@/lib/plants';

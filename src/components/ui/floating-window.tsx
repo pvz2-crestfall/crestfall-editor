@@ -9,7 +9,7 @@ import {
     type DragEndEvent,
 } from '@dnd-kit/core';
 import { X } from 'lucide-react';
-import { windowManagerState } from '@/lib/state';
+import { windowManagerState } from '@/lib/state/windowmanagerstate';
 
 type FloatingWindowProps = {
     id: string; // unique ID for persistence

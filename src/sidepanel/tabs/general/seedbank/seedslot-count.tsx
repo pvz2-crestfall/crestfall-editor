@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
-import { levelState } from '@/lib/state';
+import { levelState } from '@/lib/state/levelstate';
 import { useEffect, useState } from 'react';
 
 export function OverrideSeedSlots() {

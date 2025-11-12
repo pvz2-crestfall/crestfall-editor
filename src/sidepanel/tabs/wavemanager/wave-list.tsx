@@ -1,4 +1,4 @@
-import { levelState } from '@/lib/state';
+import { levelState } from '@/lib/state/levelstate';
 import { animationDuration } from './waves';
 import { ChevronsLeft, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';

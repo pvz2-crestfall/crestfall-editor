@@ -1,7 +1,7 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { OptionalNumberInput } from '@/components/ui/optional-ninput';
-import { levelState } from '@/lib/state';
+import { levelState } from '@/lib/state/levelstate';
 
 export function WaveManagerSettings() {
     const levelBuilder = levelState((s) => s.levelBuilder);

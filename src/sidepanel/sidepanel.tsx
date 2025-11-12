@@ -6,7 +6,7 @@ import { SidepanelGeneralTab } from './tabs/general';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { SidepanelModulesTab } from './tabs/modules';
 import { WaveManagerTab } from './tabs/wavemanager';
-import { levelState } from '@/lib/state';
+import { levelState } from '@/lib/state/levelstate';
 
 export function SidePanel() {
     const levelBuilder = levelState((s) => s.levelBuilder);

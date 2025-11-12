@@ -16,7 +16,7 @@ import {
     type SpawnModernPortalsWaveActionProps,
     type WaveAction,
 } from '@/lib/levelModules/wavemanager/wavetypes';
-import { gridState } from '@/lib/state';
+import { gridState } from '@/lib/state/gridstate';
 import { getPortalImage } from '@/preview/render-tile';
 import { useEffect, useMemo, useState } from 'react';
 import { getActionId } from './actions';

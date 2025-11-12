@@ -1,6 +1,6 @@
 import { GravestoneEditorWindow } from '@/components/grave-editor-window';
 import { Button } from '@/components/ui/button';
-import { levelState } from '@/lib/state';
+import { levelState } from '@/lib/state/levelstate';
 import { useState } from 'react';
 
 export function GravestoneEditor() {

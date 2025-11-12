@@ -1,6 +1,6 @@
 import sunImage from '/assets/icons/sun.png';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
-import { levelState } from '@/lib/state';
+import { levelState } from '@/lib/state/levelstate';
 import { useRef, useState, useEffect } from 'react';
 
 export function SunCounter() {

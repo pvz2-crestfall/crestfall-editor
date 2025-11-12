@@ -1,34 +1,6 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import { LevelBuilder } from './levelBuilder';
-import { TileManager, type TileObject } from './levelModules/tilemanager/tilemanager';
-
-export interface LevelState {
-    backgroundReloads: number;
-    levelBuilder: LevelBuilder;
-
-    reloadBackground: () => void;
-    reloadLevelBuilder: () => void;
-    setBuilder: (builder: LevelBuilder) => void;
-}
-
-export const levelState = create<LevelState>()(
-    immer((set) => ({
-        backgroundReloads: 0,
-        levelBuilder: new LevelBuilder([]),
-
-        reloadBackground: () =>
-            set((state) => {
-                state.backgroundReloads += 1;
-            }),
-        reloadLevelBuilder: () =>
-            set((state) => {
-                state.levelBuilder = new LevelBuilder(state.levelBuilder.build());
-            }),
-
-        setBuilder: (builder) => set({ levelBuilder: builder }),
-    })),
-);
+import type { TileObject, TileManager } from '../levelModules/tilemanager/tilemanager';
 
 interface GridListener {
     id: string;
@@ -98,33 +70,3 @@ export const gridState = create<GridState>()(
         },
     })),
 );
-
-type WindowManagerState = {
-    activeId: string | null;
-    order: string[]; // stack of window IDs
-    setActive: (id: string) => void;
-    register: (id: string) => void;
-    unregister: (id: string) => void;
-};
-
-export const windowManagerState = create<WindowManagerState>((set, get) => ({
-    activeId: null,
-    order: [],
-    setActive: (id) => {
-        const { order } = get();
-        const newOrder = [...order.filter((w) => w !== id), id]; // move to top
-        set({ activeId: id, order: newOrder });
-    },
-    register: (id) => {
-        const { order } = get();
-        if (!order.includes(id)) {
-            set({ order: [...order, id], activeId: id });
-        }
-    },
-    unregister: (id) => {
-        const { order, activeId } = get();
-        const newOrder = order.filter((w) => w !== id);
-        const nextActive = activeId === id ? (newOrder.at(-1) ?? null) : activeId;
-        set({ order: newOrder, activeId: nextActive });
-    },
-}));

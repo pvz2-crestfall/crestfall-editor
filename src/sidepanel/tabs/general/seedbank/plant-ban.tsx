@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
-import { levelState } from '@/lib/state';
+import { levelState } from '@/lib/state/levelstate';
 import { useEffect, useState } from 'react';
 import { PlantSearchCombobox } from '../../../../components/ui/plant-search';
 import { Plants } from '@/lib/plants';

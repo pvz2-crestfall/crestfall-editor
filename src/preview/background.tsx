@@ -1,4 +1,4 @@
-import { levelState } from '@/lib/state';
+import { levelState } from '@/lib/state/levelstate';
 import { StageModuleType } from '@/types/PVZTypes';
 
 // Automatically import all .png files in this folder

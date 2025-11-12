@@ -12,6 +12,7 @@ import { SpawnModernPortalAction } from './spawn-modern-portal';
 import { SpawnZombiesFromGriditemsAction } from './from-griditems-spawner';
 import { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
 import { PirateRaidWaveAction } from './pirate-raid-action';
+import { TideChangeWaveAction } from './tide-change-action';
 
 let currentId = 1;
 const actionIdMap = new WeakMap();
@@ -120,6 +121,11 @@ export const Actions: Record<string, ActionInterface<any>> = {
         name: 'Pirate Seas Pirate Raid',
         component: PirateRaidWaveAction,
         defaultData: { GroupSize: 5, SwashbucklerCount: 5, TimeBetweenGroups: 1 },
+    },
+    TidalChangeWaveActionProps: {
+        name: 'Tide Change',
+        component: TideChangeWaveAction,
+        defaultData: { TidalChange: { ChangeAmount: 5, ChangeType: 'absolute' } },
     },
     UnknownAction: {
         name: 'Unknown Action',

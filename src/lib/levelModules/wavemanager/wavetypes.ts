@@ -168,6 +168,10 @@ export interface RaidingPartyZombieSpawnerProps {
     TimeBetweenGroups: number;
 }
 
+export interface TidalChangeWaveActionProps {
+    TidalChange: { ChangeAmount: number; ChangeType: 'absolute' };
+}
+
 export interface WaveZombie {
     Type: string;
     Row?: number;

@@ -1,4 +1,4 @@
-import { levelState } from '@/lib/state';
+import { gridState, windowManagerState } from '@/lib/state';
 import { useState, useEffect } from 'react';
 import { FloatingWindow } from './ui/floating-window';
 import { createPortal } from 'react-dom';
@@ -7,31 +7,49 @@ import { Label } from './ui/label';
 import { PencilLine, Eraser } from 'lucide-react';
 
 export function PlacementEditorWindow({
+    onFocus,
     onClose,
     onGridClick,
+    id,
+    title = 'Placement Editor',
 }: {
+    id: string;
+    title?: string;
+    onFocus?: () => void;
     onClose: () => void;
     onGridClick: (position: { row: number; col: number }, selectedTool: string) => void;
 }) {
-    const setGridListener = levelState((s) => s.setGridListener);
-    const [selectedTool, setSelectedTool] = useState('none');
+    const addGridListener = gridState((s) => s.addGridListener);
+    const removeGridListener = gridState((s) => s.removeGridListener);
+    const focusedWindow = windowManagerState((s) => s.activeId);
+
+    const [selectedTool, setSelectedTool] = useState('place');
+    const [effectRefresh, setEffectRefresh] = useState(false);
 
     useEffect(() => {
-        setGridListener((row, col) => {
-            onGridClick({ row, col }, selectedTool);
+        addGridListener({
+            id,
+            onClick: (row, col) => {
+                if (focusedWindow == id) onGridClick({ row, col }, selectedTool);
+            },
         });
         return () => {
-            setGridListener(undefined);
+            removeGridListener(id);
         };
-    }, [selectedTool]);
+    }, [selectedTool, effectRefresh]);
 
     return createPortal(
         <FloatingWindow
-            title="Placement Editor"
+            onFocus={() => {
+                setEffectRefresh(!effectRefresh);
+                onFocus?.();
+            }}
+            onFocusLost={() => removeGridListener(id)}
+            title={title}
             defaultPosition={{ x: 200, y: 200 }}
             size={{ width: 360, height: 150 }}
             onClose={onClose}
-            id="gravestone-waveaction-placement-window"
+            id={id}
         >
             <div className="w-full flex flex-col gap-2 justify-between items-center border rounded-md px-4 py-2">
                 <ToolSelectionGroup defaultValue={selectedTool} onValueChange={setSelectedTool}></ToolSelectionGroup>

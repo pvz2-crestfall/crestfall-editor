@@ -4,18 +4,20 @@ import { Label } from '@/components/ui/label';
 import { SwitchWithLabel } from '@/components/ui/switch-with-label';
 import { AddGravestoneButton } from '@/components/wave-editor/add-grave-button';
 import { WaveEditorGravestoneList } from '@/components/wave-editor/grave-list';
-import { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
 import type { SpawnGravestonesWaveActionProps, WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
-import { levelState } from '@/lib/state';
+import { gridState } from '@/lib/state';
 import { RTIDTypes, toRTID } from '@/lib/utils';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getActionId } from './actions';
 
 export function SpawnGravestonesWaveAction({
     waveaction,
 }: {
     waveaction: WaveAction<SpawnGravestonesWaveActionProps>;
 }) {
-    const setGridData = levelState((s) => s.setGridData);
+    const id = getActionId(waveaction);
+    const updateGrid = gridState((s) => s.updateGrid);
+
     const [GravestonePool, setGravestonePool] = useState(waveaction.data.GravestonePool);
     const [SpawnPositionsPool, setSpawnPositionsPool] = useState(waveaction.data.SpawnPositionsPool);
 
@@ -44,38 +46,22 @@ export function SpawnGravestonesWaveAction({
         setSpawnPositionsPool((prev) => prev.filter((tile) => tile.mX != col || tile.mY != row));
     };
 
-    // preview
-    useEffect(() => {
-        if (placementWindowOpen) {
-            const gridPreview = new TileManager([]);
-            SpawnPositionsPool.forEach((tile) => {
-                gridPreview.setTile({ row: tile.mY, col: tile.mX }, { type: 'gravestone', variant: 'unknown' });
-            });
-            setGridData(gridPreview);
+    const onGridClick = ({ row, col }: { row: number; col: number }, selectedTool: string) => {
+        //  SpawnPositionsPool: { mX: number; mY: number }[];
+        const tileIndex = SpawnPositionsPool.findIndex((tile) => tile.mX == col && tile.mY == row);
+
+        // only add it to the list if no object with same coords exists
+        if (selectedTool == 'place' && tileIndex == -1) {
+            addNewPosition({ row, col });
+            updateGrid();
         }
 
-        return () => {
-            setGridData(undefined);
-        };
-    }, [placementWindowOpen, SpawnPositionsPool]);
-
-    const onGridClick = useCallback(
-        ({ row, col }: { row: number; col: number }, selectedTool: string) => {
-            //  SpawnPositionsPool: { mX: number; mY: number }[];
-            const tileIndex = SpawnPositionsPool.findIndex((tile) => tile.mX == col && tile.mY == row);
-
-            // only add it to the list if no object with same coords exists
-            if (selectedTool == 'place' && tileIndex == -1) {
-                addNewPosition({ row, col });
-            }
-
-            // only attempt removal if the tile actually exists
-            if (selectedTool == 'remove' && tileIndex != -1) {
-                removePosition({ row, col });
-            }
-        },
-        [SpawnPositionsPool],
-    );
+        // only attempt removal if the tile actually exists
+        if (selectedTool == 'remove' && tileIndex != -1) {
+            removePosition({ row, col });
+            updateGrid();
+        }
+    };
 
     return (
         <div className="flex flex-col w-full items-center justify-center">
@@ -89,7 +75,10 @@ export function SpawnGravestonesWaveAction({
 
                 {placementWindowOpen && (
                     <PlacementEditorWindow
+                        title="Grave Action Editor"
+                        id={id}
                         onClose={() => setPlacementWindowOpen(false)}
+                        onFocus={updateGrid}
                         onGridClick={onGridClick}
                     ></PlacementEditorWindow>
                 )}

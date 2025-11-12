@@ -1,4 +1,4 @@
-import { levelState } from '@/lib/state';
+import { gridState, levelState } from '@/lib/state';
 import { StageModuleType } from '@/types/PVZTypes';
 import { RenderTileSprites } from './render-tile';
 import { useState } from 'react';
@@ -44,10 +44,11 @@ const Alignments = {
 
 export function LevelGrid() {
     const [refreshCount, setRefreshCount] = useState(0);
-
     const levelBuilder = levelState((s) => s.levelBuilder);
-    const gridListener = levelState((s) => s.gridListener);
-    const gridData = levelState((s) => s.gridData);
+
+    const gridData = gridState((s) => s.gridData);
+    const defaultGrid = gridState((s) => s.defaultGrid);
+    const _triggerGridClick = gridState((s) => s.triggerGridClick);
 
     const rows = 5;
     const cols = 9;
@@ -60,14 +61,11 @@ export function LevelGrid() {
     const cellHeight = heightPct / rows;
 
     const triggerGridClick = (r: number, c: number) => {
-        const listener = gridListener;
-        if (listener) {
-            listener(r, c);
-            setRefreshCount(refreshCount + 1);
-        }
+        _triggerGridClick(r, c);
+        setRefreshCount(refreshCount + 1);
     };
 
-    const tileManager = gridData ?? levelBuilder.tileManager;
+    const tileManager = gridData ?? defaultGrid ?? levelBuilder.tileManager;
 
     return (
         <div className="absolute inset-0">

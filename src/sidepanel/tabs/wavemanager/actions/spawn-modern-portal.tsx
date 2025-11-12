@@ -10,16 +10,16 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
 import {
     ModernPortalType,
     PortalTypes,
     type SpawnModernPortalsWaveActionProps,
     type WaveAction,
 } from '@/lib/levelModules/wavemanager/wavetypes';
-import { levelState } from '@/lib/state';
+import { gridState } from '@/lib/state';
 import { getPortalImage } from '@/preview/render-tile';
 import { useEffect, useMemo, useState } from 'react';
+import { getActionId } from './actions';
 
 const PortalSelectorGroups = [
     {
@@ -66,7 +66,8 @@ const PortalSelectorGroups = [
 ];
 
 export function SpawnModernPortalAction({ waveaction }: { waveaction: WaveAction<SpawnModernPortalsWaveActionProps> }) {
-    const setGridData = levelState((s) => s.setGridData);
+    const id = getActionId(waveaction);
+    const updateGrid = gridState((s) => s.updateGrid);
 
     const [placementWindowOpen, setPlacementWindowOpen] = useState(false);
     const [PortalColumn, setPortalColumn] = useState(waveaction.data.PortalColumn);
@@ -82,25 +83,10 @@ export function SpawnModernPortalAction({ waveaction }: { waveaction: WaveAction
         waveaction.data.PortalType = PortalType;
     }, [PortalType]);
 
-    // preview
-    useEffect(() => {
-        if (placementWindowOpen) {
-            const gridPreview = new TileManager([]);
-            gridPreview.setTile(
-                { row: PortalRow, col: PortalColumn },
-                { type: 'portal', variant: waveaction.data.PortalType },
-            );
-            setGridData(gridPreview);
-        }
-
-        return () => {
-            setGridData(undefined);
-        };
-    }, [placementWindowOpen, PortalRow, PortalColumn, PortalType]);
-
     const onGridClick = ({ row, col }: { row: number; col: number }, _selectedTool: string) => {
         setPortalRow(row);
         setPortalColumn(col);
+        updateGrid();
     };
 
     const memoizedPortalSelector = useMemo(() => PortalSelector({ PortalType, setPortalType }), [PortalType]);
@@ -119,14 +105,18 @@ export function SpawnModernPortalAction({ waveaction }: { waveaction: WaveAction
 
                 {placementWindowOpen && (
                     <PlacementEditorWindow
+                        title="Portal Location Editor"
+                        id={id}
                         onClose={() => setPlacementWindowOpen(false)}
                         onGridClick={onGridClick}
+                        onFocus={updateGrid}
                     ></PlacementEditorWindow>
                 )}
             </div>
         </div>
     );
 }
+
 function PortalSelector({ PortalType, setPortalType }: { PortalType: ModernPortalType; setPortalType: any }) {
     return (
         <Select value={PortalType ?? undefined} onValueChange={(val) => setPortalType(val as ModernPortalType)}>
@@ -138,7 +128,7 @@ function PortalSelector({ PortalType, setPortalType }: { PortalType: ModernPorta
                     <SelectGroup>
                         <SelectLabel>{group.name}</SelectLabel>
                         {group.items.map((item) => (
-                            <SelectItem value={item.value}>
+                            <SelectItem key={item.value} value={item.value}>
                                 <div className="flex flex-row items-center gap-2">
                                     <PortalIcon type={PortalTypes[item.value]} size={5} />
                                     {item.label}

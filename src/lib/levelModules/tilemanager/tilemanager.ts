@@ -7,6 +7,12 @@ export interface TileData {
     variant?: string;
 }
 
+export interface TileObject {
+    row: number;
+    col: number;
+    data: TileData;
+}
+
 const rows = 5;
 const columns = 9;
 
@@ -16,6 +22,7 @@ export class TileManager {
     groundLayer: TileData[][] = InitializeLayer();
     obstacleLayer: TileData[][] = InitializeLayer();
     plantLayer: TileData[][] = InitializeLayer();
+    forced: TileObject[] = [];
 
     constructor(data: PVZObject[]) {
         data.forEach((obj) => {
@@ -102,7 +109,31 @@ export class TileManager {
         const plantTile = this.plantLayer[row][col];
         if (plantTile) tiles.push(plantTile);
 
+        const forcedTiles = this.forced.filter((tile) => tile.row == row && tile.col == col);
+        if (forcedTiles.length > 0) tiles.push(...forcedTiles.map((tile) => tile.data));
+
         return tiles;
+    }
+
+    getAll(): TileObject[] {
+        const flatten = (arr: TileData[][]) =>
+            arr
+                .map((row, rowIndex) =>
+                    row.map((tile, colIndex) => {
+                        return {
+                            data: tile,
+                            row: rowIndex,
+                            col: colIndex,
+                        } as TileObject;
+                    }),
+                )
+                .flat();
+
+        const groundLayer = flatten(this.groundLayer);
+        const obstacleLayer = flatten(this.obstacleLayer);
+        const plantLayer = flatten(this.plantLayer);
+
+        return [...groundLayer, ...obstacleLayer, ...plantLayer, ...this.forced];
     }
 }
 

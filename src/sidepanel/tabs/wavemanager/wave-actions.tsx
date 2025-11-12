@@ -1,15 +1,16 @@
-import { levelState } from '@/lib/state';
+import { gridState, levelState, windowManagerState } from '@/lib/state';
 import { animationDuration } from './waves';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { ChevronsRight, Trash2 } from 'lucide-react';
+import { ChevronsRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { RenderWaveAction } from './actions/render-action';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Actions } from './actions/actions';
+import { Actions, getActionId } from './actions/actions';
 import type { WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
 
 export function WaveActionList({
     waveIndex,
@@ -19,6 +20,9 @@ export function WaveActionList({
     setIndex: (index: number | null) => void;
 }) {
     const levelBuilder = levelState((s) => s.levelBuilder);
+    const setDefaultGrid = gridState((s) => s.setDefaultGrid);
+    const openWindows = windowManagerState((s) => s.order);
+    const shouldUpdate = gridState((s) => s.shouldUpdate);
 
     const [wave, setWaveState] = useState<WaveAction[]>([]);
 
@@ -59,6 +63,41 @@ export function WaveActionList({
         [wave],
     );
 
+    useEffect(() => {
+        if (waveIndex == null) return;
+        const forcedTiles = [];
+        console.log(openWindows.length);
+        if (openWindows.length != 0) {
+            for (const action of wave) {
+                const actionId = getActionId(action);
+                if (openWindows.includes(actionId)) {
+                    const actionInfo = Actions[action.type];
+                    if (actionInfo.getPreviewData != undefined) {
+                        const tileManager = actionInfo.getPreviewData(action);
+                        forcedTiles.push(...tileManager.getAll());
+                    }
+                }
+            }
+        }
+        if (openWindows.length == 0) {
+            for (const action of wave) {
+                const actionInfo = Actions[action.type];
+                if (actionInfo.getPreviewData != undefined) {
+                    const tileManager = actionInfo.getPreviewData(action);
+                    forcedTiles.push(...tileManager.getAll());
+                }
+            }
+        }
+
+        const preview = new TileManager([]);
+        preview.forced = forcedTiles;
+        console.log(forcedTiles);
+        setDefaultGrid(preview);
+        return () => {
+            setDefaultGrid(undefined);
+        };
+    }, [waveIndex, wave, openWindows, shouldUpdate]);
+
     if (waveIndex == null) {
         return <div className="p-4 text-muted-foreground">Select a wave to edit its actions</div>;
     }
@@ -84,19 +123,10 @@ export function WaveActionList({
                     {wave &&
                         wave.map((action, index) => (
                             <div
-                                key={action.type + waveIndex}
+                                key={getActionId(action)}
                                 className="flex items-center rounded-md justify-center border shadow-sm p-2 w-full"
                             >
-                                <RenderWaveAction waveaction={action}>
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        onClick={() => removeAction(index)}
-                                        className="text-muted-foreground hover:text-destructive hover:bg-red-100"
-                                    >
-                                        <Trash2 className="h-4 w-4" />
-                                    </Button>
-                                </RenderWaveAction>
+                                <RenderWaveAction onRemove={() => removeAction(index)} waveaction={action} />
                             </div>
                         ))}
 

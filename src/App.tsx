@@ -49,6 +49,11 @@ function ThemeToggle() {
 export default function App() {
     const [isDev, setIsDev] = useState(import.meta.env.PROD ? false : true);
 
+    useEffect(() => {
+        sessionStorage.clear();
+        console.log('sessionStorage cleared on page reload.');
+    }, []);
+
     return (
         <div>
             <div className="flex h-screen p-4 gap-4">

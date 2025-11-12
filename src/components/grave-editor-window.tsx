@@ -10,7 +10,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { levelState } from '@/lib/state';
+import { gridState } from '@/lib/state';
 import { PencilLine, PencilOff, Eraser } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { gravestoneList } from './grave-list';
@@ -28,16 +28,22 @@ export function GravestoneEditorWindow({
     onClose: () => void;
     onGridClick: (position: { row: number; col: number }, selectedTool: string, selectedVariant: string) => void;
 }) {
-    const setGridListener = levelState((s) => s.setGridListener);
+    const id = 'gravestone-editor-window';
+    const addGridListener = gridState((s) => s.addGridListener);
+    const removeGridListener = gridState((s) => s.removeGridListener);
+
     const [selectedGrave, setSelectedGrave] = useState('default');
     const [selectedTool, setSelectedTool] = useState('none');
 
     useEffect(() => {
-        setGridListener((row, col) => {
-            onGridClick({ row, col }, selectedTool, selectedGrave);
+        addGridListener({
+            id,
+            onClick: (row, col) => {
+                onGridClick({ row, col }, selectedTool, selectedGrave);
+            },
         });
         return () => {
-            setGridListener(undefined);
+            removeGridListener(id);
         };
     }, [selectedGrave, selectedTool]);
 
@@ -47,7 +53,7 @@ export function GravestoneEditorWindow({
             defaultPosition={{ x: 150, y: 150 }}
             size={{ width: 360, height: 260 }}
             onClose={onClose}
-            id="gravestone-editor-window"
+            id={id}
         >
             <div className="w-full flex flex-row justify-between items-center border rounded-md px-4 py-2">
                 <Label>Gravestone</Label>

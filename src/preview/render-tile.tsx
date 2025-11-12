@@ -2,7 +2,7 @@ import type { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
 import { defaultGrave } from '@/lib/levelModules/tilemanager/types';
 import { ModernPortalType, PortalTypes } from '@/lib/levelModules/wavemanager/wavetypes';
 import { StageModuleType } from '@/types/PVZTypes';
-import type { CSSProperties } from 'react';
+import { type CSSProperties } from 'react';
 
 const gravestonePaths = import.meta.glob('/assets/gravestones/*.png', {
     base: '/assets/gravestones/',
@@ -26,13 +26,9 @@ const portalPaths = import.meta.glob('/assets/portals/*.png', {
 
 export function getPortalImage(variant: string | undefined) {
     if (variant == 'default' || variant == undefined) variant = 'blank';
-
     if (variant == 'outline') return portalPaths[`./portal_outline.png`];
 
     const portalImage = PortalTypes[variant as ModernPortalType] ?? 'modern';
-
-    console.log(variant, portalImage);
-
     return portalPaths[`./portal_${portalImage}.png`] ?? portalPaths[`./portal_blank.png`];
 }
 
@@ -52,7 +48,7 @@ export function RenderTileSprites({ column, row, stageType, tileManager, width, 
 
     return (
         <>
-            {tileData.map((tile) => {
+            {tileData.map((tile, tileIndex) => {
                 // get the cell center in percentage
                 const top = ((row + 0.5) / 5) * 100;
                 const left = ((column + 0.5) / 9) * 100;
@@ -96,7 +92,7 @@ export function RenderTileSprites({ column, row, stageType, tileManager, width, 
                     `;
                 }
 
-                return <img key={`${row}-${column}-${tile.type}`} {...imageProps} style={imageStyle} />;
+                return <img key={`${row}-${column}-${tile.type + tileIndex}`} {...imageProps} style={imageStyle} />;
             })}
         </>
     );

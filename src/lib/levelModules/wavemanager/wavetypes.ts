@@ -196,6 +196,18 @@ export interface SpiderRainZombieSpawnerProps {
     ZombieFallTime: number;
 }
 
+export interface BeachStageEventZombieSpawnerProps {
+    ColumnEnd: number;
+    ColumnStart: number;
+    GroupSize: number;
+    TimeBeforeFullSpawn: number;
+    TimeBetweenGroups: number;
+    WaveStartMessage: string;
+    ZombieCount: number;
+    ZombieName: string;
+    WaveLocation?: number;
+}
+
 export interface WaveZombie {
     Type: string;
     Row?: number;

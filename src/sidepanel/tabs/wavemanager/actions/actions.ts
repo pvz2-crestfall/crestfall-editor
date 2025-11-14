@@ -14,6 +14,7 @@ import { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
 import { PirateRaidWaveAction } from './pirate-raid-action';
 import { TideChangeWaveAction } from './tide-change-action';
 import { ZombieRainWaveAction } from './zombie-rain-action';
+import { LowTideEventWaveAction } from './low-tide-event';
 
 let currentId = 1;
 const actionIdMap = new WeakMap();
@@ -156,6 +157,21 @@ export const Actions: Record<string, ActionInterface<any>> = {
             TimeBetweenGroups: 0.5,
             WaveStartMessage: '[WARNING_SPIDERRAIN]',
             ZombieFallTime: 1.5,
+        },
+    },
+    BeachStageEventZombieSpawnerProps: {
+        name: 'Low Tide Event',
+        component: LowTideEventWaveAction,
+        defaultData: {
+            ColumnEnd: 5,
+            ColumnStart: 4,
+            GroupSize: 5,
+            ZombieCount: 5,
+            ZombieName: 'beach',
+            TimeBeforeFullSpawn: 0.5,
+            TimeBetweenGroups: 0.25,
+            WaveStartMessage: '[WARNING_LOW_TIDE]',
+            WaveLocation: 3,
         },
     },
     UnknownAction: {

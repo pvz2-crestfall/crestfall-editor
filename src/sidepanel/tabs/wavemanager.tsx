@@ -7,8 +7,8 @@ export function WaveManagerTab() {
         <div className="flex flex-col gap-1">
             <TabSwitch
                 tabs={[
-                    { label: 'Settings', content: <WaveManagerSettings /> },
                     { label: 'Waves', content: <WaveManagerWaves /> },
+                    { label: 'Settings', content: <WaveManagerSettings /> },
                 ]}
             />
         </div>

@@ -1,12 +1,13 @@
 import type { WaveZombie } from '@/lib/levelModules/wavemanager/wavetypes';
 import { cn, fromRTID } from '@/lib/utils';
 import { ZombieDisplayNames } from '@/lib/zombies';
-import { ChevronRight, Trash2 } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { useState, type ReactNode } from 'react';
 import { Button } from '../ui/button';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
 import { OptionalNumberInput } from '../ui/optional-ninput';
 import { Label } from '../ui/label';
+import { DeleteButton } from '../ui/delete-button';
 
 export function WaveEditorZombieList({
     list,
@@ -62,14 +63,7 @@ export function WaveEditorZombieList({
                                 <div className="flex flex-row items-center"></div>
                             </div>
 
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                onClick={() => onRemove(index)}
-                                className="text-muted-foreground hover:text-destructive hover:bg-red-100"
-                            >
-                                <Trash2 className="h-4 w-4" />
-                            </Button>
+                            <DeleteButton onClick={() => onRemove(index)} />
                         </li>
                     ))}
                     {children}

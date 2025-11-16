@@ -1,12 +1,13 @@
 import type { WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import { ChevronRight, Eye, EyeOff, Trash2 } from 'lucide-react';
+import { ChevronRight, Eye, EyeOff } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { Actions, getActionId } from './actions';
 import { Button } from '@/components/ui/button';
 import { Toggle } from '@/components/ui/toggle';
 import { componentState } from '@/lib/state/componentstate';
+import { DeleteButton } from '@/components/ui/delete-button';
 
 export function RenderWaveAction<T = unknown>({
     waveaction,
@@ -29,14 +30,7 @@ export function RenderWaveAction<T = unknown>({
         <div className="flex flex-col justify-between gap-2 w-full">
             <Collapsible open={isOpen} onOpenChange={setIsOpen} className="w-full">
                 <div className="flex flex-row items-center justify-between px-2">
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => onRemove()}
-                        className="text-muted-foreground hover:text-destructive hover:bg-red-100"
-                    >
-                        <Trash2 className="h-4 w-4" />
-                    </Button>
+                    <DeleteButton onClick={onRemove} />
                     <div className="flex flex-row items-center w-full justify-between">
                         <h4 className="text-sm">{action.name}</h4>
                         <Toggle

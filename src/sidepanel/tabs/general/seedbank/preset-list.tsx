@@ -31,7 +31,6 @@ export function PresetPlantList() {
         }),
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleDragEnd = (event: any) => {
         const { active, over } = event;
         if (active.id !== over?.id) {

@@ -1,4 +1,4 @@
-import { ChevronRight, Settings, Trash2 } from 'lucide-react';
+import { ChevronRight, Settings } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { ConveyorPlantOptionsContent } from './plant-options';
@@ -7,6 +7,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/colla
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { Label } from '../ui/label';
+import { DeleteButton } from '../ui/delete-button';
 
 interface ComponentProps {
     list: ConveyorSeedBankPlantObject[];
@@ -80,14 +81,7 @@ function ConveyorPlantsListContent({
                         </Popover>
                         <span>{displayNames[plant.PlantType]}</span>
                     </div>
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => onRemove(plant)}
-                        className="text-muted-foreground hover:text-destructive hover:bg-red-100"
-                    >
-                        <Trash2 className="h-4 w-4" />
-                    </Button>
+                    <DeleteButton onClick={() => onRemove(plant)} />
                 </li>
             ))}
 

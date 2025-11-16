@@ -1,6 +1,6 @@
 import type { GravestonePool } from '@/lib/levelModules/wavemanager/wavetypes';
 import { cn, fromRTID } from '@/lib/utils';
-import { ChevronRight, Trash2 } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import { type ReactNode, useState } from 'react';
 import { GravestoneIcon } from '../grave-editor-window';
 import { gravestoneList } from '../grave-list';
@@ -8,6 +8,7 @@ import { Button } from '../ui/button';
 import { OptionalNumberInput } from '../ui/optional-ninput';
 import { Label } from '../ui/label';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '../ui/collapsible';
+import { DeleteButton } from '../ui/delete-button';
 
 export function WaveEditorGravestoneList({
     list,
@@ -78,14 +79,7 @@ export function WaveEditorGravestoneList({
                                     </>
                                 )}
 
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={() => onRemove(index)}
-                                    className="text-muted-foreground hover:text-destructive hover:bg-destructive"
-                                >
-                                    <Trash2 className="h-4 w-4" />
-                                </Button>
+                                <DeleteButton onClick={() => onRemove(index)}/>
                             </li>
                         );
                     })}

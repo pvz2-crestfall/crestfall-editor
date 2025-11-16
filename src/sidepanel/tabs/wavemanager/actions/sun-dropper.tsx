@@ -1,15 +1,14 @@
 import { Label } from '@/components/ui/label';
 import { OptionalNumberInput } from '@/components/ui/optional-ninput';
 import type { SunDropperWaveActionProps, WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function SunDropperWaveAction({ waveaction }: { waveaction: WaveAction<SunDropperWaveActionProps> }) {
-    const [sunAmount, _setPFCount] = useState(waveaction.data.SunAmountToDrop);
+    const [sunAmount, setPFCount] = useState(waveaction.data.SunAmountToDrop);
 
-    const setPlantFoodCount = (val: number) => {
-        waveaction.data.SunAmountToDrop = val;
-        _setPFCount(val);
-    };
+    useEffect(() => {
+        waveaction.data.SunAmountToDrop = sunAmount;
+    }, [sunAmount]);
 
     return (
         <div className="flex flex-col w-full items-center justify-center gap-2">
@@ -20,7 +19,7 @@ export function SunDropperWaveAction({ waveaction }: { waveaction: WaveAction<Su
                     optional={false}
                     min={0}
                     value={sunAmount}
-                    onChange={(val) => setPlantFoodCount(val ?? 0)}
+                    onChange={(val) => setPFCount(val ?? 0)}
                 />
             </div>
         </div>

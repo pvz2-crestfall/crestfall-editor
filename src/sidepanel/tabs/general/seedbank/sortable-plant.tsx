@@ -1,7 +1,8 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Button } from '@/components/ui/button';
-import { GripVertical, Trash2 } from 'lucide-react';
+import { GripVertical } from 'lucide-react';
+import { DeleteButton } from '@/components/ui/delete-button';
 
 export function SortablePlant({
     id,
@@ -31,14 +32,7 @@ export function SortablePlant({
                 </Button>
                 <span>{displayName ?? id}</span>
             </div>
-            <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => onRemove(id)}
-                className="text-muted-foreground hover:text-destructive hover:bg-destructive"
-            >
-                <Trash2 className="h-4 w-4" />
-            </Button>
+            <DeleteButton onClick={() => onRemove(id)} />
         </li>
     );
 }

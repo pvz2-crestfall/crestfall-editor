@@ -1,12 +1,13 @@
 import { levelState } from '@/lib/state/levelstate';
 import { animationDuration } from './waves';
-import { ChevronsLeft, Trash2 } from 'lucide-react';
+import { ChevronsLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import type { WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
 import { Label } from '@/components/ui/label';
 import { Actions } from './actions/actions';
+import { DeleteButton } from '@/components/ui/delete-button';
 
 export function WaveList({
     waveIndex,
@@ -75,14 +76,7 @@ export function WaveList({
                             <span> | </span>
                             <span>Actions {wave.length}</span>
                         </div>
-                        <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => removeWave(index)}
-                            className="text-muted-foreground hover:text-destructive hover:bg-red-100"
-                        >
-                            <Trash2 className="h-4 w-4" />
-                        </Button>
+                        <DeleteButton onClick={() => removeWave(index)} />
                     </li>
                 ))}
                 <li

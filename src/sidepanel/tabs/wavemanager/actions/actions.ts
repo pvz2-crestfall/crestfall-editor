@@ -15,6 +15,7 @@ import { PirateRaidWaveAction } from './pirate-raid-action';
 import { TideChangeWaveAction } from './tide-change-action';
 import { ZombieRainWaveAction } from './zombie-rain-action';
 import { LowTideEventWaveAction } from './low-tide-event';
+import { FrostwindWaveAction } from './frostwind-action';
 
 let currentId = 1;
 const actionIdMap = new WeakMap();
@@ -172,6 +173,19 @@ export const Actions: Record<string, ActionInterface<any>> = {
             TimeBetweenGroups: 0.25,
             WaveStartMessage: '[WARNING_LOW_TIDE]',
             WaveLocation: 3,
+        },
+    },
+    FrostWindWaveActionProps: {
+        name: 'Frost Winds',
+        component: FrostwindWaveAction,
+        defaultData: {
+            Winds: [
+                { Direction: 'right', Row: 0 },
+                { Direction: 'right', Row: 1 },
+                { Direction: 'right', Row: 2 },
+                { Direction: 'right', Row: 3 },
+                { Direction: 'right', Row: 4 },
+            ],
         },
     },
     UnknownAction: {

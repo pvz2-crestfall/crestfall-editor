@@ -208,6 +208,14 @@ export interface BeachStageEventZombieSpawnerProps {
     WaveLocation?: number;
 }
 
+export interface FrostWindWaveActionProps {
+    Winds: WindObject[];
+}
+export interface WindObject {
+    Direction: 'right' | 'left';
+    Row: number;
+}
+
 export interface WaveZombie {
     Type: string;
     Row?: number;

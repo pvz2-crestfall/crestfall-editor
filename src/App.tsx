@@ -5,19 +5,19 @@ import { LevelPreview } from './preview/preview';
 import { Button } from './components/ui/button';
 import { Switch } from './components/ui/switch';
 import { Label } from './components/ui/label';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useReducer } from 'react';
 
 // JSON preview component
 function DataPreview() {
     const levelBuilder = levelState((s) => s.levelBuilder);
-    const reloadLevelBuilder = levelState((s) => s.reloadLevelBuilder);
+    const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     return (
         <Card className="w-full max-w-3xl h-full">
             <CardContent className="p-4 h-full overflow-auto">
                 <div className="flex flex-row justify-between">
                     <h2 className="text-lg font-semibold mb-2">Level Data Preview</h2>
-                    <Button size={'lg'} onClick={() => reloadLevelBuilder()}>
+                    <Button size={'lg'} onClick={forceUpdate}>
                         Build
                     </Button>
                 </div>

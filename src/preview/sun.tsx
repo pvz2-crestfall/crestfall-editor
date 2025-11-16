@@ -30,7 +30,7 @@ export function SunCounter() {
                 <div className="w-full h-full text-white flex items-center ">
                     <div className="left-[30%] absolute w-[50%] bg-black/60 rounded-md justify-center">
                         <span style={{ fontSize }} className="pl-[40%] text-yellow-100 font-bold justify-center">
-                            {levelBuilder.startingSun}
+                            {levelBuilder.levelProperties.startingSun}
                         </span>
                     </div>
                     <img

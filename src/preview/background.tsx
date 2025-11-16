@@ -35,7 +35,7 @@ export function LevelBackground() {
 
     return (
         <img
-            src={backgroundImages[levelBuilder.stageType]}
+            src={backgroundImages[levelBuilder.levelProperties.stageType]}
             alt="Level background"
             className="absolute inset-0 w-full h-full object-cover"
             draggable={false}

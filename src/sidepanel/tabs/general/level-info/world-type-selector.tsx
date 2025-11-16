@@ -15,10 +15,10 @@ import { useEffect, useState } from 'react';
 export function WorldTypeSelector() {
     const levelBuilder = levelState((s) => s.levelBuilder);
     const reloadBackground = levelState((s) => s.reloadBackground);
-    const [stageType, setStageType] = useState(levelBuilder.stageType);
+    const [stageType, setStageType] = useState(levelBuilder.levelProperties.stageType);
 
     useEffect(() => {
-        levelBuilder.stageType = stageType;
+        levelBuilder.levelProperties.stageType = stageType;
         reloadBackground();
     }, [stageType]);
 

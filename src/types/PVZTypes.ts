@@ -100,11 +100,11 @@ export enum SeedBankSelectionMethod {
 }
 
 export enum SunDropperType {
-    Slowest = 'SlowestSunDropper',
+    Slowest = 'VerySlowSunDropper',
     Slow = 'SlowSunDropper',
     Default = 'DefaultSunDropper',
     Fast = 'FastSunDropper',
-    Fastest = 'FastestSunDropper',
+    Fastest = 'VeryFastSunDropper',
 }
 
 export enum LawnMowerType {

@@ -54,7 +54,7 @@ export function LevelGrid() {
     const rows = 5;
     const cols = 9;
 
-    const alignment = Alignments[levelBuilder.stageType];
+    const alignment = Alignments[levelBuilder.levelProperties.stageType];
 
     const widthPct = alignment.endX - alignment.startX;
     const heightPct = alignment.endY - alignment.startY;
@@ -96,7 +96,7 @@ export function LevelGrid() {
                                 height={cellHeight}
                                 row={r}
                                 column={c}
-                                stageType={levelBuilder.stageType}
+                                stageType={levelBuilder.levelProperties.stageType}
                                 tileManager={tileManager}
                             />
                         </div>

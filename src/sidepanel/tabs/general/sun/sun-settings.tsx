@@ -17,20 +17,20 @@ import { useEffect, useState } from 'react';
 export function SunSettingsComponent() {
     const levelBuilder = levelState((s) => s.levelBuilder);
 
-    const [startingSun, setStartingSun] = useState(levelBuilder.startingSun);
-    const [bonusSunAllowed, allowBonusSun] = useState(levelBuilder.allowBonusSun);
-    const [sunDropperType, setDropperType] = useState(levelBuilder.sunDropper);
+    const [startingSun, setStartingSun] = useState(levelBuilder.levelProperties.startingSun);
+    const [bonusSunAllowed, allowBonusSun] = useState(levelBuilder.levelProperties.allowBonusSun);
+    const [sunDropperType, setDropperType] = useState(levelBuilder.levelProperties.sunDropper);
 
     useEffect(() => {
-        levelBuilder.startingSun = startingSun;
+        levelBuilder.levelProperties.startingSun = startingSun;
     }, [startingSun]);
 
     useEffect(() => {
-        levelBuilder.allowBonusSun = bonusSunAllowed;
+        levelBuilder.levelProperties.allowBonusSun = bonusSunAllowed;
     }, [bonusSunAllowed]);
 
     useEffect(() => {
-        levelBuilder.sunDropper = sunDropperType;
+        levelBuilder.levelProperties.sunDropper = sunDropperType;
     }, [sunDropperType]);
 
     return (
@@ -41,7 +41,7 @@ export function SunSettingsComponent() {
                     <Label className="px-4 py-1">Starting Sun</Label>
                     <Input
                         type="number"
-                        placeholder="0"
+                        placeholder="50"
                         defaultValue={startingSun}
                         className="text-center w-20 font-mono align-left"
                         size={5}

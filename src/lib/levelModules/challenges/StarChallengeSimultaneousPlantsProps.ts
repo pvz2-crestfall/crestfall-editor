@@ -7,8 +7,8 @@ export interface StarChallengeSimultaneousPlantsProps {
 }
 
 export class SimultaneousPlants extends PVZBase {
-    static aliases: string[] = ['MaxPlants'];
     static objclass: string = 'StarChallengeSimultaneousPlantsProps';
+    aliases: string[] = ['MaxPlants'];
     objdata: StarChallengeSimultaneousPlantsProps;
 
     constructor(data: PVZObject) {

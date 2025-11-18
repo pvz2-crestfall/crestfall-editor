@@ -7,8 +7,8 @@ export interface StarChallengeSunProducedProps {
 }
 
 export class SunProduced extends PVZBase {
-    static aliases: string[] = ['SunProduced'];
     static objclass: string = 'StarChallengeSunProducedProps';
+    aliases: string[] = ['SunProduced'];
     objdata: StarChallengeSunProducedProps;
 
     constructor(data: PVZObject) {

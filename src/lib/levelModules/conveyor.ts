@@ -2,11 +2,11 @@ import type { ConveyorSeedBankPlantObject, ConveyorSeedBankPropertiesObject, PVZ
 import { PVZBase } from './base';
 
 export class ConveyorBelt extends PVZBase {
-    enabled?: boolean;
+    static objclass: string = 'ConveyorSeedBankProperties';
     aliases: string[] = ['ConveyorBelt'];
-    objclass: string = 'ConveyorSeedBankProperties';
     objdata: ConveyorSeedBankPropertiesObject;
     powertiles: ConveyorSeedBankPlantObject[] = [];
+    enabled?: boolean;
 
     constructor(propertiesObject: ConveyorSeedBankPropertiesObject) {
         super();

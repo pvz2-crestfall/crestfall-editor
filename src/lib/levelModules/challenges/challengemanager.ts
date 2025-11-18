@@ -31,8 +31,8 @@ const challengeClasses = {
 };
 
 export class ChallengeManager extends PVZBase {
+    static objclass: string = 'StarChallengeModuleProperties';
     aliases: string[] = ['ChallengeModule'];
-    objclass: string = 'StarChallengeModuleProperties';
     objdata: StarChallengeModulePropertiesObj;
 
     customMessage?: {
@@ -59,8 +59,8 @@ export class ChallengeManager extends PVZBase {
     timeWithoutSpending?: number;
     zombieDistance?: number;
 
-    moldLocations: { row: number; column: number }[] = [];
-    endangeredPlants: { row: number; column: number; name: string }[] = [];
+    moldLocations: { row: number; col: number }[] = [];
+    endangeredPlants: { row: number; col: number; name: string }[] = [];
 
     constructor(data: PVZObject[]) {
         super();
@@ -120,52 +120,55 @@ export class ChallengeManager extends PVZBase {
 
     getlevelObjects(): PVZObject[] {
         const objects: PVZObject[] = [];
+        const challengeObjects: PVZObject[] = [];
 
         if (this.customMessage) {
-            objects.push(BeatTheLevel.from(this.customMessage).buildObject());
+            challengeObjects.push(BeatTheLevel.from(this.customMessage).buildObject());
         }
         if (this.beatZombiesInTime) {
-            objects.push(ZombiesInTime.from(this.beatZombiesInTime).buildObject());
+            challengeObjects.push(ZombiesInTime.from(this.beatZombiesInTime).buildObject());
         }
         if (this.targetScore) {
-            objects.push(TargetScore.from(this.targetScore).buildObject());
+            challengeObjects.push(TargetScore.from(this.targetScore).buildObject());
         }
         if (this.plantsLost) {
-            objects.push(PlantsLost.from(this.plantsLost).buildObject());
+            challengeObjects.push(PlantsLost.from(this.plantsLost).buildObject());
         }
         if (this.maxPlants) {
-            objects.push(SimultaneousPlants.from(this.maxPlants).buildObject());
+            challengeObjects.push(SimultaneousPlants.from(this.maxPlants).buildObject());
         }
         if (this.sunProduced) {
-            objects.push(SunProduced.from(this.sunProduced).buildObject());
+            challengeObjects.push(SunProduced.from(this.sunProduced).buildObject());
         }
         if (this.maxSunUsed) {
-            objects.push(MaxSunUsed.from(this.maxSunUsed).buildObject());
+            challengeObjects.push(MaxSunUsed.from(this.maxSunUsed).buildObject());
         }
         if (this.timeWithoutSpending) {
-            objects.push(SunHoldout.from(this.timeWithoutSpending).buildObject());
+            challengeObjects.push(SunHoldout.from(this.timeWithoutSpending).buildObject());
         }
         if (this.zombieDistance) {
-            objects.push(ZombieDistance.from(this.zombieDistance).buildObject());
+            challengeObjects.push(ZombieDistance.from(this.zombieDistance).buildObject());
         }
         if (this.endangeredPlants.length > 0) {
-            objects.push(EndangeredPlants.from(this.endangeredPlants).buildObject());
+            challengeObjects.push(EndangeredPlants.from(this.endangeredPlants).buildObject());
         }
         if (this.moldLocations.length > 0) {
-            const grid = new Array(5).map(() => new Array(9).fill(0));
+            const grid = new Array(5).fill([]).map(() => new Array(9).fill(0));
             for (const location of this.moldLocations) {
-                const { row, column } = location;
+                const { row, col: column } = location;
                 grid[row][column] = 1;
             }
 
             const gridObject = new GridMap(grid);
             gridObject.aliases[0] = 'MoldGridMap';
             const moldObject = MoldColony.from(gridObject);
-
-            objects.push(gridObject, moldObject);
+            objects.push(gridObject);
+            challengeObjects.push(moldObject);
         }
 
-        const names = objects.map((x) => (x.aliases ? x.aliases[0] : '')).map((x) => toRTID(x, RTIDTypes.current));
+        const names = challengeObjects
+            .map((x) => (x.aliases ? x.aliases[0] : ''))
+            .map((x) => toRTID(x, RTIDTypes.current));
         if (names.length > 0) {
             const moduleObject: PVZObject<StarChallengeModulePropertiesObj> = {
                 aliases: this.aliases,
@@ -179,6 +182,6 @@ export class ChallengeManager extends PVZBase {
             objects.unshift(moduleObject);
         }
 
-        return objects;
+        return [...challengeObjects, ...objects];
     }
 }

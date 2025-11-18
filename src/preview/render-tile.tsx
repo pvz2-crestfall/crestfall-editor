@@ -1,3 +1,4 @@
+import type { ChallengeManager } from '@/lib/levelModules/challenges/challengemanager';
 import type { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
 import { defaultGrave } from '@/lib/levelModules/tilemanager/types';
 import { ModernPortalType, PortalTypes } from '@/lib/levelModules/wavemanager/types';
@@ -32,6 +33,12 @@ export function getPortalImage(variant: string | undefined) {
     return portalPaths[`./portal_${portalImage}.png`] ?? portalPaths[`./portal_blank.png`];
 }
 
+const tilePaths = import.meta.glob('/assets/tiles/*.png', {
+    base: '/assets/tiles/',
+    eager: true,
+    import: 'default',
+}) as Record<string, string>;
+
 interface RenderTileSpritesProps {
     column: number;
     row: number;
@@ -39,10 +46,24 @@ interface RenderTileSpritesProps {
     height: number;
     stageType: StageModuleType;
     tileManager: TileManager;
+    challengeManager?: ChallengeManager;
 }
 
-export function RenderTileSprites({ column, row, stageType, tileManager, width, height }: RenderTileSpritesProps) {
+export function RenderTileSprites({
+    column,
+    row,
+    stageType,
+    tileManager,
+    challengeManager,
+    width,
+    height,
+}: RenderTileSpritesProps) {
     const tileData = tileManager.getAllAt(row, column);
+
+    if (challengeManager && challengeManager.moldLocations.length > 0) {
+        const [mold] = challengeManager.moldLocations.filter((mold) => mold.col == column && mold.row == row);
+        if (mold) tileData.unshift({ ...mold, type: 'mold' });
+    }
 
     if (tileData.length == 0) return null;
 
@@ -90,6 +111,12 @@ export function RenderTileSprites({ column, row, stageType, tileManager, width, 
                         drop-shadow(0 0 10px rgba(100, 255, 255, 0.8))
                         drop-shadow(0 0 12px rgba(150, 255, 255, 0.8))
                     `;
+                }
+
+                if (tile.type == 'mold') {
+                    const scale = 1.25;
+                    imageProps.src = tilePaths['./mold.png'];
+                    imageStyle.transform = `translate(-50%, -50%) scale(${scale})`;
                 }
 
                 return <img key={`${row}-${column}-${tile.type + tileIndex}`} {...imageProps} style={imageStyle} />;

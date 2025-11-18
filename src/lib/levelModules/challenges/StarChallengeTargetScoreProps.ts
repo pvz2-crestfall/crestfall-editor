@@ -10,8 +10,8 @@ export interface StarChallengeTargetScoreProps {
 }
 
 export class TargetScore extends PVZBase {
-    static aliases: string[] = ['TargetScore'];
     static objclass: string = 'StarChallengeTargetScoreProps';
+    aliases: string[] = ['TargetScore'];
     objdata: StarChallengeTargetScoreProps;
 
     constructor(data: PVZObject) {

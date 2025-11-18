@@ -8,8 +8,8 @@ export interface StarChallengeKillZombiesInTimeProps {
 }
 
 export class ZombiesInTime extends PVZBase {
-    static aliases: string[] = ['KillInTime'];
     static objclass: string = 'StarChallengeKillZombiesInTimeProps';
+    aliases: string[] = ['KillInTime'];
     objdata: StarChallengeKillZombiesInTimeProps;
 
     constructor(data: PVZObject) {

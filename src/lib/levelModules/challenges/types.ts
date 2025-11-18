@@ -16,8 +16,8 @@ import { PVZBase } from '../base';
 // },
 
 export class GridMap extends PVZBase {
-    aliases: string[] = ['GridMap'];
     static objclass: string = 'BoardGridMapProps';
+    aliases: string[] = ['GridMap'];
     objdata: BoardGridMapProps;
 
     constructor(grid: number[][]) {

@@ -8,8 +8,8 @@ export interface ProtectThePlantChallengeProperties {
 }
 
 export class EndangeredPlants extends PVZBase {
+    static objclass: string = 'ProtectThePlantChallengeProperties';
     aliases: string[] = ['EndangeredPlants'];
-    objclass: string = 'ProtectThePlantChallengeProperties';
     objdata: ProtectThePlantChallengeProperties;
 
     constructor(data: PVZObject) {
@@ -21,20 +21,20 @@ export class EndangeredPlants extends PVZBase {
         for (const plant of this.objdata.Plants) {
             challengeManager.endangeredPlants.push({
                 row: plant.GridY,
-                column: plant.GridX,
+                col: plant.GridX,
                 name: plant.PlantType,
             });
         }
     }
 
-    static from(endangeredPlants: { row: number; column: number; name: string }[]) {
+    static from(endangeredPlants: { row: number; col: number; name: string }[]) {
         return new this({
             objclass: '',
             objdata: {
                 MustProtectCount: endangeredPlants.length,
                 Plants: endangeredPlants.map((plant) => {
                     return {
-                        GridX: plant.column,
+                        GridX: plant.col,
                         GridY: plant.row,
                         PlantType: plant.name,
                     };

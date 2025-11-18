@@ -44,6 +44,7 @@ const Alignments = {
 };
 
 export function LevelGrid() {
+    levelState((s) => s.backgroundReloads);
     const [refreshCount, setRefreshCount] = useState(0);
     const levelBuilder = levelState((s) => s.levelBuilder);
 
@@ -67,6 +68,7 @@ export function LevelGrid() {
     };
 
     const tileManager = gridData ?? defaultGrid ?? levelBuilder.tileManager;
+    const challengeManager = levelBuilder.challengeManager;
 
     return (
         <div className="absolute inset-0">
@@ -98,6 +100,7 @@ export function LevelGrid() {
                                 column={c}
                                 stageType={levelBuilder.levelProperties.stageType}
                                 tileManager={tileManager}
+                                challengeManager={challengeManager}
                             />
                         </div>
                     );

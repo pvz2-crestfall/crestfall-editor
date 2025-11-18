@@ -7,8 +7,8 @@ export interface StarChallengeSpendSunHoldoutProps {
 }
 
 export class SunHoldout extends PVZBase {
-    static aliases: string[] = ['TimeWithoutSpending'];
     static objclass: string = 'StarChallengeSpendSunHoldoutProps';
+    aliases: string[] = ['TimeWithoutSpending'];
     objdata: StarChallengeSpendSunHoldoutProps;
 
     constructor(data: PVZObject) {

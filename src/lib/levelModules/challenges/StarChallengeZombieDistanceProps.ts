@@ -7,8 +7,8 @@ export interface StarChallengeZombieDistanceProps {
 }
 
 export class ZombieDistance extends PVZBase {
-    static aliases: string[] = ['FlowerLineDistance'];
     static objclass: string = 'StarChallengeZombieDistanceProps';
+    aliases: string[] = ['FlowerLineDistance'];
     objdata: StarChallengeZombieDistanceProps;
 
     constructor(data: PVZObject) {

@@ -135,8 +135,8 @@ export class WaveManagerWrapper {
 }
 
 export class WaveManager extends PVZBase {
+    static objclass: string = 'WaveManagerProperties';
     aliases: string[] = ['WaveManagerProps'];
-    objclass: string = 'WaveManagerProperties';
     objdata: WaveManagerPropertiesObject;
 
     constructor(propertiesObject: WaveManagerPropertiesObject) {
@@ -146,8 +146,8 @@ export class WaveManager extends PVZBase {
 }
 
 export class WaveManagerModule extends PVZBase {
+    static objclass: string = 'WaveManagerModuleProperties';
     aliases: string[] = ['NewWaves'];
-    objclass: string = 'WaveManagerModuleProperties';
     objdata: WaveManagerModulePropertiesObject;
 
     constructor(propertiesObject: WaveManagerModulePropertiesObject) {

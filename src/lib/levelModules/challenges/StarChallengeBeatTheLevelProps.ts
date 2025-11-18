@@ -8,8 +8,8 @@ export interface StarChallengeBeatTheLevelProps {
 }
 
 export class BeatTheLevel extends PVZBase {
-    static aliases: string[] = ['BeatTheLevelChallenge'];
     static objclass: string = 'StarChallengeBeatTheLevelProps';
+    aliases: string[] = ['BeatTheLevelChallenge'];
     objdata: StarChallengeBeatTheLevelProps;
 
     constructor(data: PVZObject) {

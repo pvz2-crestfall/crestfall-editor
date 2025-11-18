@@ -7,8 +7,8 @@ export interface StarChallengePlantsLostProps {
 }
 
 export class PlantsLost extends PVZBase {
-    static aliases: string[] = ['PlantsLost'];
     static objclass: string = 'StarChallengePlantsLostProps';
+    aliases: string[] = ['PlantsLost'];
     objdata: StarChallengePlantsLostProps;
 
     constructor(data: PVZObject) {

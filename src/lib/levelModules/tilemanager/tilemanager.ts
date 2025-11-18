@@ -138,8 +138,8 @@ export class TileManager {
 }
 
 export class GravestoneProperties extends PVZBase {
+    static objclass: string = 'GravestoneProperties';
     aliases: string[] = ['Gravestones'];
-    objclass: string = 'GravestoneProperties';
     objdata: GravestonePropertiesObject;
 
     constructor(propertiesObject: GravestonePropertiesObject) {

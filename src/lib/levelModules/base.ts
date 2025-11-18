@@ -1,9 +1,13 @@
 import type { PVZObject } from '@/types/PVZTypes';
 
 export class PVZBase implements PVZObject {
+    static objclass = 'UndefinedClass';
     aliases?: string[];
-    objclass: string = 'UndefinedClass';
     objdata: unknown;
+
+    get objclass() {
+        return (this.constructor as typeof PVZBase).objclass;
+    }
 
     buildObject<T = unknown>(): PVZObject<T> {
         const result: PVZObject = {

@@ -2,8 +2,8 @@ import type { SeedBankObject, SeedBankSelectionMethod } from '@/types/PVZTypes';
 import { PVZBase } from './base';
 
 export class SeedBank extends PVZBase {
+    static objclass: string = 'SeedBankProperties';
     aliases: string[] = ['SeedBank'];
-    objclass: string = 'SeedBankProperties';
     objdata: SeedBankObject;
     enabled?: boolean = true;
 

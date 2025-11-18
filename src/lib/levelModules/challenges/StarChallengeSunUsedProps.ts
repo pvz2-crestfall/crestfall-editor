@@ -7,8 +7,8 @@ export interface StarChallengeSunUsedProps {
 }
 
 export class MaxSunUsed extends PVZBase {
-    static aliases: string[] = ['MaxSunSpent'];
     static objclass: string = 'StarChallengeSunUsedProps';
+    aliases: string[] = ['MaxSunSpent'];
     objdata: StarChallengeSunUsedProps;
 
     constructor(data: PVZObject) {

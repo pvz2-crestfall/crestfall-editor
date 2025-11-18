@@ -1,6 +1,6 @@
 import { Label } from '@/components/ui/label';
 import { OptionalNumberInput } from '@/components/ui/optional-ninput';
-import type { TidalChangeWaveActionProps, WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import type { TidalChangeWaveActionProps, WaveAction } from '@/lib/levelModules/wavemanager/types';
 import { useEffect, useState } from 'react';
 
 export function TideChangeWaveAction({ waveaction }: { waveaction: WaveAction<TidalChangeWaveActionProps> }) {

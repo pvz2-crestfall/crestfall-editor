@@ -9,8 +9,8 @@ import { PVZBase } from './base';
 import { fromRTID, RTIDTypes, toRTID } from '../utils';
 
 export class LevelDefinition extends PVZBase {
-    aliases?: string[] = undefined;
-    objclass: string = 'LevelDefinition';
+    static aliases?: string[] = undefined;
+    static objclass: string = 'LevelDefinition';
     objdata: LevelDefinitionObject;
 
     lawnMower?: LawnMowerType | 'auto';

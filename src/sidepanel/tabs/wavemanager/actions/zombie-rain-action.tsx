@@ -9,7 +9,7 @@ import type {
     ParachuteRainZombieSpawnerProps,
     SpiderRainZombieSpawnerProps,
     WaveAction,
-} from '@/lib/levelModules/wavemanager/wavetypes';
+} from '@/lib/levelModules/wavemanager/types';
 import { cn } from '@/lib/utils';
 import { ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';

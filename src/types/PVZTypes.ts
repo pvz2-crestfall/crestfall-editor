@@ -93,6 +93,17 @@ export interface GravestonePropertiesObject {
     SpawnColumnStart?: number;
 }
 
+export interface StarChallengeModulePropertiesObj {
+    Challenges: string[][];
+    ChallengesAlwaysAvailable: boolean;
+
+    Difficulties?: number[];
+}
+
+export interface BoardGridMapProps {
+    Values: number[][];
+}
+
 export enum SeedBankSelectionMethod {
     Chooser = 'chooser',
     Beghouled = 'beghouled',

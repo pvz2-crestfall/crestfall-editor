@@ -11,7 +11,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Actions, getActionId } from './actions/actions';
-import type { WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import type { WaveAction } from '@/lib/levelModules/wavemanager/types';
 import { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
 import { componentState } from '@/lib/state/componentstate';
 

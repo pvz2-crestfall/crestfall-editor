@@ -1,4 +1,4 @@
-import type { WaveZombie } from '@/lib/levelModules/wavemanager/wavetypes';
+import type { WaveZombie } from '@/lib/levelModules/wavemanager/types';
 import { cn, fromRTID } from '@/lib/utils';
 import { ZombieDisplayNames } from '@/lib/zombies';
 import { ChevronRight } from 'lucide-react';

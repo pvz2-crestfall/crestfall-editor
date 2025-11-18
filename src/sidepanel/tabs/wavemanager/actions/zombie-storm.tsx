@@ -1,7 +1,7 @@
 import { Label } from '@/components/ui/label';
 import { OptionalNumberInput } from '@/components/ui/optional-ninput';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { StormType, type StormZombieSpawnerProps, type WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import { StormType, type StormZombieSpawnerProps, type WaveAction } from '@/lib/levelModules/wavemanager/types';
 import { RTIDTypes, toRTID } from '@/lib/utils';
 import { useState } from 'react';
 import { SliderWithInputs } from '@/components/ui/slider-with-inputs';

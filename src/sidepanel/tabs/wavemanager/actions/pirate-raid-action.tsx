@@ -1,7 +1,7 @@
 import { Label } from '@/components/ui/label';
 import { OptionalNumberInput } from '@/components/ui/optional-ninput';
 import { useEffect, useState } from 'react';
-import type { RaidingPartyZombieSpawnerProps, WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import type { RaidingPartyZombieSpawnerProps, WaveAction } from '@/lib/levelModules/wavemanager/types';
 
 export function PirateRaidWaveAction({ waveaction }: { waveaction: WaveAction<RaidingPartyZombieSpawnerProps> }) {
     const [zombieCount, setZombieCount] = useState(waveaction.data.SwashbucklerCount);

@@ -2,7 +2,7 @@ import { PVZBase } from '../base';
 import type { WaveManagerModulePropertiesObject, WaveManagerPropertiesObject } from '@/types/PVZTypes';
 import type { PVZObject } from '@/types/PVZTypes';
 import { fromRTID, RTIDTypes, toRTID } from '../../utils';
-import type { WaveAction } from './wavetypes';
+import type { WaveAction } from './types';
 
 export class WaveManagerWrapper {
     waveManager: WaveManager;

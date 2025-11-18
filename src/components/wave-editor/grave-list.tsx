@@ -1,4 +1,4 @@
-import type { GravestonePool } from '@/lib/levelModules/wavemanager/wavetypes';
+import type { GravestonePool } from '@/lib/levelModules/wavemanager/types';
 import { cn, fromRTID } from '@/lib/utils';
 import { ChevronRight } from 'lucide-react';
 import { type ReactNode, useState } from 'react';
@@ -79,7 +79,7 @@ export function WaveEditorGravestoneList({
                                     </>
                                 )}
 
-                                <DeleteButton onClick={() => onRemove(index)}/>
+                                <DeleteButton onClick={() => onRemove(index)} />
                             </li>
                         );
                     })}

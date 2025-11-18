@@ -9,7 +9,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { DinoType, type DinoWaveActionProps, type WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import { DinoType, type DinoWaveActionProps, type WaveAction } from '@/lib/levelModules/wavemanager/types';
 import { useState } from 'react';
 
 export function SummonDinoAction({ waveaction }: { waveaction: WaveAction<DinoWaveActionProps> }) {

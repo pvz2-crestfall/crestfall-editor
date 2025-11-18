@@ -1,6 +1,6 @@
 import type { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
 import { defaultGrave } from '@/lib/levelModules/tilemanager/types';
-import { ModernPortalType, PortalTypes } from '@/lib/levelModules/wavemanager/wavetypes';
+import { ModernPortalType, PortalTypes } from '@/lib/levelModules/wavemanager/types';
 import { StageModuleType } from '@/types/PVZTypes';
 import { type CSSProperties } from 'react';
 

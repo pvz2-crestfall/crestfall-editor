@@ -1,6 +1,6 @@
 import { AddPlantButton } from '@/components/conveyor/add-plant-button';
 import { ConveyorPlantList } from '@/components/conveyor/plant-list';
-import type { ModifyConveyorWaveActionProps, WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import type { ModifyConveyorWaveActionProps, WaveAction } from '@/lib/levelModules/wavemanager/types';
 import { PlantDisplayNames } from '@/lib/plants';
 import type { ConveyorSeedBankPlantObject } from '@/types/PVZTypes';
 import { useState } from 'react';

@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { DeleteButton } from '@/components/ui/delete-button';
 import { Label } from '@/components/ui/label';
 import { OptionalNumberInput } from '@/components/ui/optional-ninput';
-import type { FrostWindWaveActionProps, WaveAction, WindObject } from '@/lib/levelModules/wavemanager/wavetypes';
+import type { FrostWindWaveActionProps, WaveAction, WindObject } from '@/lib/levelModules/wavemanager/types';
 import { cn } from '@/lib/utils';
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
 import {

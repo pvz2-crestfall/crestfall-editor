@@ -4,7 +4,7 @@ import { ChevronsLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
-import type { WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import type { WaveAction } from '@/lib/levelModules/wavemanager/types';
 import { Label } from '@/components/ui/label';
 import { Actions } from './actions/actions';
 import { DeleteButton } from '@/components/ui/delete-button';

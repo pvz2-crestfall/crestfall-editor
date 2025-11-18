@@ -1,6 +1,6 @@
 import { Label } from '@/components/ui/label';
 import { OptionalNumberInput } from '@/components/ui/optional-ninput';
-import type { SunDropperWaveActionProps, WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import type { SunDropperWaveActionProps, WaveAction } from '@/lib/levelModules/wavemanager/types';
 import { useEffect, useState } from 'react';
 
 export function SunDropperWaveAction({ waveaction }: { waveaction: WaveAction<SunDropperWaveActionProps> }) {

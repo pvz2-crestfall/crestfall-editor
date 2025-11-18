@@ -1,22 +1,20 @@
-import {
-    SeedBankSelectionMethod,
-    type ConveyorSeedBankPropertiesObject,
-    type LevelDefinitionObject,
-    type SeedBankObject,
-} from '@/types/PVZTypes';
+import type { ConveyorSeedBankPropertiesObject, LevelDefinitionObject, SeedBankObject } from '@/types/PVZTypes';
 import type { PVZObject } from '@/types/PVZTypes';
+import { SeedBankSelectionMethod } from '@/types/PVZTypes';
 import { toRTID, RTIDTypes } from './utils';
 import { SeedBank } from './levelModules/seedbank';
 import { ConveyorBelt } from './levelModules/conveyor';
 import { WaveManagerWrapper } from './levelModules/wavemanager/wavemanager';
 import { TileManager } from './levelModules/tilemanager/tilemanager';
 import { LevelDefinition } from './levelModules/leveldefinition';
+import { ChallengeManager } from './levelModules/challenges/challengemanager';
 
 export class LevelBuilder {
     rawData: PVZObject[];
     levelProperties: LevelDefinition;
     waveManager: WaveManagerWrapper;
     tileManager: TileManager;
+    challengeManager: ChallengeManager;
     seedBank: SeedBank;
     conveyor: ConveyorBelt;
 
@@ -55,6 +53,9 @@ export class LevelBuilder {
         // initialize wave manager
         this.waveManager = new WaveManagerWrapper(data);
         this.tileManager = new TileManager(data);
+
+        // challenge manager
+        this.challengeManager = new ChallengeManager(data);
     }
 
     build() {
@@ -76,6 +77,10 @@ export class LevelBuilder {
             modules.push(toRTID(this.conveyor.aliases[0], RTIDTypes.current));
             objects.push(conveyorObj);
         }
+
+        const [challengeModules, challengeObjects] = this.challengeManager.build();
+        modules.push(...challengeModules);
+        objects.push(...challengeObjects);
 
         const [tileModules, tileObjects] = this.tileManager.build();
         modules.push(...tileModules);

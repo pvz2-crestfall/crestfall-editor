@@ -1,5 +1,5 @@
-import * as WaveTypes from '@/lib/levelModules/wavemanager/wavetypes';
-import type { WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import * as WaveTypes from '@/lib/levelModules/wavemanager/types';
+import type { WaveAction } from '@/lib/levelModules/wavemanager/types';
 import { BasicZombieSpawner } from './basic-spawner';
 import { SunDropperWaveAction } from './sun-dropper';
 import { UnknownAction } from './unknown';

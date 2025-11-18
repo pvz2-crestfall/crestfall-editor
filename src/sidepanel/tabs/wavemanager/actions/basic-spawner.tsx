@@ -2,7 +2,7 @@ import { Label } from '@/components/ui/label';
 import { OptionalNumberInput } from '@/components/ui/optional-ninput';
 import { AddZombieButton } from '@/components/wave-editor/add-zombie-button';
 import { WaveEditorZombieList } from '@/components/wave-editor/zombie-list';
-import type { SpawnZombiesJitteredWaveActionProps, WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import type { SpawnZombiesJitteredWaveActionProps, WaveAction } from '@/lib/levelModules/wavemanager/types';
 import { RTIDTypes, toRTID } from '@/lib/utils';
 import { useState } from 'react';
 

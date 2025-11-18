@@ -1,4 +1,4 @@
-import type { WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import type { WaveAction } from '@/lib/levelModules/wavemanager/types';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { ChevronRight, Eye, EyeOff } from 'lucide-react';
 import { cn } from '@/lib/utils';

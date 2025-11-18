@@ -1,4 +1,4 @@
-import { type SpawnZombiesFromGroundSpawnerProps, type WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import { type SpawnZombiesFromGroundSpawnerProps, type WaveAction } from '@/lib/levelModules/wavemanager/types';
 import { RTIDTypes, toRTID } from '@/lib/utils';
 import { useState } from 'react';
 import { SliderWithInputs } from '@/components/ui/slider-with-inputs';

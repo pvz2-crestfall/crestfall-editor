@@ -4,7 +4,7 @@ import { Label } from '@/components/ui/label';
 import { SwitchWithLabel } from '@/components/ui/switch-with-label';
 import { AddGravestoneButton } from '@/components/wave-editor/add-grave-button';
 import { WaveEditorGravestoneList } from '@/components/wave-editor/grave-list';
-import type { SpawnGravestonesWaveActionProps, WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import type { SpawnGravestonesWaveActionProps, WaveAction } from '@/lib/levelModules/wavemanager/types';
 import { gridState } from '@/lib/state/gridstate';
 import { RTIDTypes, toRTID } from '@/lib/utils';
 import { useEffect, useState } from 'react';

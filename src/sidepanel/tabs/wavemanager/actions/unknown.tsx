@@ -1,4 +1,4 @@
-import type { WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import type { WaveAction } from '@/lib/levelModules/wavemanager/types';
 
 export function UnknownAction({ waveaction }: { waveaction: WaveAction<any> }) {
     return (

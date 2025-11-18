@@ -6,7 +6,7 @@ import { AddGravestoneButton } from '@/components/wave-editor/add-grave-button';
 import { AddZombieButton } from '@/components/wave-editor/add-zombie-button';
 import { WaveEditorGravestoneList } from '@/components/wave-editor/grave-list';
 import { WaveEditorZombieList } from '@/components/wave-editor/zombie-list';
-import type { SpawnZombiesFromGridItemSpawnerProps, WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import type { SpawnZombiesFromGridItemSpawnerProps, WaveAction } from '@/lib/levelModules/wavemanager/types';
 import { toRTID, RTIDTypes } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 

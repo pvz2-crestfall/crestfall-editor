@@ -5,7 +5,7 @@ import { Label } from '@/components/ui/label';
 import { OptionalNumberInput } from '@/components/ui/optional-ninput';
 import { SliderWithInputs } from '@/components/ui/slider-with-inputs';
 import { WaveEditorZombieSelector } from '@/components/wave-editor/zombie-selector';
-import type { BeachStageEventZombieSpawnerProps, WaveAction } from '@/lib/levelModules/wavemanager/wavetypes';
+import type { BeachStageEventZombieSpawnerProps, WaveAction } from '@/lib/levelModules/wavemanager/types';
 import { cn } from '@/lib/utils';
 import { ChevronRight } from 'lucide-react';
 import { useEffect, useState } from 'react';

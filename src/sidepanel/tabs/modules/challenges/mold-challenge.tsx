@@ -1,10 +1,20 @@
 import { PlacementEditorWindow } from '@/components/placement-editor-window';
 import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
 import { gridState } from '@/lib/state/gridstate';
 import { levelState } from '@/lib/state/levelstate';
 import { useState } from 'react';
 
-export function MoldEditor() {
+export function MoldChallenge() {
+    return (
+        <div className="flex w-full items-center justify-between border rounded-md px-4 py-2">
+            <Label>Mold Colonies</Label>
+            <MoldEditor />
+        </div>
+    );
+}
+
+function MoldEditor() {
     const levelBuilder = levelState((s) => s.levelBuilder);
     const updateGrid = gridState((s) => s.updateGrid);
 
@@ -40,11 +50,9 @@ export function MoldEditor() {
 
     return (
         <>
-            <div className="flex w-full h-full items-center justify-center">
-                <Button variant="outline" onClick={() => setEditorWindowOpen(true)}>
-                    Open Mold Editor
-                </Button>
-            </div>
+            <Button variant="outline" onClick={() => setEditorWindowOpen(true)}>
+                Open Editor
+            </Button>
 
             {editorWindowOpen && (
                 <PlacementEditorWindow

@@ -2,7 +2,7 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
+import imagemin from 'unplugin-imagemin/vite';
 
 // Set the base to be the repository name in the case it's running on GitHub Actions
 // otherwise just default to '/'
@@ -18,7 +18,7 @@ const profiling = isProduction && {
 
 // https://vite.dev/config/
 export default defineConfig({
-    plugins: [react(), tailwindcss(), ViteImageOptimizer()],
+    plugins: [react(), tailwindcss(), imagemin({ cache: false })],
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'),

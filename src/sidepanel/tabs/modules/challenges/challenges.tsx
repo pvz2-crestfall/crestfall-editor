@@ -1,5 +1,5 @@
 import { ModuleTemplate } from '../template';
-import { MoldEditor } from './mold-challenge';
+import { MoldChallenge } from './mold-challenge';
 import {
     FlowerLineChallenge,
     MaxPlantsChallenge,
@@ -26,8 +26,6 @@ import {
         name: string;
         score: number;
     };
-
-    moldLocations: { row: number; column: number }[] = [];
     endangeredPlants: { row: number; column: number; name: string }[] = [];
 */
 export function ChallengeModule() {
@@ -40,7 +38,7 @@ export function ChallengeModule() {
             <TimeWithoutSpendingChallenge />
             <FlowerLineChallenge />
 
-            <MoldEditor></MoldEditor>
+            <MoldChallenge />
         </ModuleTemplate>
     );
 }

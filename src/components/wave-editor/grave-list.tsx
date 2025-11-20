@@ -2,7 +2,7 @@ import type { GravestonePool } from '@/lib/levelModules/wavemanager/types';
 import { cn, fromRTID } from '@/lib/utils';
 import { ChevronRight } from 'lucide-react';
 import { type ReactNode, useState } from 'react';
-import { GravestoneIcon } from '../grave-editor-window';
+import { GravestoneIcon } from '../ui/asset-icons';
 import { gravestoneList } from '../grave-list';
 import { Button } from '../ui/button';
 import { OptionalNumberInput } from '../ui/optional-ninput';

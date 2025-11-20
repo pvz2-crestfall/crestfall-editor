@@ -4,7 +4,8 @@ import { cn } from '@/lib/utils';
 import { Label } from '../ui/label';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandList } from '../ui/command';
 import { VirtualizedCommandList } from '../ui/virtual-command-list';
-import { plantPaths, Plants } from '@/lib/plants';
+import { Plants } from '@/lib/plants';
+import { PlantIcon } from '../ui/asset-icons';
 
 export function AddPlantButton({ className, onSelect }: { className?: string; onSelect: (plant: string) => void }) {
     const [plantSearchOpen, setPlantSearchOpen] = useState(false);
@@ -40,7 +41,7 @@ export function AddPlantButton({ className, onSelect }: { className?: string; on
                         <CommandGroup>
                             <VirtualizedCommandList
                                 items={filteredList}
-                                icons={plantPaths}
+                                icon={PlantIcon}
                                 onSelect={(plant) => {
                                     onSelect(plant);
                                     setPlantSearchOpen(false);

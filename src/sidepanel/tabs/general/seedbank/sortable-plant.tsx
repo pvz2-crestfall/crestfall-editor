@@ -3,8 +3,8 @@ import { CSS } from '@dnd-kit/utilities';
 import { Button } from '@/components/ui/button';
 import { GripVertical } from 'lucide-react';
 import { DeleteButton } from '@/components/ui/delete-button';
-import { iconFromList } from '@/components/ui/virtual-command-list';
-import { plantPaths } from '@/lib/plants';
+import { iconFromList } from '@/components/ui/asset-icons';
+import { PlantImages } from '@/lib/assets';
 
 export function SortablePlant({
     id,
@@ -33,7 +33,7 @@ export function SortablePlant({
                     <GripVertical className="h-4 w-4" />
                 </Button>
                 <span>{displayName ?? id}</span>
-                {iconFromList(plantPaths, id, 7)}
+                {iconFromList({ icons: PlantImages, type: id, size: 7 })}
             </div>
             <DeleteButton onClick={() => onRemove(id)} />
         </li>

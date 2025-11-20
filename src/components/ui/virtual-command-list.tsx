@@ -1,14 +1,15 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { useRef } from 'react';
+import { useRef, type JSX } from 'react';
 import { CommandItem } from './command';
+import type { StandardIconProps } from './asset-icons';
 
 export function VirtualizedCommandList({
     items,
-    icons,
+    icon,
     onSelect,
 }: {
     items: { codename: string; displayName?: string }[];
-    icons?: Record<string, string>;
+    icon?: (props: StandardIconProps) => JSX.Element;
     onSelect?: (z: string) => void;
 }) {
     const parentRef = useRef<HTMLDivElement>(null);
@@ -40,38 +41,12 @@ export function VirtualizedCommandList({
                         >
                             <CommandItem value={zombie.codename} onSelect={() => onSelect?.(zombie.codename)}>
                                 {zombie.displayName}
-                                {icons != undefined && iconFromList(icons, zombie.codename, 7)}
+                                {icon?.({ type: zombie.codename, size: 7 })}
                             </CommandItem>
                         </div>
                     );
                 })}
             </div>
-        </div>
-    );
-}
-
-export function iconFromList(icons: Record<string, string> | undefined, type: string, size: number) {
-    const iconKey = (icons && icons[type]) ?? type;
-    const src = icons && icons[`./${iconKey}.png`];
-
-    const fallbackSrc = icons && icons['./unknown_plant.png'];
-    const imageSrc = src || fallbackSrc;
-
-    return (
-        <div
-            style={{
-                width: `calc(var(--spacing) * ${size})`,
-                height: `calc(var(--spacing) * ${size})`,
-                objectFit: 'contain',
-            }}
-        >
-            <img
-                src={imageSrc}
-                className="h-full w-full object-contain"
-                onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = fallbackSrc ?? '';
-                }}
-            />
         </div>
     );
 }

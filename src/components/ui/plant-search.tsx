@@ -1,11 +1,12 @@
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { plantPaths, Plants, type PlantType } from '@/lib/plants';
+import { Plants, type PlantType } from '@/lib/plants';
 import { cn } from '@/lib/utils';
 import { ChevronsUpDownIcon } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { VirtualizedCommandList } from './virtual-command-list';
+import { PlantIcon } from './asset-icons';
 
 export function PlantSearchCombobox({
     list = Plants,
@@ -50,7 +51,7 @@ export function PlantSearchCombobox({
                         <CommandGroup>
                             <VirtualizedCommandList
                                 items={filteredList}
-                                icons={plantPaths}
+                                icon={PlantIcon}
                                 onSelect={(currentValue: string) => {
                                     onChange(currentValue === value ? '' : currentValue);
                                     setOpen(false);

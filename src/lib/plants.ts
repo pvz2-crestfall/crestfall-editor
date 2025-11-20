@@ -1,9 +1,3 @@
-export const plantPaths = import.meta.glob('/assets/plants/*.png', {
-    base: '/assets/plants/',
-    eager: true,
-    import: 'default',
-}) as Record<string, string>;
-
 export interface PlantType {
     codename: string;
     displayName?: string;

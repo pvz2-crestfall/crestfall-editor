@@ -4,7 +4,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { Label } from '../ui/label';
 import { cn } from '@/lib/utils';
 import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from '../ui/command';
-import { GravestoneIcon } from '../grave-editor-window';
+import { GravestoneIcon } from '../ui/asset-icons';
 
 const MappedList = Object.entries(gravestoneList).map(([key, value]) => {
     return { codename: key, displayName: value.label };

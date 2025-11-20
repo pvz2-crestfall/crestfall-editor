@@ -17,9 +17,9 @@ import {
     type WaveAction,
 } from '@/lib/levelModules/wavemanager/types';
 import { gridState } from '@/lib/state/gridstate';
-import { getPortalImage } from '@/preview/render-tile';
 import { useEffect, useMemo, useState } from 'react';
 import { getActionId } from './actions';
+import { PortalIcon } from '@/components/ui/asset-icons';
 
 const PortalSelectorGroups = [
     {
@@ -139,20 +139,5 @@ function PortalSelector({ PortalType, setPortalType }: { PortalType: ModernPorta
                 ))}
             </SelectContent>
         </Select>
-    );
-}
-
-interface PortalIconProps {
-    size?: number;
-    type: string;
-}
-
-export function PortalIcon({ size = 5, type }: PortalIconProps) {
-    const imageSrc = getPortalImage(type);
-
-    return (
-        <div style={{ width: `calc(var(--spacing) * ${size})` }}>
-            <img src={imageSrc} alt={type} className="h-full w-full object-contain" />
-        </div>
     );
 }

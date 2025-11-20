@@ -14,12 +14,7 @@ import { gridState } from '@/lib/state/gridstate';
 import { PencilLine, PencilOff, Eraser } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { gravestoneList } from './grave-list';
-
-const gravestonePaths = import.meta.glob('/assets/gravestones/*.png', {
-    base: '/assets/gravestones/',
-    eager: true,
-    import: 'default',
-}) as Record<string, string>;
+import { GravestoneIcon } from './ui/asset-icons';
 
 export function GravestoneEditorWindow({
     onClose,
@@ -132,33 +127,5 @@ function ToolSelectionGroup({ ...props }: { defaultValue?: string; onValueChange
                 </ToggleGroupItem>
             </ToggleGroup>
         </>
-    );
-}
-
-interface GravestoneIconProps {
-    size?: number;
-    type: string;
-}
-
-export function GravestoneIcon({ size = 5, type }: GravestoneIconProps) {
-    const iconKey = gravestoneList[type]?.icon ?? type;
-    const src = gravestonePaths[`./${iconKey}.png`];
-
-    // fallback to a default gravestone if missing or invalid
-    const fallbackSrc = gravestonePaths['./gravestone_unknown.png'];
-    const imageSrc = src || fallbackSrc;
-
-    return (
-        <div style={{ width: `calc(var(--spacing) * ${size})` }}>
-            <img
-                src={imageSrc}
-                alt={gravestoneList[type]?.label ?? type}
-                className="h-full w-full object-contain"
-                onError={(e) => {
-                    // make sure broken paths revert automatically
-                    (e.currentTarget as HTMLImageElement).src = fallbackSrc;
-                }}
-            />
-        </div>
     );
 }

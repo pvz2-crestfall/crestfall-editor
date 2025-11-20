@@ -1,43 +1,8 @@
 import type { ChallengeManager } from '@/lib/levelModules/challenges/challengemanager';
 import type { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
-import { defaultGrave } from '@/lib/levelModules/tilemanager/types';
-import { ModernPortalType, PortalTypes } from '@/lib/levelModules/wavemanager/types';
 import { StageModuleType } from '@/types/PVZTypes';
 import { type CSSProperties } from 'react';
-
-const gravestonePaths = import.meta.glob('/assets/gravestones/*.png', {
-    base: '/assets/gravestones/',
-    eager: true,
-    import: 'default',
-}) as Record<string, string>;
-
-function getGravestoneImage(stageType: StageModuleType, variant: string | undefined) {
-    if (variant == 'default' || variant == undefined) {
-        variant = defaultGrave[stageType];
-    }
-
-    return gravestonePaths[`./${variant}.png`] ?? gravestonePaths[`./gravestone_unknown.png`];
-}
-
-const portalPaths = import.meta.glob('/assets/portals/*.png', {
-    base: '/assets/portals/',
-    eager: true,
-    import: 'default',
-}) as Record<string, string>;
-
-export function getPortalImage(variant: string | undefined) {
-    if (variant == 'default' || variant == undefined) variant = 'blank';
-    if (variant == 'outline') return portalPaths[`./portal_outline.png`];
-
-    const portalImage = PortalTypes[variant as ModernPortalType] ?? 'modern';
-    return portalPaths[`./portal_${portalImage}.png`] ?? portalPaths[`./portal_blank.png`];
-}
-
-const tilePaths = import.meta.glob('/assets/tiles/*.png', {
-    base: '/assets/tiles/',
-    eager: true,
-    import: 'default',
-}) as Record<string, string>;
+import { getGravestoneImage, getPortalImage, TileImages } from '@/lib/assets';
 
 interface RenderTileSpritesProps {
     column: number;
@@ -90,6 +55,9 @@ export function RenderTileSprites({
                 };
 
                 // Render different tile types accordingly
+                if (tile.type == 'plant') {
+                }
+
                 if (tile.type == 'gravestone') {
                     const scale = 1.6;
                     imageProps.src = getGravestoneImage(stageType, tile.variant);
@@ -115,7 +83,7 @@ export function RenderTileSprites({
 
                 if (tile.type == 'mold') {
                     const scale = 1.25;
-                    imageProps.src = tilePaths['./mold.png'];
+                    imageProps.src = TileImages['./mold.png'];
                     imageStyle.transform = `translate(-50%, -50%) scale(${scale})`;
                 }
 

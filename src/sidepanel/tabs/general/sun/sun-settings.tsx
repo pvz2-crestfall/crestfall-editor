@@ -36,7 +36,7 @@ export function SunSettingsComponent() {
     return (
         <div className="flex flex-col gap-2 items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
             <Label>Sun Options</Label>
-            <div className="gap-1 w-[320px]">
+            <div className="gap-1 w-[360px]">
                 <div className="flex w-full items-center justify-between border rounded-md px-4 py-2">
                     <Label className="px-4 py-1">Starting Sun</Label>
                     <Input

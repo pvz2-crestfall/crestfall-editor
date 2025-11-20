@@ -3,9 +3,10 @@ import { Label } from '@/components/ui/label';
 import { levelState } from '@/lib/state/levelstate';
 import { useEffect, useState } from 'react';
 import { PlantSearchCombobox } from '../../../../components/ui/plant-search';
-import { Plants } from '@/lib/plants';
+import { plantPaths, Plants } from '@/lib/plants';
 import { X } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
+import { iconFromList } from '@/components/ui/virtual-command-list';
 
 export function ExcludePlantList() {
     const levelBuilder = levelState((s) => s.levelBuilder);
@@ -53,10 +54,13 @@ export function ExcludePlantList() {
                 {excludeList.length > 0 ? (
                     excludeList.map((plant) => (
                         <div className="flex flex-col border bg-primary-foreground rounded-sm px-1 py-1">
-                            <div className="flex items-center gap-2">
-                                <span>{Plants.find((x) => x.codename == plant)?.displayName ?? plant}</span>
+                            <div className="flex items-center">
+                                <div className="flex flex-row gap-2">
+                                    <Label>{Plants.find((x) => x.codename == plant)?.displayName ?? plant}</Label>
+                                    {iconFromList(plantPaths, plant, 5)}
+                                </div>
                                 <Button variant="ghost" size="sm" onClick={() => removeItem(plant)}>
-                                    <X className="h-2 w-2" />
+                                    <X className="h-4 w-4" />
                                 </Button>
                             </div>
                         </div>

@@ -33,7 +33,7 @@ export function AddGravestoneButton({
                     key="+"
                     className={cn(
                         'flex items-center justify-between rounded-md border p-2 shadow-sm ',
-                        'hover:bg-primary-foreground transition-colors duration-300',
+                        'hover:bg-primary/10 transition-colors duration-300',
                         className,
                     )}
                 >

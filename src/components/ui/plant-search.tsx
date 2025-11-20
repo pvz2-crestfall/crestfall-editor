@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Plants, type PlantType } from '@/lib/plants';
+import { plantPaths, Plants, type PlantType } from '@/lib/plants';
 import { cn } from '@/lib/utils';
 import { ChevronsUpDownIcon } from 'lucide-react';
 import { useMemo, useState } from 'react';
@@ -42,7 +42,7 @@ export function PlantSearchCombobox({
                     <ChevronsUpDownIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
             </PopoverTrigger>
-            <PopoverContent className={cn('w-[200px] p-0', cmdClassName)}>
+            <PopoverContent className={cn('w-60 p-0', cmdClassName)}>
                 <Command shouldFilter={false}>
                     <CommandInput value={search} onValueChange={setSearch} placeholder="Search plants..." />
                     <CommandList>
@@ -50,6 +50,7 @@ export function PlantSearchCombobox({
                         <CommandGroup>
                             <VirtualizedCommandList
                                 items={filteredList}
+                                icons={plantPaths}
                                 onSelect={(currentValue: string) => {
                                     onChange(currentValue === value ? '' : currentValue);
                                     setOpen(false);

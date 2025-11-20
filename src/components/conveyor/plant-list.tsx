@@ -8,6 +8,8 @@ import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { Label } from '../ui/label';
 import { DeleteButton } from '../ui/delete-button';
+import { iconFromList } from '../ui/virtual-command-list';
+import { plantPaths } from '@/lib/plants';
 
 interface ComponentProps {
     list: ConveyorSeedBankPlantObject[];
@@ -79,7 +81,10 @@ function ConveyorPlantsListContent({
                                 />
                             </PopoverContent>
                         </Popover>
-                        <span>{displayNames[plant.PlantType]}</span>
+                        <div className="flex flex-row gap-2">
+                            <span>{displayNames[plant.PlantType]}</span>
+                            {iconFromList(plantPaths, plant.PlantType, 7)}
+                        </div>
                     </div>
                     <DeleteButton onClick={() => onRemove(plant)} />
                 </li>

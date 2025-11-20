@@ -8,7 +8,7 @@ export function SeedChooserSettingsComponent() {
     return (
         <div className="flex flex-col gap-2 items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
             <Label>Seed Chooser</Label>
-            <div className="gap-1 w-[320px]">
+            <div className="gap-1 w-[360px]">
                 <div className="flex border rounded-md px-4 py-2">
                     <PlantSelectionMethod />
                 </div>

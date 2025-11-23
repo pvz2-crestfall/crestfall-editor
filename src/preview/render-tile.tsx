@@ -2,7 +2,7 @@ import type { ChallengeManager } from '@/lib/levelModules/challenges/challengema
 import type { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
 import { StageModuleType } from '@/types/PVZTypes';
 import { type CSSProperties } from 'react';
-import { getGravestoneImage, getPortalImage, TileImages } from '@/lib/assets';
+import { getGravestoneImage, getPlantImage, getPortalImage, TileImages } from '@/lib/assets';
 
 interface RenderTileSpritesProps {
     column: number;
@@ -11,7 +11,7 @@ interface RenderTileSpritesProps {
     height: number;
     stageType: StageModuleType;
     tileManager: TileManager;
-    challengeManager?: ChallengeManager;
+    challengeManager: ChallengeManager;
 }
 
 export function RenderTileSprites({
@@ -25,9 +25,14 @@ export function RenderTileSprites({
 }: RenderTileSpritesProps) {
     const tileData = tileManager.getAllAt(row, column);
 
-    if (challengeManager && challengeManager.moldLocations.length > 0) {
+    if (challengeManager.moldLocations.length > 0) {
         const [mold] = challengeManager.moldLocations.filter((mold) => mold.col == column && mold.row == row);
         if (mold) tileData.unshift({ ...mold, type: 'mold' });
+    }
+
+    if (challengeManager.endangeredPlants.length > 0) {
+        const [plant] = challengeManager.endangeredPlants.filter((plant) => plant.col == column && plant.row == row);
+        if (plant) tileData.unshift({ ...plant, type: 'plant', variant: 'endangered_' + plant.name });
     }
 
     if (tileData.length == 0) return null;
@@ -54,8 +59,45 @@ export function RenderTileSprites({
                     transform: 'translate(-50%, -50%)',
                 };
 
+                const imageResult = () => {
+                    // clone the objects
+                    const props = { ...imageProps };
+                    const style = { ...imageStyle };
+                    return <img key={`${row}-${column}-${tile.type + tileIndex}`} {...props} style={style} />;
+                };
+
                 // Render different tile types accordingly
                 if (tile.type == 'plant') {
+                    const cellWidthPct = 100 / 9;
+                    const cellHeightPct = 100 / 5;
+                    const images = [];
+
+                    // render the endangered plant background
+                    let plantName = tile.variant ?? '';
+                    if (tile.variant?.startsWith('endangered_')) {
+                        plantName = tile.variant.split('_').at(1) ?? 'unknown';
+
+                        imageProps.src = TileImages['./endangered.png'];
+                        imageStyle.width = `${cellWidthPct * 0.95}%`;
+                        imageStyle.height = `${cellHeightPct * 0.95}%`;
+                        images.push(imageResult());
+                    }
+
+                    // render the actual plant
+                    imageProps.src = getPlantImage(plantName);
+                    imageStyle.maxWidth = `${cellWidthPct}%`;
+                    imageStyle.maxHeight = `${cellHeightPct * 0.75}%`;
+                    imageStyle.width = 'auto';
+                    imageStyle.height = 'auto';
+                    imageStyle.objectFit = 'contain';
+
+                    // bottom align
+                    imageStyle.top = `${((row + 0.85) / 5) * 100}%`;
+                    imageStyle.left = `${((column + 0.5) / 9) * 100}%`;
+                    imageStyle.transform = 'translate(-50%, -100%)';
+
+                    images.push(imageResult());
+                    return <>{images}</>;
                 }
 
                 if (tile.type == 'gravestone') {
@@ -87,7 +129,7 @@ export function RenderTileSprites({
                     imageStyle.transform = `translate(-50%, -50%) scale(${scale})`;
                 }
 
-                return <img key={`${row}-${column}-${tile.type + tileIndex}`} {...imageProps} style={imageStyle} />;
+                return imageResult();
             })}
         </>
     );

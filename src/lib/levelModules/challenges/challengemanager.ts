@@ -106,21 +106,9 @@ export class ChallengeManager extends PVZBase {
     }
 
     build(): [string[], PVZObject[]] {
-        const modules = this.getLevelModules();
-        const objects = this.getlevelObjects();
-
-        if (objects.length == 0) return [[], []];
-
-        return [modules, objects];
-    }
-
-    getLevelModules(): string[] {
-        return [toRTID(this.aliases[0], RTIDTypes.current)];
-    }
-
-    getlevelObjects(): PVZObject[] {
-        const objects: PVZObject[] = [];
+        const rawObjects: PVZObject[] = [];
         const challengeObjects: PVZObject[] = [];
+        const modules = [toRTID(this.aliases[0], RTIDTypes.current)];
 
         if (this.customMessage) {
             challengeObjects.push(BeatTheLevel.from(this.customMessage).buildObject());
@@ -149,8 +137,13 @@ export class ChallengeManager extends PVZBase {
         if (this.zombieDistance) {
             challengeObjects.push(ZombieDistance.from(this.zombieDistance).buildObject());
         }
+
         if (this.endangeredPlants.length > 0) {
-            challengeObjects.push(EndangeredPlants.from(this.endangeredPlants).buildObject());
+            const challenge = EndangeredPlants.from(this.endangeredPlants);
+
+            // endangered plants has to be in the level modules directly
+            rawObjects.push(challenge.buildObject());
+            modules.push(toRTID(challenge.aliases[0], RTIDTypes.current));
         }
         if (this.moldLocations.length > 0) {
             const grid = new Array(5).fill([]).map(() => new Array(9).fill(0));
@@ -161,27 +154,30 @@ export class ChallengeManager extends PVZBase {
 
             const gridObject = new GridMap(grid);
             gridObject.aliases[0] = 'MoldGridMap';
+
             const moldObject = MoldColony.from(gridObject);
-            objects.push(gridObject);
-            challengeObjects.push(moldObject);
+            rawObjects.push(gridObject.buildObject());
+            challengeObjects.push(moldObject.buildObject());
         }
 
-        const names = challengeObjects
+        const challengeNames = challengeObjects
             .map((x) => (x.aliases ? x.aliases[0] : ''))
             .map((x) => toRTID(x, RTIDTypes.current));
-        if (names.length > 0) {
+
+        if (challengeNames.length > 0) {
             const moduleObject: PVZObject<StarChallengeModulePropertiesObj> = {
                 aliases: this.aliases,
                 objclass: this.objclass,
                 objdata: {
-                    Challenges: [names],
+                    Challenges: [challengeNames],
                     ChallengesAlwaysAvailable: true,
                 },
             };
 
-            objects.unshift(moduleObject);
+            rawObjects.unshift(moduleObject);
         }
 
-        return [...challengeObjects, ...objects];
+        const objects = [...challengeObjects, ...rawObjects];
+        return [modules, objects];
     }
 }

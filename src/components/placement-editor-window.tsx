@@ -1,6 +1,6 @@
 import { gridState } from '@/lib/state/gridstate';
 import { windowManagerState } from '@/lib/state/windowmanagerstate';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, type ReactNode } from 'react';
 import { FloatingWindow } from './ui/floating-window';
 import { createPortal } from 'react-dom';
 import { ToggleGroup, ToggleGroupItem } from './ui/toggle-group';
@@ -13,12 +13,17 @@ export function PlacementEditorWindow({
     onGridClick,
     id,
     title = 'Placement Editor',
+    size = { width: 360, height: 150 },
+    children,
 }: {
     id: string;
     title?: string;
+    size?: { width: number; height: number };
     onFocus?: () => void;
     onClose: () => void;
     onGridClick: (position: { row: number; col: number }, selectedTool: string) => void;
+
+    children?: ReactNode;
 }) {
     const addGridListener = gridState((s) => s.addGridListener);
     const removeGridListener = gridState((s) => s.removeGridListener);
@@ -37,7 +42,7 @@ export function PlacementEditorWindow({
         return () => {
             removeGridListener(id);
         };
-    }, [selectedTool, effectRefresh]);
+    }, [selectedTool, effectRefresh, children]);
 
     return createPortal(
         <FloatingWindow
@@ -48,10 +53,11 @@ export function PlacementEditorWindow({
             onFocusLost={() => removeGridListener(id)}
             title={title}
             defaultPosition={{ x: 200, y: 200 }}
-            size={{ width: 360, height: 150 }}
+            size={size}
             onClose={onClose}
             id={id}
         >
+            {children}
             <div className="w-full flex flex-col gap-2 justify-between items-center border rounded-md px-4 py-2">
                 <ToolSelectionGroup defaultValue={selectedTool} onValueChange={setSelectedTool}></ToolSelectionGroup>
             </div>

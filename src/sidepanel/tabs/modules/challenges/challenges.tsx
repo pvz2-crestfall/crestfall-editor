@@ -1,4 +1,5 @@
 import { ModuleTemplate } from '../template';
+import { EndangeredChallenge } from './endangered-challenge';
 import { MoldChallenge } from './mold-challenge';
 import {
     FlowerLineChallenge,
@@ -39,6 +40,7 @@ export function ChallengeModule() {
             <FlowerLineChallenge />
 
             <MoldChallenge />
+            <EndangeredChallenge />
         </ModuleTemplate>
     );
 }

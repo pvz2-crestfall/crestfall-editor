@@ -9,8 +9,8 @@ export interface MoldColonyChallengeProps {
 }
 
 export class MoldColony extends PVZBase {
-    aliases: string[] = ['MoldColony'];
     static objclass: string = 'MoldColonyChallengeProps';
+    aliases: string[] = ['MoldColony'];
     objdata: MoldColonyChallengeProps;
 
     constructor(data: PVZObject) {

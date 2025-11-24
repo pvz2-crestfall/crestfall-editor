@@ -27,7 +27,6 @@ import {
         name: string;
         score: number;
     };
-    endangeredPlants: { row: number; column: number; name: string }[] = [];
 */
 export function ChallengeModule() {
     return (

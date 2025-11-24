@@ -8,13 +8,14 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { gridState } from '@/lib/state/gridstate';
 import { levelState } from '@/lib/state/levelstate';
 import { StageModuleType } from '@/types/PVZTypes';
 import { useEffect, useState } from 'react';
 
 export function WorldTypeSelector() {
     const levelBuilder = levelState((s) => s.levelBuilder);
-    const reloadBackground = levelState((s) => s.reloadBackground);
+    const reloadBackground = gridState((s) => s.updateGrid);
     const [stageType, setStageType] = useState(levelBuilder.levelProperties.stageType);
 
     useEffect(() => {

@@ -1,3 +1,4 @@
+import { gridState } from '@/lib/state/gridstate';
 import { levelState } from '@/lib/state/levelstate';
 import { StageModuleType } from '@/types/PVZTypes';
 
@@ -30,7 +31,7 @@ const backgroundImages = {
 };
 
 export function LevelBackground() {
-    levelState((s) => s.backgroundReloads);
+    gridState((s) => s.shouldUpdate);
     const levelBuilder = levelState((s) => s.levelBuilder);
 
     return (

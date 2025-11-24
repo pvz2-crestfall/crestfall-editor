@@ -44,7 +44,8 @@ const Alignments = {
 };
 
 export function LevelGrid() {
-    levelState((s) => s.backgroundReloads);
+    gridState((s) => s.shouldUpdate);
+
     const [refreshCount, setRefreshCount] = useState(0);
     const levelBuilder = levelState((s) => s.levelBuilder);
 

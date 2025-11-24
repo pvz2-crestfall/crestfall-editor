@@ -1,5 +1,6 @@
 import { Label } from '@/components/ui/label';
 import { OptionalNumberInput } from '@/components/ui/optional-ninput';
+import { gridState } from '@/lib/state/gridstate';
 import { levelState } from '@/lib/state/levelstate';
 import { useEffect, useState } from 'react';
 
@@ -77,10 +78,12 @@ export function TimeWithoutSpendingChallenge() {
 
 export function FlowerLineChallenge() {
     const levelBuilder = levelState((s) => s.levelBuilder);
+    const updateGrid = gridState((s) => s.updateGrid);
     const [distance, setDistance] = useState(levelBuilder.challengeManager.zombieDistance);
 
     useEffect(() => {
         levelBuilder.challengeManager.zombieDistance = distance;
+        updateGrid();
     }, [distance]);
 
     return <NumberChallenge label="Flower Line Column" value={distance} onChange={setDistance} />;

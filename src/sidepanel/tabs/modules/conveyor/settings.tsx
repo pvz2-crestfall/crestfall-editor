@@ -23,7 +23,7 @@ export function ConveyorSettings() {
                 <Label className="px-4 py-1">Enable Conveyor Belt</Label>
                 <Switch defaultChecked={enabled} onCheckedChange={setEnabled}></Switch>
             </div>
-            {levelBuilder.conveyor.enabled && (
+            {enabled && (
                 <div>
                     <div className="flex w-full items-center justify-between border rounded-md px-4 py-2">
                         <Label className="px-4 py-1">Conveyor Belt Speed</Label>

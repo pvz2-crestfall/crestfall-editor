@@ -94,6 +94,27 @@ export function LevelInfo() {
                     </SelectContent>
                 </Select>
             </div>
+
+            <WorldOptions stageType={stageType} />
         </div>
     );
+}
+
+function WorldOptions({ stageType }: { stageType: StageModuleType }) {
+    let content = null;
+
+    if (stageType == StageModuleType.Pirate) {
+        content = <h1>Hlelo there</h1>;
+    }
+
+    if (content == null) return null;
+    else
+        return (
+            <div className="flex flex-col w-full justify-center items-center mt-4">
+                <Label className="mb-2">World Options</Label>
+                <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
+                    {content}
+                </div>
+            </div>
+        );
 }

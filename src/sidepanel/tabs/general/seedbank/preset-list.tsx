@@ -54,7 +54,7 @@ export function PresetPlantList() {
     };
 
     return (
-        <div className="py-1 px-2 space-y-2">
+        <div className="flex flex-col w-full items-center py-1 px-2 space-y-2">
             <Label className="item-center justify-center">Preset Plants</Label>
             <div className="flex gap-2 justify-centered">
                 {/* <Input placeholder="New Plant..." value={newItem} onChange={(e) => setNewItem(e.target.value)} /> */}
@@ -62,7 +62,7 @@ export function PresetPlantList() {
                 <Button onClick={addItem}>Add</Button>
             </div>
 
-            <div className="flex">
+            <div className="flex w-[80%]">
                 <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
                     <SortableContext items={presetPlants} strategy={verticalListSortingStrategy}>
                         <ul className="w-full">

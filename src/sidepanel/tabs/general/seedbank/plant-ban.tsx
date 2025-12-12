@@ -33,10 +33,8 @@ export function ExcludePlantList() {
     };
 
     return (
-        <div className="py-1 px-2 space-y-2">
+        <div className="flex flex-col w-full items-center py-1 px-2 space-y-2">
             <Label className="item-center justify-center">Banned Plants</Label>
-
-            <div className=""></div>
 
             <div className="flex flex-row w-full items-center justify-center">
                 <Label className="px-4 py-1">Exclude Sun Producers</Label>

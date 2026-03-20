@@ -1,3 +1,4 @@
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import {
     Select,
@@ -16,6 +17,9 @@ import { useEffect, useState } from 'react';
 export function LevelInfo() {
     const levelBuilder = levelState((s) => s.levelBuilder);
     const reloadBackground = gridState((s) => s.updateGrid);
+    const [stageNumb, setStageNumb] = useState(levelBuilder.levelProperties.levelNumber);
+    const [stageName, setStageName] = useState(levelBuilder.levelProperties.name);
+    const [stageDesc, setStageDesc] = useState(levelBuilder.levelProperties.description);
     const [stageType, setStageType] = useState(levelBuilder.levelProperties.stageType);
     const [mowerType, setMowerType] = useState<string>(levelBuilder.levelProperties.lawnMower ?? 'disabled');
 
@@ -32,8 +36,26 @@ export function LevelInfo() {
         }
     }, [mowerType, stageType]);
 
+    useEffect(() => {
+        levelBuilder.levelProperties.levelNumber = stageNumb;
+        levelBuilder.levelProperties.description = stageDesc;
+        levelBuilder.levelProperties.name = stageName;
+    }, [stageNumb, stageName, stageDesc]);
+
     return (
         <div className="flex flex-col items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
+            <div className="flex flex-row w-full items-center justify-between border rounded-md px-4 py-2 gap-2">
+                <Label>Number</Label>
+                <Input
+                    type="number"
+                    placeholder="50"
+                    defaultValue={stageNumb}
+                    className="text-center w-20 font-mono align-left"
+                    size={5}
+                    onChange={(e) => setStageNumb(Number(e.target.value))}
+                />
+            </div>
+
             <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
                 <Label>World Type</Label>
                 <Select value={stageType ?? undefined} onValueChange={(val) => setStageType(val as StageModuleType)}>
@@ -96,6 +118,29 @@ export function LevelInfo() {
             </div>
 
             <WorldOptions stageType={stageType} />
+
+            <div className="flex flex-col w-full items-center justify-between border rounded-md px-4 py-2 gap-2">
+                <Label>Name</Label>
+                <Input
+                    className="text-center"
+                    value={stageName}
+                    placeholder=""
+                    onChange={(e) => {
+                        setStageName(e.target.value);
+                    }}
+                />
+            </div>
+            <div className="flex flex-col w-full items-center justify-between border rounded-md px-4 py-2 gap-2">
+                <Label>Description</Label>
+                <Input
+                    className="text-center"
+                    value={stageDesc}
+                    placeholder=""
+                    onChange={(e) => {
+                        setStageDesc(e.target.value);
+                    }}
+                />
+            </div>
         </div>
     );
 }

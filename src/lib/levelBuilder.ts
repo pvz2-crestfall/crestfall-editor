@@ -8,6 +8,7 @@ import { WaveManagerWrapper } from './levelModules/wavemanager/wavemanager';
 import { TileManager } from './levelModules/tilemanager/tilemanager';
 import { LevelDefinition } from './levelModules/leveldefinition';
 import { ChallengeManager } from './levelModules/challenges/challengemanager';
+import { MinigameManager } from './levelModules/minigamemanager/minigamemanager';
 
 export class LevelBuilder {
     rawData: PVZObject[];
@@ -15,6 +16,7 @@ export class LevelBuilder {
     waveManager: WaveManagerWrapper;
     tileManager: TileManager;
     challengeManager: ChallengeManager;
+    minigameManager: MinigameManager;
     seedBank: SeedBank;
     conveyor: ConveyorBelt;
 
@@ -23,12 +25,12 @@ export class LevelBuilder {
         this.rawData = data;
 
         // extract level metadata
-        let levelDefObj = data.filter((obj) => obj.objclass == 'LevelDefinition')[0];
+        let levelDefObj = data.find((obj) => obj.objclass == 'LevelDefinition');
         if (!levelDefObj) levelDefObj = { objclass: 'LevelDefinition', objdata: {} } as PVZObject;
         this.levelProperties = new LevelDefinition(levelDefObj.objdata as LevelDefinitionObject);
 
         // seed chooser properties
-        const seedBankObj = data.filter((obj) => obj.objclass == 'SeedBankProperties')[0];
+        const seedBankObj = data.find((obj) => obj.objclass == 'SeedBankProperties');
         if (seedBankObj) {
             const seedbank = seedBankObj.objdata as SeedBankObject;
             this.seedBank = new SeedBank(seedbank);
@@ -37,7 +39,7 @@ export class LevelBuilder {
         }
 
         // conveyor properties
-        const conveyorObj = data.filter((obj) => obj.objclass == 'ConveyorSeedBankProperties')[0];
+        const conveyorObj = data.find((obj) => obj.objclass == 'ConveyorSeedBankProperties');
         if (conveyorObj) {
             const seedbank = conveyorObj.objdata as ConveyorSeedBankPropertiesObject;
             this.conveyor = new ConveyorBelt(seedbank);
@@ -50,12 +52,11 @@ export class LevelBuilder {
             });
         }
 
-        // initialize wave manager
+        // initialize module managers
         this.waveManager = new WaveManagerWrapper(data);
         this.tileManager = new TileManager(data);
-
-        // challenge manager
         this.challengeManager = new ChallengeManager(data);
+        this.minigameManager = new MinigameManager(data);
     }
 
     build() {
@@ -81,6 +82,10 @@ export class LevelBuilder {
         const [challengeModules, challengeObjects] = this.challengeManager.build();
         modules.push(...challengeModules);
         objects.push(...challengeObjects);
+
+        const [minigameModules, minigameObjects] = this.minigameManager.build();
+        modules.push(...minigameModules);
+        objects.push(...minigameObjects);
 
         const [tileModules, tileObjects] = this.tileManager.build();
         modules.push(...tileModules);

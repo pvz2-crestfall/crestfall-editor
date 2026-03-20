@@ -34,6 +34,12 @@ export interface ConveyorSeedBankPropertiesObject {
     ResourceGroupNames?: string[];
 }
 
+export interface LastStandMinigameProperties {
+    PreSeedchooserFlow?: string;
+    StartingPlantfood: number;
+    StartingSun: number;
+}
+
 export interface ConveyorSeedBankPlantObject {
     PlantType: string;
 

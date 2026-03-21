@@ -31,7 +31,7 @@ export function WaveActionList({
     const [wave, setWaveState] = useState<WaveAction[]>([]);
 
     const validIndex = waveIndex ?? -1;
-    const waveActions = levelBuilder.waveManager.waves[validIndex] ?? [];
+    const waveActions = levelBuilder.waveManager.waves[validIndex]?.actions ?? [];
 
     useEffect(() => {
         setWaveState(waveIndex != null ? waveActions : []);
@@ -40,7 +40,7 @@ export function WaveActionList({
     const setWave = useCallback(
         (newWave: WaveAction[]) => {
             if (waveIndex == null) return;
-            levelBuilder.waveManager.waves[waveIndex] = newWave;
+            levelBuilder.waveManager.waves[waveIndex].actions = newWave;
             setWaveState(newWave);
         },
         [waveIndex],

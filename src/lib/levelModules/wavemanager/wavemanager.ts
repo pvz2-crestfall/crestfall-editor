@@ -4,10 +4,12 @@ import type { PVZObject } from '@/types/PVZTypes';
 import { fromRTID, RTIDTypes, toRTID } from '../../utils';
 import type { WaveAction } from './types';
 
+export type WaveListType = { id: string; actions: WaveAction[] }[];
+
 export class WaveManagerWrapper {
     waveManager: WaveManager;
     waveManagerModule: WaveManagerModule;
-    waves: WaveAction[][] = [];
+    waves: WaveListType = [];
 
     constructor(data: PVZObject[]) {
         const waveManagerObj = data.filter((obj) => obj.objclass == 'WaveManagerProperties')[0];
@@ -32,11 +34,12 @@ export class WaveManagerWrapper {
             });
         }
 
-        const waves: WaveAction[][] = [];
+        const waves: WaveListType = [];
 
         for (const wave of this.waveManager.objdata.Waves) {
-            waves.push(
-                wave
+            waves.push({
+                id: crypto.randomUUID(),
+                actions: wave
                     .map((waveAction) => {
                         const { name } = fromRTID(waveAction);
 
@@ -51,7 +54,7 @@ export class WaveManagerWrapper {
                         }
                     })
                     .filter((x) => x !== undefined),
-            );
+            });
         }
 
         this.waves = waves;
@@ -78,7 +81,7 @@ export class WaveManagerWrapper {
 
         const waveObjects: PVZObject[] = [];
         const waveNames = this.waves.map((wave, waveIndex) => {
-            return wave.map((action, actionIndex) => {
+            return wave.actions.map((action, actionIndex) => {
                 const alias = 'Wave' + (waveIndex + 1).toString() + 'Action' + actionIndex.toString();
 
                 const obj = { aliases: [alias], objclass: action.type, objdata: action.data } as PVZObject;

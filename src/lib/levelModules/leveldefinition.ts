@@ -109,6 +109,33 @@ export class LevelDefinition extends PVZBase {
     set levelNumber(levelNumber: number) {
         this.objdata.LevelNumber = levelNumber;
     }
+
+    get levelMusic(): string {
+        const musicType = this.objdata.MusicType;
+        const loadDefaultMusic = this.objdata.LoadDefaultMusic;
+
+        if (loadDefaultMusic && musicType == 'MiniGame_A') return 'zomboss';
+        if (musicType == 'MiniGame_A') return 'minigame1';
+        if (musicType == 'MiniGame_B') return 'minigame2';
+
+        return 'default';
+    }
+
+    set levelMusic(music: string) {
+        if (music == 'zomboss') {
+            this.objdata.LoadDefaultMusic = true;
+            this.objdata.MusicType = 'MiniGame_A';
+        } else {
+            this.objdata.LoadDefaultMusic = undefined;
+        }
+
+        if (music == 'minigame1') this.objdata.MusicType = 'MiniGame_A';
+        if (music == 'minigame2') this.objdata.MusicType = 'MiniGame_B';
+        if (music == 'default') {
+            this.objdata.MusicType = undefined;
+            this.objdata.LoadDefaultMusic = undefined;
+        }
+    }
 }
 
 const worldMowers = {

@@ -22,6 +22,7 @@ export function LevelInfo() {
     const [stageDesc, setStageDesc] = useState(levelBuilder.levelProperties.description);
     const [stageType, setStageType] = useState(levelBuilder.levelProperties.stageType);
     const [mowerType, setMowerType] = useState<string>(levelBuilder.levelProperties.lawnMower ?? 'disabled');
+    const [musicType, setMusicType] = useState(levelBuilder.levelProperties.levelMusic);
 
     useEffect(() => {
         levelBuilder.levelProperties.stageType = stageType;
@@ -40,7 +41,8 @@ export function LevelInfo() {
         levelBuilder.levelProperties.levelNumber = stageNumb;
         levelBuilder.levelProperties.description = stageDesc;
         levelBuilder.levelProperties.name = stageName;
-    }, [stageNumb, stageName, stageDesc]);
+        levelBuilder.levelProperties.levelMusic = musicType;
+    }, [stageNumb, stageName, stageDesc, musicType]);
 
     return (
         <div className="flex flex-col items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
@@ -116,8 +118,25 @@ export function LevelInfo() {
                     </SelectContent>
                 </Select>
             </div>
-
             <WorldOptions stageType={stageType} />
+
+            <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
+                <Label>Music Type</Label>
+                <Select value={musicType ?? undefined} onValueChange={(val) => setMusicType(val)}>
+                    <SelectTrigger className="w-[180px]">
+                        <SelectValue placeholder="Music Type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup>
+                            <SelectLabel>Music Type</SelectLabel>
+                            <SelectItem value={'default'}>Default</SelectItem>
+                            <SelectItem value={'minigame1'}>Minigame A</SelectItem>
+                            <SelectItem value={'minigame2'}>Minigame B</SelectItem>
+                            <SelectItem value={'zomboss'}>Zomboss</SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
+            </div>
 
             <div className="flex flex-col w-full items-center justify-between border rounded-md px-4 py-2 gap-2">
                 <Label>Name</Label>

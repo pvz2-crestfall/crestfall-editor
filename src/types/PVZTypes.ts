@@ -9,7 +9,12 @@ export interface LevelDefinitionObject {
     ShinyPresentTable: 'egypt_shiny_01';
     StartingSun?: number;
     AddBonusStartingSun?: boolean;
+    StartingPlantfood?: number;
+    SuppressPlantfoodPurchase?: boolean;
     ForceToWorldMap?: boolean;
+    GameFeaturesToUnlock?: string[];
+    LoadDefaultMusic?: boolean;
+    MusicType?: 'MiniGame_A' | 'MiniGame_B';
 }
 
 export interface SeedBankObject {

@@ -5,7 +5,7 @@ export class SeedBank extends PVZBase {
     static objclass: string = 'SeedBankProperties';
     aliases: string[] = ['SeedBank'];
     objdata: SeedBankObject;
-    enabled?: boolean = true;
+    enabled?: boolean = false;
 
     constructor(propertiesObject: SeedBankObject) {
         super();

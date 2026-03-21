@@ -45,7 +45,7 @@ export function LevelInfo() {
     return (
         <div className="flex flex-col items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
             <div className="flex flex-row w-full items-center justify-between border rounded-md px-4 py-2 gap-2">
-                <Label>Number</Label>
+                <Label>Level Number</Label>
                 <Input
                     type="number"
                     placeholder="50"

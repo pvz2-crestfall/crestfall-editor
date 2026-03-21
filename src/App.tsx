@@ -60,7 +60,7 @@ export default function App() {
                 <div className="flex-1 flex flex-col items-center justify-center gap-4">
                     <LevelPreview />
                     <div className="flex-1 flex flex-row items-center justify-center gap-4">
-                        <Label>Toggle Dev Mode</Label>
+                        <Label>Toggle Data Preview</Label>
                         <Switch defaultChecked={isDev} onCheckedChange={setIsDev} />
                         <ThemeToggle />
                     </div>

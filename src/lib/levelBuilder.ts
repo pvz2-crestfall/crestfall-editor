@@ -34,6 +34,7 @@ export class LevelBuilder {
         if (seedBankObj) {
             const seedbank = seedBankObj.objdata as SeedBankObject;
             this.seedBank = new SeedBank(seedbank);
+            this.seedBank.enabled = true;
         } else {
             this.seedBank = new SeedBank({ SelectionMethod: SeedBankSelectionMethod.Chooser });
         }

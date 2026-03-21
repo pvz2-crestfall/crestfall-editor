@@ -14,23 +14,13 @@ export class LevelDefinition extends PVZBase {
     objdata: LevelDefinitionObject;
 
     lawnMower?: LawnMowerType | 'auto';
-    sunDropper?: SunDropperType = SunDropperType.Default;
+    sunDropper?: SunDropperType;
 
     constructor(metadata: LevelDefinitionObject) {
         super();
 
         this.objdata = { ...metadata }; // clone the metadata object
-        this.objdata.Name = metadata['Name'] ?? '[EGYPT_LEVEL_NAME]';
-        this.objdata.Description = metadata['Description'] ?? '[PLAYERS_TRIP_TO_EGYPT]';
-        this.objdata.LevelNumber = metadata['LevelNumber'] ?? 1;
-        this.objdata.Loot = metadata['Loot'] ?? 'RTID(DefaultLoot@LevelModules)';
-        this.objdata.StageModule = metadata['StageModule'] ?? toRTID(StageModuleType.Egypt, RTIDTypes.module);
-        this.objdata.NormalPresentTable = metadata['NormalPresentTable'] ?? 'egypt_normal_01';
-        this.objdata.ShinyPresentTable = metadata['ShinyPresentTable'] ?? 'egypt_shiny_01';
         this.objdata.Modules = [];
-
-        if (!this.objdata.StartingSun) this.objdata.StartingSun = 50;
-        if (!this.objdata.AddBonusStartingSun) this.objdata.AddBonusStartingSun = true;
 
         // check for misc properties in the level modules
         if (metadata.Modules) {

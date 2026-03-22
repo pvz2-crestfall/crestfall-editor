@@ -1,6 +1,11 @@
-import type { ConveyorSeedBankPropertiesObject, LevelDefinitionObject, SeedBankObject } from '@/types/PVZTypes';
+import type {
+    ConveyorSeedBankPropertiesObject,
+    LevelDefinitionObject,
+    PiratePlankProperties,
+    SeedBankObject,
+} from '@/types/PVZTypes';
 import type { PVZObject } from '@/types/PVZTypes';
-import { SeedBankSelectionMethod } from '@/types/PVZTypes';
+import { SeedBankSelectionMethod, StageModuleType } from '@/types/PVZTypes';
 import { toRTID, RTIDTypes } from './utils';
 import { SeedBank } from './levelModules/seedbank';
 import { ConveyorBelt } from './levelModules/conveyor';
@@ -9,6 +14,7 @@ import { TileManager } from './levelModules/tilemanager/tilemanager';
 import { LevelDefinition } from './levelModules/leveldefinition';
 import { ChallengeManager } from './levelModules/challenges/challengemanager';
 import { MinigameManager } from './levelModules/minigamemanager/minigamemanager';
+import { PiratePlanks } from './levelModules/pirateplanks';
 
 export class LevelBuilder {
     rawData: PVZObject[];
@@ -19,6 +25,10 @@ export class LevelBuilder {
     minigameManager: MinigameManager;
     seedBank: SeedBank;
     conveyor: ConveyorBelt;
+
+    /* world properties */
+
+    piratePlanks?: PiratePlanks;
 
     constructor(data: PVZObject[]) {
         // save the raw level data in case it's needed for something later
@@ -53,6 +63,19 @@ export class LevelBuilder {
             });
         }
 
+        // pirate planks
+        const piratePlanksObj = data.find((obj) => obj.objclass == 'PiratePlankProperties');
+        if (piratePlanksObj) {
+            console.log('Pirate planks found');
+            const planks = piratePlanksObj.objdata as PiratePlankProperties;
+            this.piratePlanks = new PiratePlanks(planks);
+
+            if (this.levelProperties.hasMoudle(piratePlanksObj)) {
+                this.piratePlanks.enabled = true;
+                console.log('Pirate planks enabled');
+            }
+        }
+
         // initialize module managers
         this.waveManager = new WaveManagerWrapper(data);
         this.tileManager = new TileManager(data);
@@ -68,12 +91,18 @@ export class LevelBuilder {
             'RTID(DefaultZombieWinCondition@LevelModules)',
         ];
 
+        // only build pirate planks if it's a pirate stage, otherwise the game crashes
+        if (this.piratePlanks?.enabled && this.levelProperties.stageType == StageModuleType.Pirate) {
+            const planksObj = this.piratePlanks.buildObject();
+            modules.push(toRTID(this.piratePlanks.aliases[0], RTIDTypes.current));
+            objects.push(planksObj);
+        }
         if (this.seedBank.enabled) {
             const seedBankObj = this.seedBank.buildObject();
             modules.push(toRTID(this.seedBank.aliases[0], RTIDTypes.current));
             objects.push(seedBankObj);
         }
-        if (this.conveyor && this.conveyor.enabled) {
+        if (this.conveyor?.enabled) {
             this.conveyor.objdata.ManualPacketSpawning = this.seedBank.enabled || undefined;
             const conveyorObj = this.conveyor.buildObject();
             modules.push(toRTID(this.conveyor.aliases[0], RTIDTypes.current));

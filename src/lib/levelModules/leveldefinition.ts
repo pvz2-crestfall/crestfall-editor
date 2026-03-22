@@ -12,6 +12,7 @@ export class LevelDefinition extends PVZBase {
     static objclass: string = 'LevelDefinition';
     aliases?: string[] = undefined;
     objdata: LevelDefinitionObject;
+    rawModules: string[];
 
     lawnMower?: LawnMowerType | 'auto';
     sunDropper?: SunDropperType;
@@ -20,6 +21,7 @@ export class LevelDefinition extends PVZBase {
         super();
 
         this.objdata = { ...metadata }; // clone the metadata object
+        this.rawModules = metadata.Modules;
         this.objdata.Modules = [];
 
         // check for misc properties in the level modules
@@ -65,6 +67,19 @@ export class LevelDefinition extends PVZBase {
         }
 
         return modules;
+    }
+
+    hasMoudle(obj: PVZObject): boolean {
+        if (!obj.aliases || obj.aliases[0] == undefined) return false;
+
+        let [objAlias] = obj.aliases;
+
+        for (const m of this.rawModules) {
+            let module = fromRTID(m);
+            if (objAlias == module.name) return true;
+        }
+
+        return false;
     }
 
     get stageType(): StageModuleType {

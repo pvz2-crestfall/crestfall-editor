@@ -1,3 +1,9 @@
+export interface PVZObject<T = unknown> {
+    aliases?: string[];
+    objclass: string;
+    objdata: T;
+}
+
 export interface LevelDefinitionObject {
     Name: string;
     Description: string;
@@ -43,12 +49,6 @@ export interface ConveyorSeedBankPropertiesObject {
     ResourceGroupNames?: string[];
 }
 
-export interface LastStandMinigameProperties {
-    PreSeedchooserFlow?: string;
-    StartingPlantfood: number;
-    StartingSun: number;
-}
-
 export interface ConveyorSeedBankPlantObject {
     PlantType: string;
 
@@ -61,6 +61,12 @@ export interface ConveyorSeedBankPlantObject {
     MinWeightFactor?: number;
     MaxCountCooldownSeconds?: number;
     ForceBoosted?: boolean;
+}
+
+export interface LastStandMinigameProperties {
+    PreSeedchooserFlow?: string;
+    StartingPlantfood: number;
+    StartingSun: number;
 }
 
 export interface WaveManagerPropertiesObject {
@@ -172,8 +178,6 @@ export interface Tile {
     type: string | null; // e.g. 'plant', 'zombie', 'obstacle'
 }
 
-export interface PVZObject<T = unknown> {
-    aliases?: string[];
-    objclass: string;
-    objdata: T;
+export interface PiratePlankProperties {
+    PlankRows: number[];
 }

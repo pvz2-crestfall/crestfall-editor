@@ -60,7 +60,8 @@ export const DefaultLevelFile = `
                     "RTID(SeedBank@CurrentLevel)",
                     "RTID(ChallengeModule@CurrentLevel)",
                     "RTID(NewWaves@CurrentLevel)",
-                    "RTID(DefaultSunDropper@LevelModules)"
+                    "RTID(DefaultSunDropper@LevelModules)",
+                    "RTID(EgyptMowers@LevelModules)"
                 ],
                 "StartingSun": 50,
                 "AddBonusStartingSun": true

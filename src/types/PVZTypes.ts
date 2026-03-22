@@ -2,6 +2,10 @@ export interface LevelDefinitionObject {
     Name: string;
     Description: string;
     LevelNumber: number;
+    FirstRewardParam?: string;
+    FirstRewardType?: string;
+    ReplayRewardParam?: string;
+    ReplayRewardType?: string;
     Loot: 'RTID(DefaultLoot@LevelModules)';
     Modules: string[];
     StageModule: string;

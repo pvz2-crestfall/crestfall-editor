@@ -6,13 +6,16 @@ import { VirtualizedCommandList } from './ui/virtual-command-list';
 import { CommandEmpty, CommandGroup, CommandInput, CommandList, Command } from './ui/command';
 import { PlantDisplayNames, Plants } from '@/lib/plants';
 import { PlantIcon } from './ui/asset-icons';
+import { cn } from '@/lib/utils';
 
 export function PlantSelector({
     className,
+    buttonClassName,
     plantType,
     onSelect,
 }: {
     className?: string;
+    buttonClassName?: string;
     plantType: string;
     onSelect?: (plant: string) => void;
 }) {
@@ -32,9 +35,9 @@ export function PlantSelector({
                     variant="outline"
                     role="combobox"
                     aria-expanded={searchOpen}
-                    className="w-40 justify-between bg-transparent"
+                    className={cn('w-40 justify-between bg-transparent', buttonClassName)}
                 >
-                    <span className="overflow-hidden flex flex-row gap-2">
+                    <span className="items-center overflow-hidden flex flex-row gap-2">
                         {plantType ? PlantDisplayNames[plantType] : 'Select Plant.'}
                         {PlantIcon({ type: plantType, size: 7 })}
                     </span>

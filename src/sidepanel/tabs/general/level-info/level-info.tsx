@@ -13,6 +13,7 @@ import { gridState } from '@/lib/state/gridstate';
 import { levelState } from '@/lib/state/levelstate';
 import { LawnMowerType, StageModuleType } from '@/types/PVZTypes';
 import { useEffect, useState } from 'react';
+import { LevelUnlockSelector } from './level-reward';
 
 export function LevelInfo() {
     const levelBuilder = levelState((s) => s.levelBuilder);
@@ -57,7 +58,6 @@ export function LevelInfo() {
                     onChange={(e) => setStageNumb(Number(e.target.value))}
                 />
             </div>
-
             <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
                 <Label>World Type</Label>
                 <Select value={stageType ?? undefined} onValueChange={(val) => setStageType(val as StageModuleType)}>
@@ -86,7 +86,6 @@ export function LevelInfo() {
                     </SelectContent>
                 </Select>
             </div>
-
             <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
                 <Label>Lawn Mowers</Label>
                 <Select value={mowerType ?? undefined} onValueChange={(val) => setMowerType(val)}>
@@ -119,7 +118,6 @@ export function LevelInfo() {
                 </Select>
             </div>
             <WorldOptions stageType={stageType} />
-
             <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
                 <Label>Music Type</Label>
                 <Select value={musicType ?? undefined} onValueChange={(val) => setMusicType(val)}>
@@ -137,7 +135,7 @@ export function LevelInfo() {
                     </SelectContent>
                 </Select>
             </div>
-
+            <LevelUnlockSelector />
             <div className="flex flex-col w-full items-center justify-between border rounded-md px-4 py-2 gap-2">
                 <Label>Name</Label>
                 <Input

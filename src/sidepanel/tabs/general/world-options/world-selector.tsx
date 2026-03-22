@@ -8,25 +8,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { gridState } from '@/lib/state/gridstate';
-import { levelState } from '@/lib/state/levelstate';
 import { StageModuleType } from '@/types/PVZTypes';
-import { useEffect, useState } from 'react';
 
-export function WorldTypeSelector() {
-    const levelBuilder = levelState((s) => s.levelBuilder);
-    const reloadBackground = gridState((s) => s.updateGrid);
-    const [stageType, setStageType] = useState(levelBuilder.levelProperties.stageType);
-
-    useEffect(() => {
-        levelBuilder.levelProperties.stageType = stageType;
-        reloadBackground();
-    }, [stageType]);
-
+export function WorldTypeSelector({ value, onValueChange }: { value: StageModuleType; onValueChange: (type: any) => void }) {
     return (
         <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
             <Label>World Type</Label>
-            <Select value={stageType ?? undefined} onValueChange={(val) => setStageType(val as StageModuleType)}>
+            <Select value={value ?? undefined} onValueChange={(val) => onValueChange(val as StageModuleType)}>
                 <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Stage Type" />
                 </SelectTrigger>

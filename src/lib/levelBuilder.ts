@@ -28,7 +28,7 @@ export class LevelBuilder {
 
     /* world properties */
 
-    piratePlanks?: PiratePlanks;
+    piratePlanks: PiratePlanks;
 
     constructor(data: PVZObject[]) {
         // save the raw level data in case it's needed for something later
@@ -74,6 +74,8 @@ export class LevelBuilder {
                 this.piratePlanks.enabled = true;
                 console.log('Pirate planks enabled');
             }
+        } else {
+            this.piratePlanks = new PiratePlanks({ PlankRows: [] });
         }
 
         // initialize module managers

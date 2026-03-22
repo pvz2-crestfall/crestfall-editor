@@ -59,9 +59,9 @@ export function LevelUnlockSelector() {
                         <SelectGroup>
                             <SelectLabel>Unlock</SelectLabel>
                             <SelectItem value="default">Default</SelectItem>
+                            <SelectItem value="unlock_plant">Plant Unlock</SelectItem>
                             <SelectItem value="moneybag">Big Money Bag</SelectItem>
                             <SelectItem value="giftbox">Mystery Box</SelectItem>
-                            <SelectItem value="unlock_plant">Plant Unlock</SelectItem>
                             <SelectItem value="none">None</SelectItem>
                         </SelectGroup>
                     </SelectContent>

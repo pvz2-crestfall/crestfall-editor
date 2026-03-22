@@ -8,26 +8,13 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { levelState } from '@/lib/state/levelstate';
 import { LawnMowerType } from '@/types/PVZTypes';
-import { useEffect, useState } from 'react';
 
-export function MowerTypeSelector() {
-    const levelBuilder = levelState((s) => s.levelBuilder);
-    const [mowerType, setMowerType] = useState<string>(levelBuilder.levelProperties.lawnMower ?? 'disabled');
-
-    useEffect(() => {
-        if (mowerType == 'disabled') {
-            levelBuilder.levelProperties.lawnMower = undefined;
-        } else {
-            levelBuilder.levelProperties.lawnMower = mowerType as LawnMowerType;
-        }
-    }, [mowerType]);
-
+export function LawnMowersSelector({ value, onValueChange }: { value: string; onValueChange: (type: string) => void }) {
     return (
         <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
             <Label>Lawn Mowers</Label>
-            <Select value={mowerType ?? undefined} onValueChange={(val) => setMowerType(val)}>
+            <Select value={value ?? undefined} onValueChange={(val) => onValueChange(val)}>
                 <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Mower Type" />
                 </SelectTrigger>

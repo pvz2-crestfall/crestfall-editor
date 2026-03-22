@@ -19,6 +19,7 @@ export function LastStandMinigame() {
             // PreSeedchooserFlow: rift,
         };
         levelBuilder.minigameManager.lastStandEnabled = enabled;
+        levelBuilder.waveManager.waveManagerModule.objdata.ManualStartup = enabled || undefined;
     }, [enabled, startingSun, startingPf]);
 
     return (

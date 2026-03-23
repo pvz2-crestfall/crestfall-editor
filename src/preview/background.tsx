@@ -35,7 +35,7 @@ const backgroundImages = {
 export function LevelBackground() {
     gridState((s) => s.shouldUpdate);
     const levelBuilder = levelState((s) => s.levelBuilder);
-
+    console.log('Updating background.');
     return (
         <div className="absolute inset-0">
             <img
@@ -43,7 +43,9 @@ export function LevelBackground() {
                 className="w-full h-full object-cover"
                 draggable={false}
             />
-            <PiratePlanksRender plankRows={levelBuilder.piratePlanks.rows} />
+            {levelBuilder.levelProperties.stageType == StageModuleType.Pirate && (
+                <PiratePlanksRender plankRows={levelBuilder.piratePlanks.rows} />
+            )}
         </div>
     );
 }
@@ -67,7 +69,7 @@ function PiratePlanksRender({ plankRows }: { plankRows: PiratePlankRows }) {
                         transform: 'translate(-50%, 0%)',
                     };
 
-                    return <img src={src} style={imageStyle} draggable={false} />;
+                    return <img key={"pirate-plank-" + index.toString()} src={src} style={imageStyle} draggable={false} />;
                 }
             })}
         </div>

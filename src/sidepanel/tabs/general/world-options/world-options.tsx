@@ -58,13 +58,12 @@ function PirateSeaOptions() {
 
             {plankRows.map((row, index) => {
                 return (
-                    <div className="flex items-center w-full justify-between border rounded-md px-4 py-2">
+                    <div
+                        key={'pirate-plant-toggle-' + index.toString()}
+                        className="flex items-center w-full justify-between border rounded-md px-4 py-2"
+                    >
                         <Label className="py-1">Plank Row {index + 1}</Label>
-                        <Switch
-                            id="bonus-sun-toggle"
-                            defaultChecked={row}
-                            onCheckedChange={(val) => setRow(index, val)}
-                        />
+                        <Switch defaultChecked={row} onCheckedChange={(val) => setRow(index, val)} />
                     </div>
                 );
             })}

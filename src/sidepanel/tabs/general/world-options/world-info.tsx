@@ -14,16 +14,14 @@ export function WorldInfo() {
     const [mowerType, setMowerType] = useState<string>(levelBuilder.levelProperties.lawnMower ?? 'disabled');
 
     useEffect(() => {
-        levelBuilder.levelProperties.stageType = stageType;
-        reloadBackground();
-    }, [stageType]);
-
-    useEffect(() => {
         if (mowerType == 'disabled') {
             levelBuilder.levelProperties.lawnMower = undefined;
         } else {
             levelBuilder.levelProperties.lawnMower = mowerType as LawnMowerType;
         }
+
+        levelBuilder.levelProperties.stageType = stageType;
+        reloadBackground();
     }, [mowerType, stageType]);
 
     return (

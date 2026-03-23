@@ -8,7 +8,7 @@ interface GridListener {
 }
 
 export interface GridState {
-    shouldUpdate: boolean;
+    shouldUpdate: number;
     gridListeners: GridListener[];
     rawTiles: TileObject[] | undefined;
     gridData: TileManager | undefined;
@@ -27,7 +27,7 @@ export interface GridState {
 
 export const gridState = create<GridState>()(
     immer((set, get) => ({
-        shouldUpdate: false,
+        shouldUpdate: 0,
         gridListeners: [],
         rawTiles: [],
         gridData: undefined,
@@ -65,7 +65,7 @@ export const gridState = create<GridState>()(
         },
         updateGrid: () => {
             set((state) => {
-                state.shouldUpdate = !state.shouldUpdate;
+                state.shouldUpdate += 1;
             });
         },
     })),

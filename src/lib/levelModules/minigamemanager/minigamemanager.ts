@@ -13,6 +13,7 @@ export class MinigameManager {
         for (const object of data) {
             if (object.objclass == 'LastStandMinigameProperties') {
                 this.lastStand = object.objdata as LastStandMinigameProperties;
+                this.lastStandEnabled = true;
             }
         }
     }

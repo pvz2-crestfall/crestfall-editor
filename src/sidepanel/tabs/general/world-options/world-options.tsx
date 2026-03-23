@@ -1,6 +1,7 @@
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import type { PiratePlankRows } from '@/lib/levelModules/pirateplanks';
+import { gridState } from '@/lib/state/gridstate';
 import { levelState } from '@/lib/state/levelstate';
 import { StageModuleType } from '@/types/PVZTypes';
 import { useEffect, useState } from 'react';
@@ -26,6 +27,8 @@ export function WorldOptions({ stageType }: { stageType: StageModuleType }) {
 
 function PirateSeaOptions() {
     const levelBuilder = levelState((s) => s.levelBuilder);
+    const reloadBackground = gridState((s) => s.updateGrid);
+
     const [plankRows, setPlankRows] = useState(levelBuilder.piratePlanks.rows);
 
     useEffect(() => {
@@ -37,6 +40,8 @@ function PirateSeaOptions() {
         } else {
             levelBuilder.piratePlanks.enabled = true;
         }
+
+        reloadBackground();
     }, [plankRows]);
 
     const setRow = (index: number, value: boolean) => {

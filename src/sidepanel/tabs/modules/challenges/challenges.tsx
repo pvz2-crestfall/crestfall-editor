@@ -1,4 +1,5 @@
 import { ModuleTemplate } from '../template';
+import { BeatTheLevelChallenge } from './custom-message';
 import { EndangeredChallenge } from './endangered-challenge';
 import { MoldChallenge } from './mold-challenge';
 import {
@@ -40,6 +41,8 @@ export function ChallengeModule() {
 
             <MoldChallenge />
             <EndangeredChallenge />
+
+            <BeatTheLevelChallenge />
         </ModuleTemplate>
     );
 }

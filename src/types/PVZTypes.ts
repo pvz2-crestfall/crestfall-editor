@@ -181,3 +181,9 @@ export interface Tile {
 export interface PiratePlankProperties {
     PlankRows: number[];
 }
+
+export interface RailcartProperties {
+    RailcartType: string;
+    Railcarts: { Column: number; Row: number }[];
+    Rails: { Column: number; RowEnd: number; RowStart: number }[];
+}

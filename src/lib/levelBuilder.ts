@@ -2,6 +2,7 @@ import type {
     ConveyorSeedBankPropertiesObject,
     LevelDefinitionObject,
     PiratePlankProperties,
+    RailcartProperties,
     SeedBankObject,
 } from '@/types/PVZTypes';
 import type { PVZObject } from '@/types/PVZTypes';
@@ -15,6 +16,7 @@ import { LevelDefinition } from './levelModules/leveldefinition';
 import { ChallengeManager } from './levelModules/challenges/challengemanager';
 import { MinigameManager } from './levelModules/minigamemanager/minigamemanager';
 import { PiratePlanks } from './levelModules/pirateplanks';
+import { Railcarts } from './levelModules/railcarts';
 
 export class LevelBuilder {
     rawData: PVZObject[];
@@ -29,18 +31,19 @@ export class LevelBuilder {
     /* world properties */
 
     piratePlanks: PiratePlanks;
+    railcarts: Railcarts;
 
     constructor(data: PVZObject[]) {
         // save the raw level data in case it's needed for something later
         this.rawData = data;
 
         // extract level metadata
-        let levelDefObj = data.find((obj) => obj.objclass == 'LevelDefinition');
+        let levelDefObj = data.find(({ objclass }) => objclass == 'LevelDefinition');
         if (!levelDefObj) levelDefObj = { objclass: 'LevelDefinition', objdata: {} } as PVZObject;
         this.levelProperties = new LevelDefinition(levelDefObj.objdata as LevelDefinitionObject);
 
         // seed chooser properties
-        const seedBankObj = data.find((obj) => obj.objclass == 'SeedBankProperties');
+        const seedBankObj = data.find(({ objclass }) => objclass == 'SeedBankProperties');
         if (seedBankObj) {
             const seedbank = seedBankObj.objdata as SeedBankObject;
             this.seedBank = new SeedBank(seedbank);
@@ -50,7 +53,7 @@ export class LevelBuilder {
         }
 
         // conveyor properties
-        const conveyorObj = data.find((obj) => obj.objclass == 'ConveyorSeedBankProperties');
+        const conveyorObj = data.find(({ objclass }) => objclass == 'ConveyorSeedBankProperties');
         if (conveyorObj) {
             const seedbank = conveyorObj.objdata as ConveyorSeedBankPropertiesObject;
             this.conveyor = new ConveyorBelt(seedbank);
@@ -64,18 +67,22 @@ export class LevelBuilder {
         }
 
         // pirate planks
-        const piratePlanksObj = data.find((obj) => obj.objclass == 'PiratePlankProperties');
+        const piratePlanksObj = data.find(({ objclass }) => objclass == 'PiratePlankProperties');
         if (piratePlanksObj) {
-            console.log('Pirate planks found');
             const planks = piratePlanksObj.objdata as PiratePlankProperties;
             this.piratePlanks = new PiratePlanks(planks);
-
-            if (this.levelProperties.hasMoudle(piratePlanksObj)) {
-                this.piratePlanks.enabled = true;
-                console.log('Pirate planks enabled');
-            }
+            this.piratePlanks.enabled = this.levelProperties.hasMoudle(piratePlanksObj);
         } else {
             this.piratePlanks = new PiratePlanks({ PlankRows: [] });
+        }
+
+        // Railcarts
+        const railcartsObj = data.find(({ objclass }) => objclass == 'RailcartProperties');
+        if (railcartsObj) {
+            const carts = railcartsObj.objdata as RailcartProperties;
+            this.railcarts = new Railcarts(carts);
+        } else {
+            this.railcarts = new Railcarts({ RailcartType: 'railcart_cowboy', Railcarts: [], Rails: [] });
         }
 
         // initialize module managers
@@ -98,6 +105,11 @@ export class LevelBuilder {
             const planksObj = this.piratePlanks.buildObject();
             modules.push(toRTID(this.piratePlanks.aliases[0], RTIDTypes.current));
             objects.push(planksObj);
+        }
+        if (!this.railcarts.isEmpty()) {
+            const cartsObj = this.railcarts.buildObject();
+            modules.push(toRTID(this.railcarts.aliases[0], RTIDTypes.current));
+            objects.push(cartsObj);
         }
         if (this.seedBank.enabled) {
             const seedBankObj = this.seedBank.buildObject();

@@ -49,6 +49,21 @@ export function RailwayRender({ alignment, railcarts }: { alignment: GridAlignme
                     );
                 });
             })}
+
+            {/* render the minecarts */}
+            {railcarts.objdata.Railcarts.map(({ Row, Column }) => {
+                let src = railwayImages[railpath + 'cart.png'];
+
+                const imageStyle: CSSProperties = {
+                    position: 'absolute',
+                    top: cellTop + cellHeight * Row + '%',
+                    left: cellLeft + cellWidth * Column + '%',
+                    height: cellHeight + '%',
+                    width: cellWidth + '%',
+                };
+
+                return <img key={`cart-${Row}-${Column}`} src={src} style={imageStyle} draggable={false} />;
+            })}
         </div>
     );
 }

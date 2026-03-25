@@ -33,7 +33,7 @@ export function RailcartsModule() {
         if (selectedTool == 'rail') {
             selectedRailcartTile.rail = true;
         }
-        if (selectedTool == 'cart') {
+        if (selectedTool == 'cart' && selectedRailcartTile.rail) {
             selectedRailcartTile.cart = true;
         }
         if (selectedTool == 'remove') {

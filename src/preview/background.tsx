@@ -11,8 +11,6 @@ export const lawnImages = import.meta.glob('/assets/lawns/*.png', {
     import: 'default',
 }) as Record<string, string>;
 
-console.log(lawnImages);
-
 // Map StageModuleType -> bundled URLs
 const backgroundImages = {
     [StageModuleType.Tutorial]: lawnImages['./Frontlawn.png'],
@@ -35,7 +33,6 @@ const backgroundImages = {
 export function LevelBackground() {
     gridState((s) => s.shouldUpdate);
     const levelBuilder = levelState((s) => s.levelBuilder);
-    console.log('Updating background.');
     return (
         <div className="absolute inset-0">
             <img
@@ -69,7 +66,9 @@ function PiratePlanksRender({ plankRows }: { plankRows: PiratePlankRows }) {
                         transform: 'translate(-50%, 0%)',
                     };
 
-                    return <img key={"pirate-plank-" + index.toString()} src={src} style={imageStyle} draggable={false} />;
+                    return (
+                        <img key={'pirate-plank-' + index.toString()} src={src} style={imageStyle} draggable={false} />
+                    );
                 }
             })}
         </div>

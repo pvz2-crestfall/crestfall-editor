@@ -3,8 +3,9 @@ import { levelState } from '@/lib/state/levelstate';
 import { StageModuleType } from '@/types/PVZTypes';
 import { RenderTileSprites } from './render-tile';
 import { useState } from 'react';
+import { RailwayRender } from './rail-render';
 
-interface GridAlignment {
+export interface GridAlignment {
     startX: number;
     startY: number;
     endX: number;
@@ -25,7 +26,7 @@ const altAlignment: GridAlignment = {
     endY: 89.5,
 };
 
-const Alignments = {
+export const Alignments = {
     [StageModuleType.Tutorial]: defaultAlignment,
     [StageModuleType.FrontLawn]: defaultAlignment,
     [StageModuleType.Egypt]: { ...defaultAlignment, endX: 96.9 },
@@ -73,6 +74,8 @@ export function LevelGrid() {
 
     return (
         <div className="absolute inset-0">
+            <RailwayRender alignment={alignment} railcarts={levelBuilder.railcarts} />
+
             <div
                 className="absolute grid"
                 style={{

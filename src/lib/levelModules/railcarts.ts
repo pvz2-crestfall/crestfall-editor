@@ -95,4 +95,12 @@ export class Railcarts extends PVZBase {
     isEmpty(): boolean {
         return !this.railGrid.some((row) => row.some((cell) => cell.cart || cell.rail));
     }
+
+    get railType(): string {
+        return this.objdata.RailcartType;
+    }
+
+    set railType(type: string) {
+        this.objdata.RailcartType = type;
+    }
 }

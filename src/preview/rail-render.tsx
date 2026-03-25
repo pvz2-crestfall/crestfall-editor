@@ -26,10 +26,10 @@ export function RailwayRender({ alignment, railcarts }: { alignment: GridAlignme
                 return row.map((railway, rowIndex) => {
                     let src = railwayImages[railpath + 'mid.png'];
 
-                    if (!row[rowIndex + 1]) {
+                    if (!row[rowIndex + 1] || !row[rowIndex + 1].rail) {
                         src = railwayImages[railpath + 'bottom.png'];
                     }
-                    if (!row[rowIndex - 1]) {
+                    if (!row[rowIndex - 1] || !row[rowIndex - 1].rail) {
                         src = railwayImages[railpath + 'top.png'];
                     }
 
@@ -49,6 +49,7 @@ export function RailwayRender({ alignment, railcarts }: { alignment: GridAlignme
                                     key={`rail-${rowIndex}-${columnIndex}`}
                                     src={src}
                                     style={imageStyle}
+                                    alt="rail"
                                     draggable={false}
                                 />
                             )}
@@ -57,6 +58,7 @@ export function RailwayRender({ alignment, railcarts }: { alignment: GridAlignme
                                     key={`cart-${rowIndex}-${columnIndex}`}
                                     src={railwayImages[railpath + 'cart.png']}
                                     style={imageStyle}
+                                    alt="cart"
                                     draggable={false}
                                 />
                             )}

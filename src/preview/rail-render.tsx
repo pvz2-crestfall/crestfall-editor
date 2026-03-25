@@ -23,9 +23,7 @@ export function RailwayRender({ alignment, railcarts }: { alignment: GridAlignme
     return (
         <div className="flex flex-col">
             {railcarts.railGrid.map((row, columnIndex) => {
-                return row.map((rail, rowIndex) => {
-                    if (!rail) return null;
-
+                return row.map((railway, rowIndex) => {
                     let src = railwayImages[railpath + 'mid.png'];
 
                     if (!row[rowIndex + 1]) {
@@ -45,24 +43,26 @@ export function RailwayRender({ alignment, railcarts }: { alignment: GridAlignme
                     };
 
                     return (
-                        <img key={`rail-${rowIndex}-${columnIndex}`} src={src} style={imageStyle} draggable={false} />
+                        <>
+                            {railway.rail && (
+                                <img
+                                    key={`rail-${rowIndex}-${columnIndex}`}
+                                    src={src}
+                                    style={imageStyle}
+                                    draggable={false}
+                                />
+                            )}
+                            {railway.cart && (
+                                <img
+                                    key={`cart-${rowIndex}-${columnIndex}`}
+                                    src={railwayImages[railpath + 'cart.png']}
+                                    style={imageStyle}
+                                    draggable={false}
+                                />
+                            )}
+                        </>
                     );
                 });
-            })}
-
-            {/* render the minecarts */}
-            {railcarts.objdata.Railcarts.map(({ Row, Column }) => {
-                let src = railwayImages[railpath + 'cart.png'];
-
-                const imageStyle: CSSProperties = {
-                    position: 'absolute',
-                    top: cellTop + cellHeight * Row + '%',
-                    left: cellLeft + cellWidth * Column + '%',
-                    height: cellHeight + '%',
-                    width: cellWidth + '%',
-                };
-
-                return <img key={`cart-${Row}-${Column}`} src={src} style={imageStyle} draggable={false} />;
             })}
         </div>
     );

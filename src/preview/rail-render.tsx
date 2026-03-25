@@ -28,11 +28,11 @@ export function RailwayRender({ alignment, railcarts }: { alignment: GridAlignme
 
                     let src = railwayImages[railpath + 'mid.png'];
 
-                    if (!row[rowIndex - 1]) {
-                        src = railwayImages[railpath + 'top.png'];
-                    }
                     if (!row[rowIndex + 1]) {
                         src = railwayImages[railpath + 'bottom.png'];
+                    }
+                    if (!row[rowIndex - 1]) {
+                        src = railwayImages[railpath + 'top.png'];
                     }
 
                     const imageStyle: CSSProperties = {

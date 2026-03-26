@@ -10,18 +10,9 @@ import {
     SunProductionChallenge,
     TimeWithoutSpendingChallenge,
 } from './simple-challenges';
+import { BeatZombiesInTimeChallenge } from './zombies-in-time';
 
 /*
-    customMessage?: {
-        description: string;
-        name: string;
-    };
-
-    beatZombiesInTime?: {
-        time: number;
-        zombies: number;
-    };
-
     targetScore?: {
         description: string;
         descriptionFailure: string;
@@ -31,17 +22,16 @@ import {
 */
 export function ChallengeModule() {
     return (
-        <ModuleTemplate title="Challenges / Restrictions" className="w-[80%] mx-auto">
+        <ModuleTemplate title="Challenges / Restrictions" className="w-[90%] mx-auto">
             <MaxPlantsChallenge />
             <PlantsLostChallenge />
             <SunProductionChallenge />
             <MaxSunUsedChallenge />
             <TimeWithoutSpendingChallenge />
             <FlowerLineChallenge />
-
+            <BeatZombiesInTimeChallenge />
             <MoldChallenge />
             <EndangeredChallenge />
-
             <BeatTheLevelChallenge />
         </ModuleTemplate>
     );

@@ -56,7 +56,10 @@ export function RailcartsModule() {
                     <SelectContent position="popper">
                         <SelectGroup>
                             <SelectLabel>Railway Theme</SelectLabel>
+                            <SelectItem value="railcart_egypt">Egypt Railcarts</SelectItem>
+                            <SelectItem value="railcart_pirate">Pirate Railcarts</SelectItem>
                             <SelectItem value="railcart_cowboy">Wild West Railcarts</SelectItem>
+                            <SelectItem value="railcart_future">Future Railcarts</SelectItem>
                             <SelectItem value="railcart_tutorial">Modern Railcarts</SelectItem>
                         </SelectGroup>
                     </SelectContent>

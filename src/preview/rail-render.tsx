@@ -17,8 +17,7 @@ export function RailwayRender({ alignment, railcarts }: { alignment: GridAlignme
 
     // determine which railcart sprite to use
     const railcartType = railcarts.objdata.RailcartType;
-    let railpath = railcartType == 'railcart_cowboy' ? 'cowboy' : 'modern';
-    railpath = `./${railpath}/`;
+    let railpath = `./${railcartType}/`;
 
     return (
         <div className="flex flex-col">

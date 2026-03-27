@@ -48,5 +48,6 @@ export enum RTIDTypes {
     current = 'CurrentLevel',
     module = 'LevelModules',
     zombie = 'ZombieTypes',
+    plant = 'PlantTypes',
     gridItem = 'GridItemTypes',
 }

@@ -1,5 +1,3 @@
-import type { ConveyorSeedBankPlantObject } from '@/types/PVZTypes';
-
 export interface WaveAction<T = unknown> {
     type: string;
     name: string;
@@ -40,8 +38,23 @@ export interface SpawnZombiesFromGroundSpawnerProps {
 }
 
 export interface ModifyConveyorWaveActionProps {
-    Add: ConveyorSeedBankPlantObject[];
-    Remove: ConveyorSeedBankPlantObject[];
+    Add: ModifyConveyorWaveActionPlant[];
+    Remove: ModifyConveyorWaveActionPlant[];
+}
+
+export interface ModifyConveyorWaveActionPlant {
+    Type: string;
+    
+    ToolType?: string;
+    Weight?: number;
+    Level?: number;
+    MaxDelivered?: number;
+    MaxCount?: number;
+    MaxWeightFactor?: number;
+    MinCount?: number;
+    MinWeightFactor?: number;
+    MaxCountCooldownSeconds?: number;
+    ForceBoosted?: boolean;
 }
 
 export interface DinoWaveActionProps {

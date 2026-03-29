@@ -69,6 +69,10 @@ export class LevelDefinition extends PVZBase {
         return modules;
     }
 
+    getMowerType(): LawnMowerType | undefined {
+        return this.lawnMower == 'auto' ? worldMowers[this.stageType] : this.lawnMower;
+    }
+
     hasMoudle(obj: PVZObject): boolean {
         if (!obj.aliases || obj.aliases[0] == undefined) return false;
 

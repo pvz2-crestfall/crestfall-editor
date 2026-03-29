@@ -4,6 +4,7 @@ import { StageModuleType } from '@/types/PVZTypes';
 import { RenderTileSprites } from './render-tile';
 import { useState } from 'react';
 import { RailwayRender } from './rail-render';
+import { LawnMowersRender } from './mowers';
 
 export interface GridAlignment {
     startX: number;
@@ -75,7 +76,7 @@ export function LevelGrid() {
     return (
         <div className="absolute inset-0">
             <RailwayRender alignment={alignment} railcarts={levelBuilder.railcarts} />
-
+            <LawnMowersRender alignment={alignment} mowers={levelBuilder.levelProperties.getMowerType()} />
             <div
                 className="absolute grid"
                 style={{

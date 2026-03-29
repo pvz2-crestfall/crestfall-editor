@@ -1,6 +1,6 @@
 import type { GravestonePropertiesObject, PVZObject } from '@/types/PVZTypes';
-import { PVZBase } from '../base';
 import { RTIDTypes, toRTID } from '@/lib/utils';
+import { GravestoneProperties } from './gravestones';
 
 export interface TileData {
     type: string;
@@ -29,7 +29,7 @@ export class TileManager {
             if (obj.objclass === 'GravestoneProperties') {
                 const graveData = obj.objdata as GravestonePropertiesObject;
 
-                graveData.ForceSpawnData.forEach((tile) => {
+                graveData.ForceSpawnData?.forEach((tile) => {
                     const row = tile.GridY;
                     const col = tile.GridX;
 
@@ -134,16 +134,5 @@ export class TileManager {
         const plantLayer = flatten(this.plantLayer);
 
         return [...groundLayer, ...obstacleLayer, ...plantLayer, ...this.forced];
-    }
-}
-
-export class GravestoneProperties extends PVZBase {
-    static objclass: string = 'GravestoneProperties';
-    aliases: string[] = ['Gravestones'];
-    objdata: GravestonePropertiesObject;
-
-    constructor(propertiesObject: GravestonePropertiesObject) {
-        super();
-        this.objdata = propertiesObject;
     }
 }

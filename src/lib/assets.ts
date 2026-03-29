@@ -27,7 +27,7 @@ export const PlantImages = import.meta.glob('/assets/plants/*.png', {
 }) as Record<string, string>;
 
 export function getGravestoneImage(stageType: StageModuleType, variant: string | undefined) {
-    if (variant == 'default' || variant == undefined) {
+    if (variant == 'default' || !variant) {
         variant = defaultGrave[stageType];
     }
 

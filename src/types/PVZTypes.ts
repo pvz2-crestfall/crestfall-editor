@@ -104,7 +104,7 @@ export interface DynamicZombieWave {
 }
 
 export interface GravestonePropertiesObject {
-    ForceSpawnData: {
+    ForceSpawnData?: {
         GridX: number;
         GridY: number;
         TypeName?: string;

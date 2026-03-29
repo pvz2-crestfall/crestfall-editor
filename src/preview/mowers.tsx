@@ -13,7 +13,7 @@ export function LawnMowersRender({ alignment, mowers }: { alignment: GridAlignme
     const cellTop = alignment.startY;
     const cellLeft = alignment.startX;
     const cellHeight = (alignment.endY - alignment.startY) / 5;
-    const cellWidth = (alignment.endX - alignment.startX) / 9;
+    // const cellWidth = (alignment.endX - alignment.startX) / 9;
 
     if (!mowers) {
         return null;

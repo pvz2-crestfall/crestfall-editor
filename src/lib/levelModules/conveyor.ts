@@ -1,6 +1,13 @@
 import type { ConveyorSeedBankPlantObject, ConveyorSeedBankPropertiesObject, PVZObject } from '@/types/PVZTypes';
 import { PVZBase } from './base';
 
+const defaultDropDelayConditions = [
+    { Delay: 3, MaxPackets: 0 },
+    { Delay: 6, MaxPackets: 2 },
+    { Delay: 9, MaxPackets: 4 },
+    { Delay: 12, MaxPackets: 8 },
+];
+
 export class ConveyorBelt extends PVZBase {
     static objclass: string = 'ConveyorSeedBankProperties';
     aliases: string[] = ['ConveyorBelt'];
@@ -16,12 +23,7 @@ export class ConveyorBelt extends PVZBase {
             this.objdata.SpeedConditions = [{ MaxPackets: 0, Speed: 100 }];
         }
         if (!this.objdata.DropDelayConditions || this.objdata.DropDelayConditions.length == 0) {
-            this.objdata.DropDelayConditions = [
-                { Delay: 3, MaxPackets: 0 },
-                { Delay: 6, MaxPackets: 2 },
-                { Delay: 9, MaxPackets: 4 },
-                { Delay: 12, MaxPackets: 8 },
-            ];
+            this.objdata.DropDelayConditions = defaultDropDelayConditions;
         }
 
         // seperate powertiles from normal plants on loading
@@ -53,7 +55,11 @@ export class ConveyorBelt extends PVZBase {
     }
 
     get delayConditions() {
-        return this.objdata.DropDelayConditions;
+        return this.objdata.DropDelayConditions || defaultDropDelayConditions;
+    }
+
+    set delayConditions(val: { Delay: number; MaxPackets: number }[]) {
+        this.objdata.DropDelayConditions = val;
     }
 
     get plants() {
@@ -93,6 +99,10 @@ export class ConveyorBelt extends PVZBase {
 
         if (this.powertiles && this.enablePowerTiles) {
             result.objdata.InitialPlantList = this.plants.concat(this.powertiles);
+        }
+
+        if (this.objdata.ManualPacketSpawning) {
+            result.objdata.DropDelayConditions = undefined;
         }
 
         return result as PVZObject<T>;

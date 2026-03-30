@@ -41,7 +41,7 @@ export interface SeedBankPlantObject {
 }
 
 export interface ConveyorSeedBankPropertiesObject {
-    DropDelayConditions: { MaxPackets: number; Delay: number }[];
+    DropDelayConditions?: { MaxPackets: number; Delay: number }[];
     SpeedConditions: { MaxPackets: number; Speed: number }[];
     InitialPlantList: ConveyorSeedBankPlantObject[];
 
@@ -61,12 +61,6 @@ export interface ConveyorSeedBankPlantObject {
     MinWeightFactor?: number;
     MaxCountCooldownSeconds?: number;
     ForceBoosted?: boolean;
-}
-
-export interface LastStandMinigameProperties {
-    PreSeedchooserFlow?: string;
-    StartingPlantfood: number;
-    StartingSun: number;
 }
 
 export interface WaveManagerPropertiesObject {

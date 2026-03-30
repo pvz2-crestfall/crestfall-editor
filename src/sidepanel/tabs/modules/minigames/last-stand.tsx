@@ -7,18 +7,15 @@ import { useEffect, useState } from 'react';
 export function LastStandMinigame() {
     const levelBuilder = levelState((s) => s.levelBuilder);
 
-    const [enabled, setEnabled] = useState(levelBuilder.minigameManager.lastStandEnabled);
-    const [startingSun, setSun] = useState(levelBuilder.minigameManager.lastStand.StartingSun);
-    const [startingPf, setPf] = useState(levelBuilder.minigameManager.lastStand.StartingPlantfood);
+    const [enabled, setEnabled] = useState(levelBuilder.minigameManager.lastStand.enabled);
+    const [startingSun, setSun] = useState(levelBuilder.minigameManager.lastStand.startingSun);
+    const [startingPf, setPf] = useState(levelBuilder.minigameManager.lastStand.startingPf);
     // const [rift, setRift] = useState(levelBuilder.minigameManager.lastStand.PreSeedchooserFlow);
 
     useEffect(() => {
-        levelBuilder.minigameManager.lastStand = {
-            StartingSun: startingSun,
-            StartingPlantfood: startingPf,
-            // PreSeedchooserFlow: rift,
-        };
-        levelBuilder.minigameManager.lastStandEnabled = enabled;
+        levelBuilder.minigameManager.lastStand.startingSun = startingSun;
+        levelBuilder.minigameManager.lastStand.startingPf = startingPf;
+        levelBuilder.minigameManager.lastStand.enabled = enabled;
         levelBuilder.waveManager.waveManagerModule.objdata.ManualStartup = enabled || undefined;
     }, [enabled, startingSun, startingPf]);
 

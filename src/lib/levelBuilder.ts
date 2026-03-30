@@ -117,7 +117,6 @@ export class LevelBuilder {
             objects.push(seedBankObj);
         }
         if (this.conveyor?.enabled) {
-            this.conveyor.objdata.ManualPacketSpawning = this.seedBank.enabled || undefined;
             const conveyorObj = this.conveyor.buildObject();
             modules.push(toRTID(this.conveyor.aliases[0], RTIDTypes.current));
             objects.push(conveyorObj);

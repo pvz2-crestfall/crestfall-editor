@@ -8,14 +8,19 @@ export function ConveyorSettings() {
     const levelBuilder = levelState((s) => s.levelBuilder);
     const [enabled, setEnabled] = useState(levelBuilder.conveyor.enabled);
     const [speed, setSpeed] = useState(levelBuilder.conveyor.speed);
+    const [delayConditions, setDelayConditions] = useState(levelBuilder.conveyor.delayConditions);
 
     useEffect(() => {
         levelBuilder.conveyor.speed = speed;
-    }, [speed]);
-
-    useEffect(() => {
         levelBuilder.conveyor.enabled = enabled;
-    }, [enabled]);
+        levelBuilder.conveyor.delayConditions = delayConditions;
+    }, [speed, enabled, delayConditions]);
+
+    const setDelayCondition = (index: number, condition: { Delay: number; MaxPackets: number }) => {
+        const copy = [...delayConditions];
+        copy[index] = condition;
+        setDelayConditions(copy);
+    };
 
     return (
         <div>
@@ -38,7 +43,7 @@ export function ConveyorSettings() {
                     </div>
                     <div className="flex flex-col  w-full items-center justify-between border rounded-md px-4 py-2">
                         <Label className="px-4 py-1">Drop Delay Conditions</Label>
-                        {levelBuilder.conveyor.delayConditions.map((condition, index) => (
+                        {delayConditions.map((condition, index) => (
                             <div className="flex flex-row border rounded-md py-2 px-4 gap-2">
                                 <div key={index} className="flex flex-row gap-2">
                                     <Label>Max Packets: </Label>
@@ -46,12 +51,14 @@ export function ConveyorSettings() {
                                         type="number"
                                         placeholder="0"
                                         defaultValue={condition.MaxPackets}
+                                        value={condition.MaxPackets}
                                         className="text-center w-20 font-mono align-left"
                                         size={2}
                                         onChange={(e) =>
-                                            (levelBuilder.conveyor.delayConditions[index].MaxPackets = Number(
-                                                e.target.value,
-                                            ))
+                                            setDelayCondition(index, {
+                                                Delay: condition.Delay,
+                                                MaxPackets: Number(e.target.value),
+                                            })
                                         }
                                     />
                                     <Label>Delay: </Label>
@@ -59,12 +66,14 @@ export function ConveyorSettings() {
                                         type="number"
                                         placeholder="0"
                                         defaultValue={condition.Delay}
+                                        value={condition.Delay}
                                         className="text-center w-20 font-mono align-left"
                                         size={2}
                                         onChange={(e) =>
-                                            (levelBuilder.conveyor.delayConditions[index].Delay = Number(
-                                                e.target.value,
-                                            ))
+                                            setDelayCondition(index, {
+                                                Delay: Number(e.target.value),
+                                                MaxPackets: condition.MaxPackets,
+                                            })
                                         }
                                     />
                                 </div>

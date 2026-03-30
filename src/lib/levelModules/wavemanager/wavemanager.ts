@@ -135,6 +135,14 @@ export class WaveManagerWrapper {
     set firstWaveTime(val: number | undefined) {
         this.waveManager.objdata.ZombieCountdownFirstWaveSecs = val;
     }
+
+    get supressFlagZombie() {
+        return this.waveManager.objdata.SuppressFlagZombie || false;
+    }
+
+    set supressFlagZombie(val: boolean) {
+        this.waveManager.objdata.SuppressFlagZombie = val ? val : undefined;
+    }
 }
 
 export class WaveManager extends PVZBase {

@@ -1,6 +1,7 @@
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { OptionalNumberInput } from '@/components/ui/optional-ninput';
+import { Switch } from '@/components/ui/switch';
 import { levelState } from '@/lib/state/levelstate';
 
 export function WaveManagerSettings() {
@@ -52,6 +53,15 @@ export function WaveManagerSettings() {
                         value={levelBuilder.waveManager.maxWaveHealth}
                         onChange={(val) => (levelBuilder.waveManager.maxWaveHealth = val)}
                     />
+                </div>
+                <div className="flex w-full items-center justify-between border rounded-md px-4 py-2 h-12">
+                    <Label>Supress Flag Zombie Spawn</Label>
+                    <div className="w-20 flex items-center justify-center">
+                        <Switch
+                            defaultChecked={levelBuilder.waveManager.supressFlagZombie}
+                            onCheckedChange={(val: boolean) => (levelBuilder.waveManager.supressFlagZombie = val)}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

@@ -6,17 +6,19 @@ import { useEffect, useState } from 'react';
 
 function NumberChallenge({
     label,
-    value,
-    onChange,
+    ...props
 }: {
     label: string;
     value?: number;
+    min?: number;
+    max?: number;
+    onlySubmitOnBlur?: boolean;
     onChange: (value?: number) => void;
 }) {
     return (
         <div className="flex w-full items-center justify-between border rounded-md px-4 py-2">
             <Label>{label}</Label>
-            <OptionalNumberInput placeholder="" value={value} onChange={onChange} />
+            <OptionalNumberInput placeholder="" {...props} />
         </div>
     );
 }
@@ -86,5 +88,5 @@ export function FlowerLineChallenge() {
         updateGrid();
     }, [distance]);
 
-    return <NumberChallenge label="Flower Line Column" value={distance} onChange={setDistance} />;
+    return <NumberChallenge label="Flower Line Column" value={distance} onChange={setDistance} max={9} />;
 }

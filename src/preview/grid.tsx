@@ -5,6 +5,7 @@ import { RenderTileSprites } from './render-tile';
 import { useState } from 'react';
 import { RailwayRender } from './rail-render';
 import { LawnMowersRender } from './mowers';
+import { FlowerLineRender } from './flowers';
 
 export interface GridAlignment {
     startX: number;
@@ -75,8 +76,10 @@ export function LevelGrid() {
 
     return (
         <div className="absolute inset-0">
-            <RailwayRender alignment={alignment} railcarts={levelBuilder.railcarts} />
             <LawnMowersRender alignment={alignment} mowers={levelBuilder.levelProperties.getMowerType()} />
+            <RailwayRender alignment={alignment} railcarts={levelBuilder.railcarts} />
+            <FlowerLineRender alignment={alignment} flowerColumn={levelBuilder.challengeManager.zombieDistance} />
+            
             <div
                 className="absolute grid"
                 style={{

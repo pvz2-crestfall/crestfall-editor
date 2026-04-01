@@ -36,14 +36,6 @@ export function RenderTileSprites({
         if (plant) tileData.unshift({ type: TileType.Plant, param1: 'endangered_' + plant.name });
     }
 
-    if (challengeManager.zombieDistance != undefined) {
-        const distance = challengeManager.zombieDistance;
-        if (Math.trunc(distance) == col) {
-            console.log(distance, col, Math.abs(col - distance).toString());
-            tileData.unshift({ type: TileType.Flower, param1: Math.abs(col - distance).toString() });
-        }
-    }
-
     if (tileData.length == 0) return null;
 
     return (
@@ -137,15 +129,15 @@ export function RenderTileSprites({
                     imageProps.src = TileImages['./mold.png'];
                     imageStyle.transform = `translate(-50%, -50%) scale(${scale})`;
                 }
-                if (tile.type == TileType.Flower) {
-                    const scale = 1.35;
-                    const raw = tile.param1 ?? '0';
-                    const rightPercent = Number(raw) * 100;
+                // if (tile.type == TileType.Flower) {
+                //     const scale = 1.35;
+                //     const raw = tile.param1 ?? '0';
+                //     const rightPercent = Number(raw) * 100;
 
-                    imageProps.src = TileImages['./flower_line.png'];
-                    imageStyle.left = `${(100 / 9) * col - width / 2}%`;
-                    imageStyle.transform = `translate(${rightPercent * scale}%, -50%) scale(${scale})`;
-                }
+                //     imageProps.src = TileImages['./flower_line.png'];
+                //     imageStyle.left = `${(100 / 9) * col - width / 2}%`;
+                //     imageStyle.transform = `translate(${rightPercent * scale}%, -50%) scale(${scale})`;
+                // }
 
                 return imageResult();
             })}

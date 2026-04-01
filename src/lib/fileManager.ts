@@ -2,13 +2,40 @@ import type { LevelDefinitionObject } from '@/types/PVZTypes';
 import type { PVZObject } from '../types/PVZTypes';
 import { LevelBuilder } from './levelBuilder';
 
-// Save grid as a downloadable JSON file
-export function saveLevel(levelBuilder: LevelBuilder) {
+export async function saveLevel(levelBuilder: LevelBuilder) {
     const data = {
         objects: levelBuilder.build(),
         version: 1,
     };
+
     const json = JSON.stringify(data, null, 4);
+    const defaultName = 'level.json';
+
+    // modern save dialogue
+    if ('showSaveFilePicker' in window) {
+        try {
+            const handle = await (window as any).showSaveFilePicker({
+                suggestedName: defaultName,
+                types: [
+                    {
+                        description: 'JSON Files',
+                        accept: { 'application/json': ['.json'] },
+                    },
+                ],
+            });
+
+            const writable = await handle.createWritable();
+            await writable.write(json);
+            await writable.close();
+
+            return; // done
+        } catch (err) {
+            // @ts-ignore
+            if (err.name == 'AbortError') return;
+        }
+    }
+
+    // fallback
     const blob = new Blob([json], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');

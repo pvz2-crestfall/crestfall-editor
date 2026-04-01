@@ -26,11 +26,6 @@ export function RenderTileSprites({
 }: RenderTileSpritesProps) {
     const tileData = tileManager.getAllAt({ row, col }).slice();
 
-    if (challengeManager.moldLocations.length > 0) {
-        const [mold] = challengeManager.moldLocations.filter((mold) => mold.col == col && mold.row == row);
-        if (mold) tileData.unshift({ type: TileType.Mold });
-    }
-
     if (challengeManager.endangeredPlants.length > 0) {
         const [plant] = challengeManager.endangeredPlants.filter((plant) => plant.col == col && plant.row == row);
         if (plant) tileData.unshift({ type: TileType.Plant, param1: 'endangered_' + plant.name });
@@ -123,21 +118,6 @@ export function RenderTileSprites({
                         drop-shadow(0 0 12px rgba(150, 255, 255, 0.8))
                     `;
                 }
-
-                if (tile.type == TileType.Mold) {
-                    const scale = 1.35;
-                    imageProps.src = TileImages['./mold.png'];
-                    imageStyle.transform = `translate(-50%, -50%) scale(${scale})`;
-                }
-                // if (tile.type == TileType.Flower) {
-                //     const scale = 1.35;
-                //     const raw = tile.param1 ?? '0';
-                //     const rightPercent = Number(raw) * 100;
-
-                //     imageProps.src = TileImages['./flower_line.png'];
-                //     imageStyle.left = `${(100 / 9) * col - width / 2}%`;
-                //     imageStyle.transform = `translate(${rightPercent * scale}%, -50%) scale(${scale})`;
-                // }
 
                 return imageResult();
             })}

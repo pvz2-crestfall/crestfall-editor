@@ -1,6 +1,7 @@
 import type { PVZObject } from '@/types/PVZTypes';
 import { PVZBase } from '../base';
-import type { ChallengeManager } from './challengemanager';
+import type { TileManager } from './tilemanager';
+import { TileType } from './types';
 
 export interface ProtectThePlantChallengeProperties {
     MustProtectCount: number;
@@ -17,17 +18,17 @@ export class EndangeredPlants extends PVZBase {
         this.objdata = data.objdata as ProtectThePlantChallengeProperties;
     }
 
-    assign(challengeManager: ChallengeManager) {
+    assign(tileManager: TileManager) {
         for (const plant of this.objdata.Plants) {
-            challengeManager.endangeredPlants.push({
-                row: plant.GridY,
-                col: plant.GridX,
-                name: plant.PlantType,
+            tileManager.grid[plant.GridX][plant.GridY].objects.push({
+                type: TileType.Plant,
+                param1: plant.PlantType,
+                param2: 'endangered',
             });
         }
     }
 
-    static from(endangeredPlants: { row: number; col: number; name: string }[]) {
+    static from(endangeredPlants: { row: number; col: number; type: string }[]) {
         return new this({
             objclass: '',
             objdata: {
@@ -36,10 +37,14 @@ export class EndangeredPlants extends PVZBase {
                     return {
                         GridX: plant.col,
                         GridY: plant.row,
-                        PlantType: plant.name,
+                        PlantType: plant.type,
                     };
                 }),
             },
         });
+    }
+
+    shouldBuild(): boolean {
+        return this.objdata.Plants.length > 0;
     }
 }

@@ -13,7 +13,7 @@ import { ZombieDistance } from './StarChallengeZombieDistanceProps';
 import { TargetScore } from './StarChallengeTargetScoreProps';
 import { SunHoldout } from './StarChallengeSpendSunHoldoutProps';
 import { MoldColony } from './MoldColonyChallengeProps';
-import { EndangeredPlants } from './ProtectThePlantChallengeProperties';
+// import { EndangeredPlants } from './ProtectThePlantChallengeProperties';
 import { GridMap } from './types';
 
 const challengeClasses = {
@@ -27,7 +27,7 @@ const challengeClasses = {
     StarChallengeTargetScoreProps: TargetScore,
     StarChallengeSpendSunHoldoutProps: SunHoldout,
     MoldColonyChallengeProps: MoldColony,
-    ProtectThePlantChallengeProperties: EndangeredPlants,
+    // ProtectThePlantChallengeProperties: EndangeredPlants,
 };
 
 export class ChallengeManager extends PVZBase {
@@ -60,7 +60,6 @@ export class ChallengeManager extends PVZBase {
     zombieDistance?: number;
 
     moldLocations: { row: number; col: number }[] = [];
-    endangeredPlants: { row: number; col: number; name: string }[] = [];
 
     constructor(data: PVZObject[]) {
         super();
@@ -138,13 +137,6 @@ export class ChallengeManager extends PVZBase {
             challengeObjects.push(ZombieDistance.from(this.zombieDistance).buildObject());
         }
 
-        if (this.endangeredPlants.length > 0) {
-            const challenge = EndangeredPlants.from(this.endangeredPlants);
-
-            // endangered plants has to be in the level modules directly
-            rawObjects.push(challenge.buildObject());
-            modules.push(toRTID(challenge.aliases[0], RTIDTypes.current));
-        }
         if (this.moldLocations.length > 0) {
             const grid = new Array(5).fill([]).map(() => new Array(9).fill(0));
             for (const location of this.moldLocations) {

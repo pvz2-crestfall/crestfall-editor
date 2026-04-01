@@ -15,21 +15,8 @@ interface RenderTileSpritesProps {
     challengeManager: ChallengeManager;
 }
 
-export function RenderTileSprites({
-    col,
-    row,
-    stageType,
-    tileManager,
-    challengeManager,
-    width,
-    height,
-}: RenderTileSpritesProps) {
+export function RenderTileSprites({ col, row, stageType, tileManager, width, height }: RenderTileSpritesProps) {
     const tileData = tileManager.getAllAt({ row, col }).slice();
-
-    if (challengeManager.endangeredPlants.length > 0) {
-        const [plant] = challengeManager.endangeredPlants.filter((plant) => plant.col == col && plant.row == row);
-        if (plant) tileData.unshift({ type: TileType.Plant, param1: 'endangered_' + plant.name });
-    }
 
     if (tileData.length == 0) return null;
 
@@ -70,9 +57,7 @@ export function RenderTileSprites({
 
                     // render the endangered plant background
                     let plantName = tile.param1 ?? '';
-                    if (tile.param1?.startsWith('endangered_')) {
-                        plantName = tile.param1.split('_').at(1) ?? 'unknown';
-
+                    if (tile.param2 == 'endangered') {
                         imageProps.src = TileImages['./endangered.png'];
                         imageStyle.width = `${cellWidthPct * 0.95}%`;
                         imageStyle.height = `${cellHeightPct * 0.95}%`;

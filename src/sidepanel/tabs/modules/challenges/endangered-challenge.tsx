@@ -2,6 +2,7 @@ import { PlacementEditorWindow } from '@/components/placement-editor-window';
 import { PlantSelector } from '@/components/plant-selector';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { TileType } from '@/lib/levelModules/tilemanager/types';
 import { gridState } from '@/lib/state/gridstate';
 import { levelState } from '@/lib/state/levelstate';
 import { useState } from 'react';
@@ -22,30 +23,22 @@ function EndangeredPlantsEditor() {
     const [editorWindowOpen, setEditorWindowOpen] = useState(false);
     const [selectedPlant, setSelectedPlant] = useState('peashooter');
 
-    const setPlants = (arr: { row: number; col: number; name: string }[]) => {
-        levelBuilder.challengeManager.endangeredPlants = arr;
-    };
-
-    const addNewPosition = (position: { col: number; row: number }, plant: string) => {
-        setPlants([...levelBuilder.challengeManager.endangeredPlants, { ...position, name: plant }]);
-    };
-
-    const removePosition = ({ col, row }: { col: number; row: number }) => {
-        setPlants(levelBuilder.challengeManager.endangeredPlants.filter((tile) => tile.col != col || tile.row != row));
-        updateGrid();
-    };
-
     const onGridClick = (position: { row: number; col: number }, selectedTool: string) => {
         console.log(position, selectedTool, selectedPlant);
         if (selectedTool == 'none') return;
 
         if (selectedTool == 'place') {
-            addNewPosition(position, selectedPlant);
+            levelBuilder.tileManager.setTile(position, {
+                type: TileType.Plant,
+                param1: selectedPlant,
+                param2: 'endangered',
+            });
+            updateGrid();
         }
 
         if (selectedTool == 'remove') {
-            removePosition(position);
-            // updateGrid();
+            levelBuilder.tileManager.removeTile(position, { type: TileType.Plant });
+            updateGrid();
         }
     };
 

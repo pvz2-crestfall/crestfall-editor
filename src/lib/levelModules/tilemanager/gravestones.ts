@@ -24,4 +24,8 @@ export class GravestoneProperties extends PVZBase {
     get length(): number {
         return this.objdata.ForceSpawnData?.length || this.objdata.GravestoneCount || 0;
     }
+
+    shouldBuild(): boolean {
+        return this.length > 0;
+    }
 }

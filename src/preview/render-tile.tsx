@@ -1,11 +1,12 @@
 import type { ChallengeManager } from '@/lib/levelModules/challenges/challengemanager';
-import type { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
+import { type TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
+import { TileType, type TileObject } from '@/lib/levelModules/tilemanager/types';
 import { StageModuleType } from '@/types/PVZTypes';
 import { type CSSProperties } from 'react';
 import { getGravestoneImage, getPlantImage, getPortalImage, TileImages } from '@/lib/assets';
 
 interface RenderTileSpritesProps {
-    column: number;
+    col: number;
     row: number;
     width: number;
     height: number;
@@ -15,7 +16,7 @@ interface RenderTileSpritesProps {
 }
 
 export function RenderTileSprites({
-    column,
+    col,
     row,
     stageType,
     tileManager,
@@ -23,23 +24,23 @@ export function RenderTileSprites({
     width,
     height,
 }: RenderTileSpritesProps) {
-    const tileData = tileManager.getAllAt(row, column);
+    const tileData = tileManager.getAllAt({ row, col }).slice();
 
     if (challengeManager.moldLocations.length > 0) {
-        const [mold] = challengeManager.moldLocations.filter((mold) => mold.col == column && mold.row == row);
-        if (mold) tileData.unshift({ type: 'mold' });
+        const [mold] = challengeManager.moldLocations.filter((mold) => mold.col == col && mold.row == row);
+        if (mold) tileData.unshift({ type: TileType.Mold });
     }
 
     if (challengeManager.endangeredPlants.length > 0) {
-        const [plant] = challengeManager.endangeredPlants.filter((plant) => plant.col == column && plant.row == row);
-        if (plant) tileData.unshift({ type: 'plant', variant: 'endangered_' + plant.name });
+        const [plant] = challengeManager.endangeredPlants.filter((plant) => plant.col == col && plant.row == row);
+        if (plant) tileData.unshift({ type: TileType.Plant, param1: 'endangered_' + plant.name });
     }
 
     if (challengeManager.zombieDistance != undefined) {
         const distance = challengeManager.zombieDistance;
-        if (Math.trunc(distance) == column) {
-            console.log(distance, column, Math.abs(column - distance).toString());
-            tileData.unshift({ type: 'flower', variant: Math.abs(column - distance).toString() });
+        if (Math.trunc(distance) == col) {
+            console.log(distance, col, Math.abs(col - distance).toString());
+            tileData.unshift({ type: TileType.Flower, param1: Math.abs(col - distance).toString() });
         }
     }
 
@@ -50,11 +51,11 @@ export function RenderTileSprites({
             {tileData.map((tile, tileIndex) => {
                 // get the cell center in percentage
                 const top = ((row + 0.5) / 5) * 100;
-                const left = ((column + 0.5) / 9) * 100;
+                const left = ((col + 0.5) / 9) * 100;
 
                 const imageProps = {
                     src: '',
-                    alt: tile.type,
+                    alt: getAlt(tile),
                     className: 'absolute transition-transform pointer-events-none',
                     draggable: false,
                 };
@@ -71,19 +72,19 @@ export function RenderTileSprites({
                     // clone the objects
                     const props = { ...imageProps };
                     const style = { ...imageStyle };
-                    return <img key={`${row}-${column}-${tile.type + tileIndex}`} {...props} style={style} />;
+                    return <img key={`${row}-${col}-${tileIndex}`} {...props} style={style} />;
                 };
 
                 // Render different tile types accordingly
-                if (tile.type == 'plant') {
+                if (tile.type == TileType.Plant) {
                     const cellWidthPct = 100 / 9;
                     const cellHeightPct = 100 / 5;
                     const images = [];
 
                     // render the endangered plant background
-                    let plantName = tile.variant ?? '';
-                    if (tile.variant?.startsWith('endangered_')) {
-                        plantName = tile.variant.split('_').at(1) ?? 'unknown';
+                    let plantName = tile.param1 ?? '';
+                    if (tile.param1?.startsWith('endangered_')) {
+                        plantName = tile.param1.split('_').at(1) ?? 'unknown';
 
                         imageProps.src = TileImages['./endangered.png'];
                         imageStyle.width = `${cellWidthPct * 0.95}%`;
@@ -101,22 +102,22 @@ export function RenderTileSprites({
 
                     // bottom align
                     imageStyle.top = `${((row + 0.85) / 5) * 100}%`;
-                    imageStyle.left = `${((column + 0.5) / 9) * 100}%`;
+                    imageStyle.left = `${((col + 0.5) / 9) * 100}%`;
                     imageStyle.transform = 'translate(-50%, -100%)';
 
                     images.push(imageResult());
                     return <>{images}</>;
                 }
 
-                if (tile.type == 'gravestone') {
+                if (tile.type == TileType.Grave) {
                     const scale = 1.6;
-                    imageProps.src = getGravestoneImage(stageType, tile.variant);
+                    imageProps.src = getGravestoneImage(stageType, tile.param1);
                     imageStyle.transform = `translate(-50%, -65%) scale(${scale})`;
                 }
 
-                if (tile.type == 'portal') {
+                if (tile.type == TileType.Portal) {
                     const scale = 3;
-                    imageProps.src = getPortalImage(tile.variant);
+                    imageProps.src = getPortalImage(tile.param1);
                     imageStyle.transform = `translate(-20%, -60%) scale(${scale})`;
 
                     // add glow effect and outline
@@ -131,18 +132,18 @@ export function RenderTileSprites({
                     `;
                 }
 
-                if (tile.type == 'mold') {
+                if (tile.type == TileType.Mold) {
                     const scale = 1.35;
                     imageProps.src = TileImages['./mold.png'];
                     imageStyle.transform = `translate(-50%, -50%) scale(${scale})`;
                 }
-                if (tile.type == 'flower') {
+                if (tile.type == TileType.Flower) {
                     const scale = 1.35;
-                    const raw = tile.variant ?? '0';
+                    const raw = tile.param1 ?? '0';
                     const rightPercent = Number(raw) * 100;
 
                     imageProps.src = TileImages['./flower_line.png'];
-                    imageStyle.left = `${(100 / 9) * column - width / 2}%`;
+                    imageStyle.left = `${(100 / 9) * col - width / 2}%`;
                     imageStyle.transform = `translate(${rightPercent * scale}%, -50%) scale(${scale})`;
                 }
 
@@ -151,3 +152,20 @@ export function RenderTileSprites({
         </>
     );
 }
+
+const getAlt = (tile: TileObject) => {
+    switch (tile.type) {
+        case TileType.Plant:
+            return `Plant ${tile.param1 ?? ''}`;
+        case TileType.Grave:
+            return 'Gravestone';
+        case TileType.Portal:
+            return 'Portal';
+        case TileType.Mold:
+            return 'Mold';
+        case TileType.Flower:
+            return 'Flower line';
+        default:
+            return 'TileEntity';
+    }
+};

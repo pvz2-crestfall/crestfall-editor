@@ -17,3 +17,26 @@ export const defaultGrave = {
     [StageModuleType.BattleZ]: 'gravestone_dark',
     [StageModuleType.Rift]: 'gravestone_tutorial',
 };
+
+export type TileGrid = TileData[][];
+
+export interface TileData {
+    objects: TileObject[];
+}
+
+export interface TileObject {
+    type: TileType;
+    param1?: string;
+    param2?: string;
+}
+
+export enum TileType {
+    Plant,
+    Zombie,
+    GridItem,
+    Grave,
+    Mold,
+    Flower,
+    Portal,
+    None,
+}

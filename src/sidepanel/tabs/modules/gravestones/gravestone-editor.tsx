@@ -1,5 +1,6 @@
 import { GravestoneEditorWindow } from '@/components/grave-editor-window';
 import { Button } from '@/components/ui/button';
+import { TileType } from '@/lib/levelModules/tilemanager/types';
 import { levelState } from '@/lib/state/levelstate';
 import { useState } from 'react';
 
@@ -13,11 +14,11 @@ export function GravestoneEditor() {
         if (selectedTool == 'none') return;
 
         if (selectedTool == 'place') {
-            levelBuilder.tileManager.setTile(position, { type: 'gravestone', variant: selectedGrave });
+            levelBuilder.tileManager.setTile(position, { type: TileType.Grave, param1: selectedGrave });
         }
 
         if (selectedTool == 'remove') {
-            levelBuilder.tileManager.removeTile(position, { type: 'gravestone' });
+            levelBuilder.tileManager.removeTile(position, { type: TileType.Grave });
         }
     };
 

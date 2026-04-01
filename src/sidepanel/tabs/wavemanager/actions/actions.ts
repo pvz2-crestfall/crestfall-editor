@@ -11,6 +11,7 @@ import { SpawnGravestonesWaveAction } from './spawn-gravestones-action';
 import { SpawnModernPortalAction } from './spawn-modern-portal';
 import { SpawnZombiesFromGriditemsAction } from './from-griditems-spawner';
 import { TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
+import { TileType } from '@/lib/levelModules/tilemanager/types';
 import { PirateRaidWaveAction } from './pirate-raid-action';
 import { TideChangeWaveAction } from './tide-change-action';
 import { ZombieRainWaveAction } from './zombie-rain-action';
@@ -93,7 +94,7 @@ export const Actions: Record<string, ActionInterface<any>> = {
             const { SpawnPositionsPool } = action.data;
             const gridPreview = new TileManager([]);
             SpawnPositionsPool.forEach((tile) => {
-                gridPreview.setTile({ row: tile.mY, col: tile.mX }, { type: 'gravestone', variant: 'unknown' });
+                gridPreview.setTile({ row: tile.mY, col: tile.mX }, { type: TileType.Grave, param1: 'unknown' });
             });
             return gridPreview;
         },
@@ -111,7 +112,7 @@ export const Actions: Record<string, ActionInterface<any>> = {
         getPreviewData(action: WaveAction<WaveTypes.SpawnModernPortalsWaveActionProps>) {
             const { PortalRow, PortalColumn, PortalType } = action.data;
             const gridPreview = new TileManager([]);
-            gridPreview.setTile({ row: PortalRow, col: PortalColumn }, { type: 'portal', variant: PortalType });
+            gridPreview.setTile({ row: PortalRow, col: PortalColumn }, { type: TileType.Portal, param1: PortalType });
             return gridPreview;
         },
     },

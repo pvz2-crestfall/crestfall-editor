@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
-import type { TileObject, TileManager } from '../levelModules/tilemanager/tilemanager';
+import type { TileManager } from '../levelModules/tilemanager/tilemanager';
+import type { TileObject } from '../levelModules/tilemanager/types';
 
 interface GridListener {
     id: string;

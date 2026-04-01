@@ -102,7 +102,7 @@ export function LevelGrid() {
                                 width={cellWidth}
                                 height={cellHeight}
                                 row={r}
-                                column={c}
+                                col={c}
                                 stageType={levelBuilder.levelProperties.stageType}
                                 tileManager={tileManager}
                                 challengeManager={challengeManager}

@@ -70,7 +70,7 @@ export function WaveActionList({
     useEffect(() => {
         if (waveIndex == null) return;
 
-        const forcedTiles = [];
+        const preview = new TileManager([]);
         for (const action of wave) {
             const actionId = getActionId(action);
             const actionInfo = Actions[action.type];
@@ -79,15 +79,12 @@ export function WaveActionList({
                     (openWindows.length != 0 && openWindows.includes(actionId))) &&
                 actionInfo.getPreviewData != undefined
             ) {
-                const tileManager = actionInfo.getPreviewData(action);
-                forcedTiles.push(...tileManager.getAll());
+                const actionPreviewData = actionInfo.getPreviewData(action);
+                preview.mergeWith(actionPreviewData);
             }
             console.log(actionToggles[actionId]);
         }
 
-        const preview = new TileManager([]);
-        preview.forced = forcedTiles;
-        console.log(forcedTiles);
         setDefaultGrid(preview);
 
         return () => setDefaultGrid(undefined);

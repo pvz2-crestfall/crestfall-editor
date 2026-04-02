@@ -181,3 +181,12 @@ export interface RailcartProperties {
     Railcarts: { Column: number; Row: number }[];
     Rails: { Column: number; RowEnd: number; RowStart: number }[];
 }
+
+export interface PowerTileProperties {
+    LinkedTiles: {
+        Group: string;
+        Location: { mX: number; mY: number };
+        PropagationDelay: number;
+        PropagationInitialDelay?: number;
+    }[];
+}

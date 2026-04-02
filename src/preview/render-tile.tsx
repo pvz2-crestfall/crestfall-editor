@@ -2,7 +2,7 @@ import type { ChallengeManager } from '@/lib/levelModules/challenges/challengema
 import { type TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
 import { TileType, type TileObject } from '@/lib/levelModules/tilemanager/types';
 import { StageModuleType } from '@/types/PVZTypes';
-import { type CSSProperties } from 'react';
+import { type CSSProperties, type JSX } from 'react';
 import { getGravestoneImage, getPlantImage, getPortalImage, TileImages } from '@/lib/assets';
 
 interface RenderTileSpritesProps {
@@ -20,15 +20,17 @@ export function RenderTileSprites({ col, row, stageType, tileManager, width, hei
 
     if (tileData.length == 0) return null;
 
+    // get the cell center in percentage
+    const top = ((row + 0.5) / 5) * 100;
+    const left = ((col + 0.5) / 9) * 100;
+    const cellWidthPct = 100 / 9;
+    const cellHeightPct = 100 / 5;
+
     return (
         <>
             {tileData.map((tile, tileIndex) => {
-                // get the cell center in percentage
-                const top = ((row + 0.5) / 5) * 100;
-                const left = ((col + 0.5) / 9) * 100;
-
-                const imageProps = {
-                    src: '',
+                const imageProps: JSX.IntrinsicElements['img'] = {
+                    src: undefined,
                     alt: getAlt(tile),
                     className: 'absolute transition-transform pointer-events-none',
                     draggable: false,
@@ -49,18 +51,22 @@ export function RenderTileSprites({ col, row, stageType, tileManager, width, hei
                     return <img key={`${row}-${col}-${tileIndex}`} {...props} style={style} />;
                 };
 
-                // Render different tile types accordingly
                 if (tile.type == TileType.Plant) {
-                    const cellWidthPct = 100 / 9;
-                    const cellHeightPct = 100 / 5;
                     const images = [];
 
                     // render the endangered plant background
                     let plantName = tile.param1 ?? '';
                     if (tile.param2 == 'endangered') {
                         imageProps.src = TileImages['./endangered.png'];
-                        imageStyle.width = `${cellWidthPct * 0.95}%`;
-                        imageStyle.height = `${cellHeightPct * 0.95}%`;
+
+                        if (tileData.some((obj) => obj.type == TileType.FloorTile)) {
+                            imageStyle.width = `${cellWidthPct * 0.75}%`;
+                            imageStyle.height = `${cellHeightPct * 1}%`;
+                        } else {
+                            imageStyle.width = `${cellWidthPct}%`;
+                            imageStyle.height = `${cellHeightPct}%`;
+                        }
+
                         images.push(imageResult());
                     }
 
@@ -78,13 +84,15 @@ export function RenderTileSprites({ col, row, stageType, tileManager, width, hei
                     imageStyle.transform = 'translate(-50%, -100%)';
 
                     images.push(imageResult());
-                    return <>{images}</>;
+                    return images;
                 }
 
                 if (tile.type == TileType.Grave) {
                     const scale = 1.6;
                     imageProps.src = getGravestoneImage(stageType, tile.param1);
                     imageStyle.transform = `translate(-50%, -65%) scale(${scale})`;
+
+                    return imageResult();
                 }
 
                 if (tile.type == TileType.Portal) {
@@ -102,9 +110,9 @@ export function RenderTileSprites({ col, row, stageType, tileManager, width, hei
                         drop-shadow(0 0 10px rgba(100, 255, 255, 0.8))
                         drop-shadow(0 0 12px rgba(150, 255, 255, 0.8))
                     `;
-                }
 
-                return imageResult();
+                    return imageResult();
+                }
             })}
         </>
     );
@@ -118,10 +126,8 @@ const getAlt = (tile: TileObject) => {
             return 'Gravestone';
         case TileType.Portal:
             return 'Portal';
-        case TileType.Mold:
-            return 'Mold';
-        case TileType.Flower:
-            return 'Flower line';
+        case TileType.FloorTile:
+            return 'Floor Tile';
         default:
             return 'TileEntity';
     }

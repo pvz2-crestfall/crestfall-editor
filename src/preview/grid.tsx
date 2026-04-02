@@ -7,6 +7,7 @@ import { RailwayRender } from './rail-render';
 import { LawnMowersRender } from './mowers';
 import { FlowerLineRender } from './flowers';
 import { MoldRender } from './mold';
+import { FloorTileRender } from './floortiles';
 
 export interface GridAlignment {
     startX: number;
@@ -77,11 +78,11 @@ export function LevelGrid() {
 
     return (
         <div className="absolute inset-0">
+            <FloorTileRender alignment={alignment} grid={levelBuilder.tileManager.grid} />
             <LawnMowersRender alignment={alignment} mowers={levelBuilder.levelProperties.getMowerType()} />
             <RailwayRender alignment={alignment} railcarts={levelBuilder.railcarts} />
             <FlowerLineRender alignment={alignment} flowerColumn={levelBuilder.challengeManager.zombieDistance} />
             <MoldRender alignment={alignment} mold={levelBuilder.challengeManager.moldLocations} />
-
             <div
                 className="absolute grid"
                 style={{

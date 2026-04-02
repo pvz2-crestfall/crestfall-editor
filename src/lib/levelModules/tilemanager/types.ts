@@ -35,8 +35,7 @@ export enum TileType {
     Zombie,
     GridItem,
     Grave,
-    Mold,
-    Flower,
     Portal,
+    FloorTile,
     None,
 }

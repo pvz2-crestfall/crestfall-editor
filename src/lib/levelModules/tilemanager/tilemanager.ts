@@ -4,6 +4,7 @@ import { GravestoneProperties } from './GravestoneProperties';
 import { type TileGrid, TileType, type TileObject } from './types';
 import { EndangeredPlants } from './ProtectThePlantChallengeProperties';
 import { LevelDefinition } from '../leveldefinition';
+import { PowerTiles } from './PowerTileProperties';
 
 const rows = 5;
 const columns = 9;
@@ -11,10 +12,13 @@ const columns = 9;
 const tileClasses = {
     GravestoneProperties: GravestoneProperties,
     ProtectThePlantChallengeProperties: EndangeredPlants,
+    PowerTileProperties: PowerTiles,
 };
 
 export class TileManager {
     grid: TileGrid;
+
+    powertilePropagationDelay: number = 1.5;
 
     constructor(data: PVZObject[]) {
         this.grid = Array.from({ length: columns }, () =>
@@ -54,12 +58,12 @@ export class TileManager {
         // const gravestones = new GravestoneProperties({});
         // const protectedPlants = new EndangeredPlants({});
 
+        let powertiles: { col: number; row: number; type: string; delay: number }[] = [];
         let gravestones: { col: number; row: number; type?: string }[] = [];
         let protectedPlants: { col: number; row: number; type: string }[] = [];
 
         this.grid.forEach((column, columnIndex) => {
             column.forEach((tile, rowIndex) => {
-                // read the gravestone data
                 for (const object of tile.objects) {
                     if (object.type == TileType.Grave) {
                         gravestones.push({
@@ -78,11 +82,26 @@ export class TileManager {
                             });
                         }
                     }
+
+                    if (object.type == TileType.FloorTile) {
+                        if (object.param1 == 'powertile') {
+                            powertiles.push({
+                                col: columnIndex,
+                                row: rowIndex,
+                                type: object.param2 || 'epsilon',
+                                delay: this.powertilePropagationDelay,
+                            });
+                        }
+                    }
                 }
             });
         });
 
-        const modulesToBuild = [GravestoneProperties.from(gravestones), EndangeredPlants.from(protectedPlants)];
+        const modulesToBuild = [
+            GravestoneProperties.from(gravestones),
+            EndangeredPlants.from(protectedPlants),
+            PowerTiles.from(powertiles),
+        ];
 
         for (const mod of modulesToBuild) {
             if (mod.shouldBuild()) {

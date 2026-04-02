@@ -83,7 +83,7 @@ export class ChallengeManager extends PVZBase {
         }
 
         const challengeObjects = [];
-        for (const challenge of this.objdata.Challenges.flat()) {
+        for (const challenge of this.objdata.Challenges[0] ?? []) {
             const { name } = fromRTID(challenge);
             const obj = data.filter((o) => o.aliases?.includes(name))[0];
             if (obj != undefined) challengeObjects.push(obj);

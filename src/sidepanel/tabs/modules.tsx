@@ -3,6 +3,7 @@ import { ConveyorLevelModule } from './modules/conveyor/conveyor';
 import { GraveStonesModule } from './modules/gravestones/gravestones';
 import { MinigameModule } from './modules/minigames/minigames';
 import { RailcartsModule } from './modules/railways/railway-editor';
+import { PowertilesModule } from './modules/tiles/powertiles';
 
 export function SidepanelModulesTab() {
     return (
@@ -12,6 +13,7 @@ export function SidepanelModulesTab() {
             <GraveStonesModule />
             <MinigameModule />
             <ChallengeModule />
+            <PowertilesModule />
         </div>
     );
 }

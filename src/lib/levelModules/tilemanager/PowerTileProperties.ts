@@ -20,8 +20,7 @@ export class PowerTiles extends PVZBase {
 
             tileManager.grid[col][row].objects.push({
                 type: TileType.FloorTile,
-                param1: 'powertile',
-                param2: tile.Group,
+                param1: 'powertile_' + tile.Group,
             });
         });
     }

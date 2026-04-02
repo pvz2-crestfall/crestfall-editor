@@ -1,4 +1,4 @@
-import { GravestoneImages, PlantImages, PortalImages } from '@/lib/assets';
+import { GravestoneImages, PlantImages, PortalImages, TileImages } from '@/lib/assets';
 import { ModernPortalType, PortalTypes } from '@/lib/levelModules/wavemanager/types';
 
 export function iconFromList({
@@ -46,6 +46,10 @@ export function GravestoneIcon(props: StandardIconProps) {
 
 export function PlantIcon(props: StandardIconProps) {
     return iconFromList({ icons: PlantImages, fallback: 'unknown_plant', ...props });
+}
+
+export function TileIcon(props: StandardIconProps) {
+    return iconFromList({ icons: TileImages, fallback: 'endangered', ...props });
 }
 
 export function PortalIcon({ size = 5, type }: StandardIconProps) {

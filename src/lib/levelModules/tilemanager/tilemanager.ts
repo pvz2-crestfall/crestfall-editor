@@ -84,11 +84,11 @@ export class TileManager {
                     }
 
                     if (object.type == TileType.FloorTile) {
-                        if (object.param1 == 'powertile') {
+                        if (object.param1?.startsWith('powertile')) {
                             powertiles.push({
                                 col: columnIndex,
                                 row: rowIndex,
-                                type: object.param2 || 'epsilon',
+                                type: object.param1.split('_').at(1) || 'epsilon',
                                 delay: this.powertilePropagationDelay,
                             });
                         }

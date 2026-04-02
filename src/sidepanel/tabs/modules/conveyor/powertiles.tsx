@@ -5,7 +5,7 @@ import { Switch } from '@/components/ui/switch';
 import { levelState } from '@/lib/state/levelstate';
 import type { ConveyorSeedBankPlantObject } from '@/types/PVZTypes';
 import { useEffect, useState } from 'react';
-import { PowerTiles, PowerTilesDisplayNames } from '@/lib/plants';
+import { PowerTileList, PowerTilesDisplayNames } from '@/lib/plants';
 import { ConveyorPlantList } from '@/components/conveyor/plant-list';
 
 export function ConveyorPowerTiles() {
@@ -25,7 +25,7 @@ export function ConveyorPowerTiles() {
     const [newItem, setNewItem] = useState('');
     const addItem = () => {
         if (!newItem.trim()) return;
-        setPowertiles([...powertiles, { PlantType: newItem, Weight: 50 }]);
+        setPowertiles([...powertiles, { PlantType: 'tool_' + newItem, Weight: 50 }]);
         setNewItem('');
     };
     const removeItem = (plant: ConveyorSeedBankPlantObject) => {
@@ -43,7 +43,7 @@ export function ConveyorPowerTiles() {
                 <div className="py-2">
                     <div className="flex gap-2 justify-centered">
                         <PlantSearchCombobox
-                            list={PowerTiles}
+                            list={PowerTileList}
                             className="w-[80%]"
                             onChange={(val) => setNewItem(val)}
                             value={newItem ?? ''}

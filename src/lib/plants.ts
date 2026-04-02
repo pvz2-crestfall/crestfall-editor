@@ -27,7 +27,7 @@ export const Plants: PlantType[] = [
     { codename: 'kernelpult', displayName: 'Kernel-pult' },
     { codename: 'springbean', displayName: 'Spring Bean' },
     { codename: 'snowpea', displayName: 'Snow Pea' },
-    { codename: 'chilibean', displayName: 'Chili Pea' },
+    { codename: 'chilibean', displayName: 'Chili Bean' },
     { codename: 'splitpea', displayName: 'Split Pea' },
     { codename: 'lightningreed', displayName: 'Lightning Reed' },
     { codename: 'peapod', displayName: 'Pea Pod' },
@@ -188,14 +188,18 @@ export const Plants: PlantType[] = [
     { codename: 'levitater', displayName: 'Levitater' },
 ];
 
-export const PowerTiles: PlantType[] = [
-    { codename: 'tool_powertile_alpha', displayName: 'Power Tile: Alpha' },
-    { codename: 'tool_powertile_beta', displayName: 'Power Tile: Beta' },
-    { codename: 'tool_powertile_delta', displayName: 'Power Tile: Delta' },
-    { codename: 'tool_powertile_gamma', displayName: 'Power Tile: Gamma' },
+export const PowerTileList: PlantType[] = [
+    { codename: 'powertile_alpha', displayName: 'Power Tile: Alpha' },
+    { codename: 'powertile_beta', displayName: 'Power Tile: Beta' },
+    { codename: 'powertile_delta', displayName: 'Power Tile: Delta' },
+    { codename: 'powertile_gamma', displayName: 'Power Tile: Gamma' },
+    { codename: 'powertile_epsilon', displayName: 'Power Tile: Epsilon' },
 ];
 
 export const PlantDisplayNames = Object.fromEntries(Plants.map((plant) => [plant.codename, plant.displayName]));
 export const PowerTilesDisplayNames = Object.fromEntries(
-    PowerTiles.map((plant) => [plant.codename, plant.displayName]),
+    PowerTileList.map((plant) => [
+        [plant.codename, plant.displayName],
+        ['tool_' + plant.codename, plant.displayName],
+    ]).flat(),
 );

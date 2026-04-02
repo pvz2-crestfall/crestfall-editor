@@ -24,7 +24,7 @@ export function FloorTileRender({ alignment, grid }: { alignment: GridAlignment;
                             width: `${cellWidth}%`,
                         };
 
-                        let tileName = object.param1 == 'powertile' ? 'powertile_' + object.param2 : object.param1;
+                        let tileName = object.param1;
                         let src = TileImages[`./${tileName}.png`];
 
                         return (

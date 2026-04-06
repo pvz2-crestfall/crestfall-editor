@@ -1,7 +1,7 @@
 import type { PiratePlankRows } from '@/lib/levelModules/pirateplanks';
 import { gridState } from '@/lib/state/gridstate';
 import { levelState } from '@/lib/state/levelstate';
-import { StageModuleType } from '@/types/PVZTypes';
+import { StageModuleType } from '@/lib/levelModules/leveldefinition';
 import type { CSSProperties } from 'react';
 
 // Automatically import all .png files in this folder

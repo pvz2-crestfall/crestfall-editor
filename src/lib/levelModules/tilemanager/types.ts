@@ -1,4 +1,4 @@
-import { StageModuleType } from '@/types/PVZTypes';
+import { StageModuleType } from '../leveldefinition';
 
 export const defaultGrave = {
     [StageModuleType.Tutorial]: 'gravestone_tutorial',

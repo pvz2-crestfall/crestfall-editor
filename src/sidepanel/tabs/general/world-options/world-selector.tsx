@@ -8,9 +8,15 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { StageModuleType } from '@/types/PVZTypes';
+import { StageModuleType } from '@/lib/levelModules/leveldefinition';
 
-export function WorldTypeSelector({ value, onValueChange }: { value: StageModuleType; onValueChange: (type: any) => void }) {
+export function WorldTypeSelector({
+    value,
+    onValueChange,
+}: {
+    value: StageModuleType;
+    onValueChange: (type: any) => void;
+}) {
     return (
         <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
             <Label>World Type</Label>

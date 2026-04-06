@@ -17,6 +17,7 @@ export interface LevelDefinitionObject {
     StageModule: string;
     NormalPresentTable: 'egypt_normal_01';
     ShinyPresentTable: 'egypt_shiny_01';
+    LevelPowerupSet?: string;
     StartingSun?: number;
     AddBonusStartingSun?: boolean;
     StartingPlantfood?: number;
@@ -147,24 +148,6 @@ export enum LawnMowerType {
     BWB = 'BeachMowers',
     Modern = 'ModernMowers',
     BattleZ = 'JoustMowers',
-}
-
-export enum StageModuleType {
-    Tutorial = 'TutorialStage',
-    FrontLawn = 'FrontLawnStage',
-    Egypt = 'EgyptStage',
-    Pirate = 'PirateStage',
-    WildWest = 'WestStage',
-    Frostbite = 'IceageStage',
-    LostCity = 'LostCityStage',
-    Future = 'FutureStage',
-    DarkAges = 'DarkStage',
-    NMT = 'EightiesStage',
-    Jurassic = 'DinoStage',
-    BWB = 'BeachStage',
-    Modern = 'ModernStage',
-    BattleZ = 'JoustStage',
-    Rift = 'RiftStage',
 }
 
 export interface Tile {

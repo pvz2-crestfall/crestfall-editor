@@ -13,6 +13,7 @@ import { levelState } from '@/lib/state/levelstate';
 import { useEffect, useState } from 'react';
 import { LevelUnlockSelector } from './level-reward';
 import { Separator } from '@/components/ui/separator';
+import { PowerupSelector } from './powerup-set';
 
 export function LevelInfo() {
     const levelBuilder = levelState((s) => s.levelBuilder);
@@ -61,7 +62,7 @@ export function LevelInfo() {
                 </Select>
             </div>
             <LevelUnlockSelector />
-
+            <PowerupSelector />
             <Separator className="m-2"></Separator>
 
             <div className="flex flex-col w-full items-center justify-between border rounded-md px-4 py-2 gap-2">

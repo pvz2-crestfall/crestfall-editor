@@ -1,4 +1,4 @@
-import type { StageModuleType } from '@/types/PVZTypes';
+import type { StageModuleType } from './levelModules/leveldefinition';
 import { defaultGrave } from './levelModules/tilemanager/types';
 import { PortalTypes, ModernPortalType } from './levelModules/wavemanager/types';
 

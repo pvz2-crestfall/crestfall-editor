@@ -3,7 +3,7 @@ import { Switch } from '@/components/ui/switch';
 import type { PiratePlankRows } from '@/lib/levelModules/pirateplanks';
 import { gridState } from '@/lib/state/gridstate';
 import { levelState } from '@/lib/state/levelstate';
-import { StageModuleType } from '@/types/PVZTypes';
+import { StageModuleType } from '@/lib/levelModules/leveldefinition';
 import { useEffect, useState } from 'react';
 
 export function WorldOptions({ stageType }: { stageType: StageModuleType }) {

@@ -1,10 +1,4 @@
-import {
-    LawnMowerType,
-    StageModuleType,
-    SunDropperType,
-    type LevelDefinitionObject,
-    type PVZObject,
-} from '@/types/PVZTypes';
+import { LawnMowerType, SunDropperType, type LevelDefinitionObject, type PVZObject } from '@/types/PVZTypes';
 import { PVZBase } from './base';
 import { fromRTID, RTIDTypes, toRTID } from '../utils';
 
@@ -155,6 +149,56 @@ export class LevelDefinition extends PVZBase {
             this.objdata.LoadDefaultMusic = undefined;
         }
     }
+
+    get powerupType(): PowerupSet {
+        switch (this.objdata.LevelPowerupSet) {
+            case 'LevelPowerupsDefault':
+                return PowerupSet.Default;
+            case 'LevelPowerupsUnlimited':
+                return PowerupSet.Unlimited;
+            case 'LevelPowerupsFlameThrower':
+                return PowerupSet.Flamethrower;
+            case 'LevelPowerupsVasebreaker':
+                return PowerupSet.Vasebreaker;
+            case 'LevelPowerupsBeghouled':
+                return PowerupSet.Beghouled;
+            case 'LevelPowerupsDisabled':
+                return PowerupSet.Disabled;
+            default:
+                return PowerupSet.Default;
+        }
+    }
+
+    set powerupType(type: PowerupSet) {
+        this.objdata.LevelPowerupSet = type;
+    }
+}
+
+export enum StageModuleType {
+    Tutorial = 'TutorialStage',
+    FrontLawn = 'FrontLawnStage',
+    Egypt = 'EgyptStage',
+    Pirate = 'PirateStage',
+    WildWest = 'WestStage',
+    Frostbite = 'IceageStage',
+    LostCity = 'LostCityStage',
+    Future = 'FutureStage',
+    DarkAges = 'DarkStage',
+    NMT = 'EightiesStage',
+    Jurassic = 'DinoStage',
+    BWB = 'BeachStage',
+    Modern = 'ModernStage',
+    BattleZ = 'JoustStage',
+    Rift = 'RiftStage',
+}
+
+export enum PowerupSet {
+    Default = 'LevelPowerupsDefault',
+    Unlimited = 'LevelPowerupsUnlimited',
+    Flamethrower = 'LevelPowerupsFlameThrower',
+    Vasebreaker = 'LevelPowerupsVasebreaker',
+    Beghouled = 'LevelPowerupsBeghouled',
+    Disabled = 'LevelPowerupsDisabled',
 }
 
 const worldMowers = {

@@ -1,7 +1,7 @@
 import type { ChallengeManager } from '@/lib/levelModules/challenges/challengemanager';
 import { type TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
 import { TileType, type TileObject } from '@/lib/levelModules/tilemanager/types';
-import { StageModuleType } from '@/types/PVZTypes';
+import { StageModuleType } from '@/lib/levelModules/leveldefinition';
 import { type CSSProperties, type JSX } from 'react';
 import { getGravestoneImage, getPlantImage, getPortalImage, TileImages } from '@/lib/assets';
 

@@ -6,7 +6,8 @@ import type {
     SeedBankObject,
 } from '@/types/PVZTypes';
 import type { PVZObject } from '@/types/PVZTypes';
-import { SeedBankSelectionMethod, StageModuleType } from '@/types/PVZTypes';
+import { SeedBankSelectionMethod } from '@/types/PVZTypes';
+import { StageModuleType } from './levelModules/leveldefinition';
 import { toRTID, RTIDTypes } from './utils';
 import { SeedBank } from './levelModules/seedbank';
 import { ConveyorBelt } from './levelModules/conveyor';

@@ -181,3 +181,13 @@ export interface InitialGridItemProperties {
         TypeName: string;
     }[];
 }
+
+export interface InitialPlantProperties {
+    InitialPlantPlacements: {
+        GridX: number;
+        GridY: number;
+        TypeName: string;
+        Level?: number;
+        Condition?: string;
+    }[];
+}

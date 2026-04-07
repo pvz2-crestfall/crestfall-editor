@@ -42,6 +42,7 @@ export function SidePanel() {
                         tabs={[
                             { label: 'General Properties', content: SidepanelGeneralTab() },
                             { label: 'Level Modules', content: SidepanelModulesTab() },
+                            // { label: 'Tile Editor', content: SidepanelTileEditorTab() },
                             { label: 'Wave Manager', content: WaveManagerTab() },
                             { label: 'Save/Load', content: exportAndImportTab },
                         ]}

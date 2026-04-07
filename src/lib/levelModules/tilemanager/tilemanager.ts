@@ -6,6 +6,7 @@ import { EndangeredPlants } from './ProtectThePlantChallengeProperties';
 import { LevelDefinition } from '../leveldefinition';
 import { PowerTiles } from './PowerTileProperties';
 import { InitialGridItems } from './InitialGridItemProperties';
+import { InitialPlants } from './InitialPlantProperties';
 
 const rows = 5;
 const columns = 9;
@@ -15,6 +16,7 @@ const tileClasses = {
     ProtectThePlantChallengeProperties: EndangeredPlants,
     PowerTileProperties: PowerTiles,
     InitialGridItemProperties: InitialGridItems,
+    InitialPlantProperties: InitialPlants,
 };
 
 export class TileManager {
@@ -59,6 +61,7 @@ export class TileManager {
 
         let powertiles: { col: number; row: number; type: string; delay: number }[] = [];
         let gravestones: { col: number; row: number; type?: string }[] = [];
+        let plants: { col: number; row: number; type: string; condition?: string }[] = [];
         let protectedPlants: { col: number; row: number; type: string }[] = [];
         let gridItems: { col: number; row: number; type: string }[] = [];
 
@@ -73,12 +76,19 @@ export class TileManager {
                         });
                     }
 
-                    if (object.type == TileType.Plant) {
+                    if (object.type == TileType.Plant && object.param1) {
                         if (object.param2 == 'endangered') {
                             protectedPlants.push({
                                 col: columnIndex,
                                 row: rowIndex,
-                                type: object.param1 || 'sunflower',
+                                type: object.param1,
+                            });
+                        } else {
+                            plants.push({
+                                col: columnIndex,
+                                row: rowIndex,
+                                type: object.param1,
+                                condition: object.param2,
                             });
                         }
                     }
@@ -108,6 +118,7 @@ export class TileManager {
         const modulesToBuild = [
             GravestoneProperties.from(gravestones),
             EndangeredPlants.from(protectedPlants),
+            InitialPlants.from(plants),
             PowerTiles.from(powertiles),
             InitialGridItems.from(gridItems),
         ];

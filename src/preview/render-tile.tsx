@@ -3,7 +3,7 @@ import { type TileManager } from '@/lib/levelModules/tilemanager/tilemanager';
 import { TileType, type TileObject } from '@/lib/levelModules/tilemanager/types';
 import { StageModuleType } from '@/lib/levelModules/leveldefinition';
 import { type CSSProperties, type JSX } from 'react';
-import { getGravestoneImage, getPlantImage, getPortalImage, TileImages } from '@/lib/assets';
+import { getGravestoneImage, getPlantImage, getPortalImage, PlantImages, TileImages } from '@/lib/assets';
 
 interface RenderTileSpritesProps {
     col: number;
@@ -84,6 +84,19 @@ export function RenderTileSprites({ col, row, stageType, tileManager, width, hei
                     imageStyle.transform = 'translate(-50%, -100%)';
 
                     images.push(imageResult());
+
+                    if (tile.param2 == 'icecubed') {
+                        imageProps.src = PlantImages['./iceblock.png'];
+
+                        imageStyle.width = `${cellWidthPct}%`;
+                        imageStyle.height = `${cellHeightPct}%`;
+                        imageStyle.top = `${((row + 0.95) / 5) * 100}%`;
+                        imageStyle.scale = 1.1;
+                        imageStyle.opacity = 0.75;
+
+                        images.push(imageResult());
+                    }
+
                     return images;
                 } else if (tile.type == TileType.Grave) {
                     const scale = 1.6;

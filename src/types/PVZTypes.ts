@@ -173,3 +173,11 @@ export interface PowerTileProperties {
         PropagationInitialDelay?: number;
     }[];
 }
+
+export interface InitialGridItemProperties {
+    InitialGridItemPlacements: {
+        GridX: number;
+        GridY: number;
+        TypeName: string;
+    }[];
+}

@@ -85,17 +85,13 @@ export function RenderTileSprites({ col, row, stageType, tileManager, width, hei
 
                     images.push(imageResult());
                     return images;
-                }
-
-                if (tile.type == TileType.Grave) {
+                } else if (tile.type == TileType.Grave) {
                     const scale = 1.6;
                     imageProps.src = getGravestoneImage(stageType, tile.param1);
                     imageStyle.transform = `translate(-50%, -65%) scale(${scale})`;
 
                     return imageResult();
-                }
-
-                if (tile.type == TileType.Portal) {
+                } else if (tile.type == TileType.Portal) {
                     const scale = 3;
                     imageProps.src = getPortalImage(tile.param1);
                     imageStyle.transform = `translate(-20%, -60%) scale(${scale})`;
@@ -111,6 +107,8 @@ export function RenderTileSprites({ col, row, stageType, tileManager, width, hei
                         drop-shadow(0 0 12px rgba(150, 255, 255, 0.8))
                     `;
 
+                    return imageResult();
+                } else if (tile.type == TileType.GridItem) {
                     return imageResult();
                 }
             })}
@@ -128,6 +126,8 @@ const getAlt = (tile: TileObject) => {
             return 'Portal';
         case TileType.FloorTile:
             return 'Floor Tile';
+        case TileType.GridItem:
+            return 'Grid Item';
         default:
             return 'TileEntity';
     }

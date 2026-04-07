@@ -5,6 +5,7 @@ import { type TileGrid, TileType, type TileObject } from './types';
 import { EndangeredPlants } from './ProtectThePlantChallengeProperties';
 import { LevelDefinition } from '../leveldefinition';
 import { PowerTiles } from './PowerTileProperties';
+import { InitialGridItems } from './InitialGridItemProperties';
 
 const rows = 5;
 const columns = 9;
@@ -13,6 +14,7 @@ const tileClasses = {
     GravestoneProperties: GravestoneProperties,
     ProtectThePlantChallengeProperties: EndangeredPlants,
     PowerTileProperties: PowerTiles,
+    InitialGridItemProperties: InitialGridItems,
 };
 
 export class TileManager {
@@ -55,12 +57,10 @@ export class TileManager {
         const modules: string[] = [];
         const objects: PVZObject[] = [];
 
-        // const gravestones = new GravestoneProperties({});
-        // const protectedPlants = new EndangeredPlants({});
-
         let powertiles: { col: number; row: number; type: string; delay: number }[] = [];
         let gravestones: { col: number; row: number; type?: string }[] = [];
         let protectedPlants: { col: number; row: number; type: string }[] = [];
+        let gridItems: { col: number; row: number; type: string }[] = [];
 
         this.grid.forEach((column, columnIndex) => {
             column.forEach((tile, rowIndex) => {
@@ -83,7 +83,11 @@ export class TileManager {
                         }
                     }
 
-                    if (object.type == TileType.FloorTile) {
+                    if (object.type == TileType.FloorTile && object.param1) {
+                        if (InitialGridItems.floorTiles.includes(object.param1)) {
+                            gridItems.push({ col: columnIndex, row: rowIndex, type: object.param1 });
+                        }
+
                         if (object.param1?.startsWith('powertile')) {
                             powertiles.push({
                                 col: columnIndex,
@@ -93,6 +97,10 @@ export class TileManager {
                             });
                         }
                     }
+
+                    if (object.type == TileType.GridItem && object.param1) {
+                        gridItems.push({ col: columnIndex, row: rowIndex, type: object.param1 });
+                    }
                 }
             });
         });
@@ -101,6 +109,7 @@ export class TileManager {
             GravestoneProperties.from(gravestones),
             EndangeredPlants.from(protectedPlants),
             PowerTiles.from(powertiles),
+            InitialGridItems.from(gridItems),
         ];
 
         for (const mod of modulesToBuild) {

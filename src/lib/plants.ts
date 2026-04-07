@@ -44,6 +44,7 @@ export const Plants: PlantType[] = [
     { codename: 'marigold', displayName: 'Marigold' },
     { codename: 'spikerock', displayName: 'Spikerock' },
     { codename: 'powerlily', displayName: 'Power Lily' },
+    { codename: 'fastlily', displayName: 'Fast Lily' },
     { codename: 'squash', displayName: 'Squash' },
     { codename: 'citron', displayName: 'Citron' },
     { codename: 'powerplant', displayName: 'Tile Turnip' },

@@ -1,6 +1,13 @@
-import { LawnMowerType, SunDropperType, type LevelDefinitionObject, type PVZObject } from '@/types/PVZTypes';
+import {
+    LawnMowerType,
+    SunDropperType,
+    type LevelDefinitionObject,
+    type PVZObject,
+    type SunDropperProperties,
+} from '@/types/PVZTypes';
 import { PVZBase } from './base';
 import { fromRTID, RTIDTypes, toRTID } from '../utils';
+import { SunDropper } from './sundropper';
 
 export class LevelDefinition extends PVZBase {
     static objclass: string = 'LevelDefinition';
@@ -9,10 +16,27 @@ export class LevelDefinition extends PVZBase {
     rawModules: string[];
 
     lawnMower?: LawnMowerType | 'auto';
-    sunDropper?: SunDropperType;
+    sunDropperType?: SunDropperType;
 
-    constructor(metadata: LevelDefinitionObject) {
+    customSunDropper = new SunDropper({
+        InitialSunDropDelay: 2,
+        SunCountdownBase: 6,
+        SunCountdownMax: 12,
+        SunCountdownRange: 3,
+        SunCountdownIncreasePerSun: 0.1,
+    });
+
+    constructor(data: PVZObject[]) {
         super();
+
+        let metadata: LevelDefinitionObject;
+        let definitionObject = data.find(({ objclass }) => objclass == 'LevelDefinition');
+        if (!definitionObject) {
+            alert('invalid level loaded!');
+            metadata = {} as LevelDefinitionObject;
+        } else {
+            metadata = definitionObject.objdata as LevelDefinitionObject;
+        }
 
         this.objdata = { ...metadata }; // clone the metadata object
         this.rawModules = metadata.Modules;
@@ -21,21 +45,23 @@ export class LevelDefinition extends PVZBase {
         // check for misc properties in the level modules
         if (metadata.Modules) {
             metadata.Modules.forEach((module) => {
-                const moduleRegex = /RTID\((.+)@(.+)\)/;
-                const match = module.match(moduleRegex);
+                let { name, type } = fromRTID(module);
 
-                if (match) {
-                    const moduleName = match[1];
-
-                    // check for lawn mowers
-                    if (Object.values(LawnMowerType).includes(moduleName as LawnMowerType)) {
-                        this.lawnMower = moduleName as LawnMowerType;
+                if (type == RTIDTypes.current) {
+                    let obj = data.find((obj) => obj.aliases?.includes(name));
+                    if (obj?.objclass == 'SunDropperProperties') {
+                        this.sunDropperType = SunDropperType.Custom;
+                        this.customSunDropper.objdata = obj.objdata as SunDropperProperties;
+                    }
+                } else {
+                    if (Object.values(LawnMowerType).includes(name as LawnMowerType)) {
+                        this.lawnMower = name as LawnMowerType;
                     }
 
                     // check for sun dropper type
-                    console.log(moduleName);
-                    if (Object.values(SunDropperType).includes(moduleName as SunDropperType)) {
-                        this.sunDropper = moduleName as SunDropperType;
+                    console.log(name);
+                    if (Object.values(SunDropperType).includes(name as SunDropperType)) {
+                        this.sunDropperType = name as SunDropperType;
                     }
                 }
             });
@@ -43,24 +69,29 @@ export class LevelDefinition extends PVZBase {
     }
 
     build(externalModuels?: string[]): [string[], PVZObject[]] {
-        const modules = [...(externalModuels ?? []), ...this.getLevelModules()];
-        const object = this.buildObject<LevelDefinitionObject>();
+        const modules = [...(externalModuels ?? [])];
+        const objects = [];
 
-        object.objdata.Modules = modules;
+        if (this.sunDropperType) {
+            if (this.sunDropperType == SunDropperType.Custom) {
+                let dropperObj = this.customSunDropper.buildObject();
+                modules.push(toRTID(this.customSunDropper.aliases[0], RTIDTypes.current));
+                objects.push(dropperObj);
+            } else {
+                modules.push(toRTID(this.sunDropperType, RTIDTypes.module));
+            }
+        }
 
-        return [modules, [object]];
-    }
-
-    getLevelModules(): string[] {
-        const modules = [];
-
-        if (this.sunDropper) modules.push(toRTID(this.sunDropper, RTIDTypes.module));
         if (this.lawnMower) {
             const lawnMowerType = this.lawnMower == 'auto' ? worldMowers[this.stageType] : this.lawnMower;
             modules.push(toRTID(lawnMowerType, RTIDTypes.module));
         }
 
-        return modules;
+        const levelObject = this.buildObject<LevelDefinitionObject>();
+        levelObject.objdata.Modules = modules;
+        objects.unshift(levelObject);
+
+        return [modules, objects];
     }
 
     getMowerType(): LawnMowerType | undefined {
@@ -74,7 +105,7 @@ export class LevelDefinition extends PVZBase {
 
         for (const m of this.rawModules) {
             let module = fromRTID(m);
-            if (objAlias == module.name) return true;
+            if (objAlias == module.name && module.type == RTIDTypes.current) return true;
         }
 
         return false;

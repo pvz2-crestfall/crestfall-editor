@@ -132,6 +132,7 @@ export enum SunDropperType {
     Default = 'DefaultSunDropper',
     Fast = 'FastSunDropper',
     Fastest = 'VeryFastSunDropper',
+    Custom = 'CustomDropper',
 }
 
 export enum LawnMowerType {
@@ -197,4 +198,12 @@ export interface SunBombChallengeProperties {
     PlantDamage: number;
     ZombieBombExplosionRadius: number;
     ZombieDamage: number;
+}
+
+export interface SunDropperProperties {
+    InitialSunDropDelay: number;
+    SunCountdownBase: number;
+    SunCountdownRange: number;
+    SunCountdownIncreasePerSun: number;
+    SunCountdownMax: number;
 }

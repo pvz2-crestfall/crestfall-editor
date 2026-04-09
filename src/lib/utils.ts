@@ -14,8 +14,9 @@ export function fromRTID(input: string): { name: string; type: RTIDTypes } {
     const match = input.match(rtidRegex);
 
     if (match) {
+        console.log(match);
         const moduleName = match[1];
-        const moduleType = match[1];
+        const moduleType = match[2];
 
         return {
             name: moduleName,

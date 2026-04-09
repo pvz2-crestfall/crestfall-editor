@@ -1,6 +1,5 @@
 import type {
     ConveyorSeedBankPropertiesObject,
-    LevelDefinitionObject,
     PiratePlankProperties,
     RailcartProperties,
     SeedBankObject,
@@ -38,10 +37,8 @@ export class LevelBuilder {
         // save the raw level data in case it's needed for something later
         this.rawData = data;
 
-        // extract level metadata
-        let levelDefObj = data.find(({ objclass }) => objclass == 'LevelDefinition');
-        if (!levelDefObj) levelDefObj = { objclass: 'LevelDefinition', objdata: {} } as PVZObject;
-        this.levelProperties = new LevelDefinition(levelDefObj.objdata as LevelDefinitionObject);
+        // define level metadata
+        this.levelProperties = new LevelDefinition(data);
 
         // seed chooser properties
         const seedBankObj = data.find(({ objclass }) => objclass == 'SeedBankProperties');
@@ -139,8 +136,8 @@ export class LevelBuilder {
         modules.push(...waveModules);
         objects.push(...waveObjects);
 
-        const [_levelModules, [levelObject]] = this.levelProperties.build(modules);
-        objects.unshift(levelObject);
+        const [_levelModules, levelObjects] = this.levelProperties.build(modules);
+        objects.unshift(...levelObjects);
 
         return objects;
     }

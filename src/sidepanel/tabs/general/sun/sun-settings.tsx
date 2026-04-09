@@ -13,13 +13,14 @@ import {
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { useEffect, useState } from 'react';
+import { CustomSunDropperOptions } from './custom-dropper';
 
 export function SunSettingsComponent() {
     const levelBuilder = levelState((s) => s.levelBuilder);
 
     const [startingSun, setStartingSun] = useState(levelBuilder.levelProperties.startingSun);
     const [bonusSunAllowed, allowBonusSun] = useState(levelBuilder.levelProperties.allowBonusSun);
-    const [sunDropperType, setDropperType] = useState(levelBuilder.levelProperties.sunDropper);
+    const [sunDropperType, setDropperType] = useState(levelBuilder.levelProperties.sunDropperType);
 
     useEffect(() => {
         levelBuilder.levelProperties.startingSun = startingSun;
@@ -30,7 +31,7 @@ export function SunSettingsComponent() {
     }, [bonusSunAllowed]);
 
     useEffect(() => {
-        levelBuilder.levelProperties.sunDropper = sunDropperType;
+        levelBuilder.levelProperties.sunDropperType = sunDropperType;
     }, [sunDropperType]);
 
     return (
@@ -48,7 +49,6 @@ export function SunSettingsComponent() {
                         onChange={(e) => setStartingSun(Number(e.target.value))}
                     />
                 </div>
-
                 <div className="flex flex-col border rounded-md px-4 py-2">
                     <div className="flex w-full items-center justify-between">
                         <Label className="px-4 py-1">Sun Dropper</Label>
@@ -70,13 +70,14 @@ export function SunSettingsComponent() {
                                     <SelectItem value={SunDropperType.Default}>Default</SelectItem>
                                     <SelectItem value={SunDropperType.Slow}>Slow</SelectItem>
                                     <SelectItem value={SunDropperType.Slowest}>Slowest</SelectItem>
+                                    <SelectItem value={SunDropperType.Custom}>Custom</SelectItem>
                                     <SelectItem value="disable">Disabled</SelectItem>
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
                     </div>
                 </div>
-
+                {sunDropperType == SunDropperType.Custom && <CustomSunDropperOptions />}
                 <div className="flex items-center justify-between border rounded-md px-4 py-2">
                     <Label className="px-4 py-1">Allow Bonus Sun</Label>
                     <Switch id="bonus-sun-toggle" defaultChecked={bonusSunAllowed} onCheckedChange={allowBonusSun} />

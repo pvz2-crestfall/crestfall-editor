@@ -191,3 +191,10 @@ export interface InitialPlantProperties {
         Condition?: string;
     }[];
 }
+
+export interface SunBombChallengeProperties {
+    PlantBombExplosionRadius: number;
+    PlantDamage: number;
+    ZombieBombExplosionRadius: number;
+    ZombieDamage: number;
+}

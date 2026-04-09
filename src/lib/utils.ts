@@ -52,18 +52,19 @@ export function useOnScreen<T extends HTMLElement = HTMLElement>(ref: React.RefO
     return isIntersecting;
 }
 
-export const useOnPageLeave = (handler: any) => {
+export const useOnPageLeave = (handler: () => void) => {
     useEffect(() => {
-        window.onbeforeunload = null;
-        window.addEventListener('beforeunload', (event) => {
-            //When they leave the site
-            event.preventDefault(); // Cancel the event as stated by the standard.
+        const handleBeforeUnload = (event: any) => {
             handler();
-        });
+
+            event.preventDefault();
+            event.returnValue = true;
+        };
+
+        window.addEventListener('beforeunload', handleBeforeUnload);
 
         return () => {
-            handler(); //When they visit another local link
-            document.removeEventListener('beforeunload', handler);
+            window.removeEventListener('beforeunload', handleBeforeUnload);
         };
-    }, []);
+    }, [handler]);
 };

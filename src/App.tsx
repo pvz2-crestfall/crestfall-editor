@@ -6,7 +6,6 @@ import { Button } from './components/ui/button';
 import { Switch } from './components/ui/switch';
 import { Label } from './components/ui/label';
 import { useState, useEffect, useReducer } from 'react';
-import { LevelBuilder } from './lib/levelBuilder';
 import { useOnPageLeave } from './lib/utils';
 import { autosave } from './lib/fileManager';
 

@@ -1,6 +1,8 @@
 import type { PVZObject } from '../types/PVZTypes';
 import { LevelBuilder } from './levelBuilder';
 
+export const MAX_AUTO_SAVES: number = 10;
+
 export async function saveLevel(levelBuilder: LevelBuilder) {
     const data = {
         objects: levelBuilder.build(),
@@ -62,11 +64,23 @@ export function loadLevelFile(file: File, setBuilder: (levelBuilder: LevelBuilde
 }
 
 export function autosave(levelBuilder: LevelBuilder) {
-    const data = {
+    const data = JSON.stringify({
         objects: levelBuilder.build(),
         version: 1,
-    };
-    sessionStorage.setItem('session-project', JSON.stringify(data));
+    });
+    sessionStorage.setItem('session-project', data);
+
+    let oldHistory = localStorage.getItem('autosave-history');
+    let history = [];
+
+    if (oldHistory != null) {
+        let parsed = JSON.parse(oldHistory) as PVZObject[];
+        history.push(...parsed.slice(0, MAX_AUTO_SAVES - 1));
+    }
+
+    history.unshift(data);
+    localStorage.setItem('autosave-history', JSON.stringify(history));
+
     console.log('Autosaved.');
 }
 

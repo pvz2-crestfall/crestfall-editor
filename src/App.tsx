@@ -6,6 +6,9 @@ import { Button } from './components/ui/button';
 import { Switch } from './components/ui/switch';
 import { Label } from './components/ui/label';
 import { useState, useEffect, useReducer } from 'react';
+import { LevelBuilder } from './lib/levelBuilder';
+import { useOnPageLeave } from './lib/utils';
+import { autosave } from './lib/fileManager';
 
 // JSON preview component
 function DataPreview() {
@@ -48,11 +51,9 @@ function ThemeToggle() {
 
 export default function App() {
     const [isDev, setIsDev] = useState(import.meta.env.PROD ? false : true);
+    const levelBuilder = levelState((s) => s.levelBuilder);
 
-    useEffect(() => {
-        sessionStorage.clear();
-        console.log('sessionStorage cleared on page reload.');
-    }, []);
+    useOnPageLeave(() => autosave(levelBuilder));
 
     return (
         <div>

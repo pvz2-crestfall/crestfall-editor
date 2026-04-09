@@ -10,9 +10,11 @@ export interface LevelState {
     setBuilder: (builder: LevelBuilder) => void;
 }
 
+const lastSession = sessionStorage.getItem('session-project');
+
 export const levelState = create<LevelState>()(
     immer((set) => ({
-        levelBuilder: new LevelBuilder(JSON.parse(DefaultLevelFile).objects),
+        levelBuilder: new LevelBuilder(JSON.parse(lastSession ?? DefaultLevelFile).objects),
         reloadLevelBuilder: () =>
             set((state) => {
                 state.levelBuilder = new LevelBuilder(state.levelBuilder.build());

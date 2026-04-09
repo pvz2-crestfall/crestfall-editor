@@ -1,4 +1,3 @@
-import type { LevelDefinitionObject } from '@/types/PVZTypes';
 import type { PVZObject } from '../types/PVZTypes';
 import { LevelBuilder } from './levelBuilder';
 
@@ -54,17 +53,21 @@ export function loadLevelFile(file: File, setBuilder: (levelBuilder: LevelBuilde
             const data = JSON.parse(event.target?.result as string);
             const objects: PVZObject[] = data['objects'].map((obj: unknown) => obj as PVZObject);
 
-            const levelData = objects.filter((obj) => obj.objclass == 'LevelDefinition')[0]
-                .objdata as LevelDefinitionObject;
-
             setBuilder(new LevelBuilder(objects));
-
-            console.log('Loaded level data:', levelData);
         } catch (err) {
             alert('Failed to load JSON ' + err);
         }
     };
     reader.readAsText(file);
+}
+
+export function autosave(levelBuilder: LevelBuilder) {
+    const data = {
+        objects: levelBuilder.build(),
+        version: 1,
+    };
+    sessionStorage.setItem('session-project', JSON.stringify(data));
+    console.log('Autosaved.');
 }
 
 export const DefaultLevelFile = `

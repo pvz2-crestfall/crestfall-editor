@@ -1,5 +1,5 @@
 import { clsx, type ClassValue } from 'clsx';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 export function cn(...inputs: ClassValue[]) {
@@ -14,7 +14,6 @@ export function fromRTID(input: string): { name: string; type: RTIDTypes } {
     const match = input.match(rtidRegex);
 
     if (match) {
-        console.log(match);
         const moduleName = match[1];
         const moduleType = match[2];
 
@@ -25,6 +24,14 @@ export function fromRTID(input: string): { name: string; type: RTIDTypes } {
     } else {
         throw new Error('Invalid RTID Passed!');
     }
+}
+
+export enum RTIDTypes {
+    current = 'CurrentLevel',
+    module = 'LevelModules',
+    zombie = 'ZombieTypes',
+    plant = 'PlantTypes',
+    gridItem = 'GridItemTypes',
 }
 
 export function useOnScreen<T extends HTMLElement = HTMLElement>(ref: React.RefObject<T | null>) {
@@ -45,10 +52,18 @@ export function useOnScreen<T extends HTMLElement = HTMLElement>(ref: React.RefO
     return isIntersecting;
 }
 
-export enum RTIDTypes {
-    current = 'CurrentLevel',
-    module = 'LevelModules',
-    zombie = 'ZombieTypes',
-    plant = 'PlantTypes',
-    gridItem = 'GridItemTypes',
-}
+export const useOnPageLeave = (handler: any) => {
+    useEffect(() => {
+        window.onbeforeunload = null;
+        window.addEventListener('beforeunload', (event) => {
+            //When they leave the site
+            event.preventDefault(); // Cancel the event as stated by the standard.
+            handler();
+        });
+
+        return () => {
+            handler(); //When they visit another local link
+            document.removeEventListener('beforeunload', handler);
+        };
+    }, []);
+};

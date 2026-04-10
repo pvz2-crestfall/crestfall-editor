@@ -3,6 +3,12 @@ import { LevelBuilder } from './levelBuilder';
 
 export const MAX_AUTO_SAVES: number = 10;
 
+export type SaveEntry = {
+    timestamp: string;
+    objects: any;
+    name?: string;
+};
+
 export async function saveLevel(levelBuilder: LevelBuilder) {
     const data = {
         objects: levelBuilder.build(),
@@ -64,11 +70,12 @@ export function loadLevelFile(file: File, setBuilder: (levelBuilder: LevelBuilde
 }
 
 export function autosave(levelBuilder: LevelBuilder) {
-    const data = JSON.stringify({
+    const data = {
+        timestamp: Date.now(),
         objects: levelBuilder.build(),
         version: 1,
-    });
-    sessionStorage.setItem('session-project', data);
+    };
+    sessionStorage.setItem('session-project', JSON.stringify(data));
 
     let oldHistory = localStorage.getItem('autosave-history');
     let history = [];

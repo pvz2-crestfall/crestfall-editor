@@ -24,7 +24,6 @@ function EndangeredPlantsEditor() {
     const [selectedPlant, setSelectedPlant] = useState('peashooter');
 
     const onGridClick = (position: { row: number; col: number }, selectedTool: string) => {
-        console.log(position, selectedTool, selectedPlant);
         if (selectedTool == 'none') return;
 
         if (selectedTool == 'place') {

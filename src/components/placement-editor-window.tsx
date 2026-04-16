@@ -57,9 +57,14 @@ export function PlacementEditorWindow({
             onClose={onClose}
             id={id}
         >
-            {children}
-            <div className="w-full flex flex-col gap-2 justify-between items-center border rounded-md px-4 py-2">
-                <ToolSelectionGroup defaultValue={selectedTool} onValueChange={setSelectedTool}></ToolSelectionGroup>
+            <div>
+                {children}
+                <div className="w-full flex flex-col gap-2 justify-between items-center border rounded-md px-4 py-2">
+                    <ToolSelectionGroup
+                        defaultValue={selectedTool}
+                        onValueChange={setSelectedTool}
+                    ></ToolSelectionGroup>
+                </div>
             </div>
         </FloatingWindow>,
         document.body,

@@ -1,6 +1,5 @@
 import { ModuleTemplate } from '../template';
 import { BeatTheLevelChallenge } from './custom-message';
-import { EndangeredChallenge } from './endangered-challenge';
 import { MoldChallenge } from './mold-challenge';
 import {
     FlowerLineChallenge,
@@ -31,7 +30,6 @@ export function ChallengeModule() {
             <FlowerLineChallenge />
             <BeatZombiesInTimeChallenge />
             <MoldChallenge />
-            <EndangeredChallenge />
             <BeatTheLevelChallenge />
         </ModuleTemplate>
     );

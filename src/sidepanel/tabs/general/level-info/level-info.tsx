@@ -47,7 +47,7 @@ export function LevelInfo() {
             <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
                 <Label>Music Type</Label>
                 <Select value={musicType ?? undefined} onValueChange={(val) => setMusicType(val)}>
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger className="w-[50%]">
                         <SelectValue placeholder="Music Type" />
                     </SelectTrigger>
                     <SelectContent>

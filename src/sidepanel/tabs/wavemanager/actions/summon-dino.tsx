@@ -36,7 +36,7 @@ export function SummonDinoAction({ waveaction }: { waveaction: WaveAction<DinoWa
             <div className="flex w-full items-center justify-between border rounded-md px-4 py-2">
                 <Label>Dinosaur Type</Label>
                 <Select value={dinoType} onValueChange={setDinoType}>
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger className="w-[50%]">
                         <SelectValue placeholder="Dino Type" />
                     </SelectTrigger>
                     <SelectContent>

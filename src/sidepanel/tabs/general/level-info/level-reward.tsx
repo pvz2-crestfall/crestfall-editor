@@ -52,7 +52,7 @@ export function LevelUnlockSelector() {
             <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
                 <Label>Level Reward</Label>
                 <Select value={rewardType ?? 'default'} onValueChange={(val) => setRewardType(val)}>
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger className="w-[50%]">
                         <SelectValue placeholder="Unlock Type" />
                     </SelectTrigger>
                     <SelectContent>
@@ -71,7 +71,7 @@ export function LevelUnlockSelector() {
                 <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
                     <Label>Plant Unlock</Label>
                     <PlantSelector
-                        buttonClassName="w-[180px]"
+                        buttonClassName="w-[50%]"
                         plantType={rewardParam ?? ''}
                         onSelect={setRewardParam}
                     />

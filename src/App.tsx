@@ -55,8 +55,8 @@ export default function App() {
     useOnPageLeave(() => autosave(levelBuilder));
 
     return (
-        <div>
-            <div className="flex flex-col h-screen lg:flex-row p-4 gap-4 w-full">
+        <div className="flex min-w-md">
+            <div className="flex flex-col h-screen lg:flex-row gap-4 w-full">
                 <div className="flex-1 flex flex-col items-center justify-center gap-4 w-full">
                     <div className="w-full flex justify-center ">
                         <LevelPreview />
@@ -69,7 +69,7 @@ export default function App() {
                     </div>
                 </div>
 
-                <div className="w-full lg:w-lg min-w-0">
+                <div className="flex min-w-md">
                     <SidePanel />
                 </div>
             </div>

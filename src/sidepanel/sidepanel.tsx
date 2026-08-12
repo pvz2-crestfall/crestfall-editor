@@ -8,7 +8,7 @@ import { exportAndImportTab } from './tabs/files/filemanager';
 
 export function SidePanel() {
     return (
-        <Card className="flex p-0 h-full">
+        <Card className="flex p-0 h-full min-w-0">
             <ScrollArea className="h-full rounded-md border">
                 <CardContent className="flex px-0 sm:px-6 flex-col gap-3">
                     <TabSwitch

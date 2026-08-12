@@ -120,7 +120,7 @@ export function SpawnModernPortalAction({ waveaction }: { waveaction: WaveAction
 function PortalSelector({ PortalType, setPortalType }: { PortalType: ModernPortalType; setPortalType: any }) {
     return (
         <Select value={PortalType ?? undefined} onValueChange={(val) => setPortalType(val as ModernPortalType)}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[50%]">
                 <SelectValue placeholder="Portal Type" />
             </SelectTrigger>
             <SelectContent>

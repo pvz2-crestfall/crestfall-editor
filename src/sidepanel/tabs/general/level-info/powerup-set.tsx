@@ -26,7 +26,7 @@ export function PowerupSelector() {
             <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
                 <Label>Powerup Set</Label>
                 <Select value={powerupType} onValueChange={(val) => setPowerupType(val as PowerupSet)}>
-                    <SelectTrigger className="w-[180px]">
+                    <SelectTrigger className="w-[50%]">
                         <SelectValue placeholder="Powerup Type" />
                     </SelectTrigger>
                     <SelectContent>

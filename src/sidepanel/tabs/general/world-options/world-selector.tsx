@@ -21,7 +21,7 @@ export function WorldTypeSelector({
         <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
             <Label>World Type</Label>
             <Select value={value ?? undefined} onValueChange={(val) => onValueChange(val as StageModuleType)}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[50%]">
                     <SelectValue placeholder="Stage Type" />
                 </SelectTrigger>
                 <SelectContent>

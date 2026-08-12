@@ -9,7 +9,7 @@ import { Actions } from './actions/actions';
 import { DeleteButton } from '@/components/ui/delete-button';
 import { CSS } from '@dnd-kit/utilities';
 import { arrayMove, SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { closestCenter, DndContext, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
+import { closestCenter, DndContext, MouseSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import type { WaveAction } from '@/lib/levelModules/wavemanager/types';
 import type { WaveListType } from '@/lib/levelModules/wavemanager/wavemanager';
 
@@ -54,7 +54,15 @@ export function WaveList({
         }, 300); // match the CSS animation duration
     };
 
-    const sensors = useSensors(useSensor(PointerSensor));
+    const sensors = useSensors(
+        useSensor(MouseSensor),
+        useSensor(TouchSensor, {
+            activationConstraint: {
+                delay: 150, // Require holding for 150ms to drag, letting regular taps pass through
+                tolerance: 5,
+            },
+        }),
+    );
 
     const handleDragEnd = (event: any) => {
         const { active, over } = event;
@@ -136,7 +144,6 @@ function SortableWaveItem({
         <li
             ref={setNodeRef}
             style={style}
-            {...attributes}
             className={cn(
                 'flex items-center justify-between rounded-md border p-2',
                 removingIndex === index
@@ -153,7 +160,13 @@ function SortableWaveItem({
             <div className="flex items-center">
                 <span>Wave {index + 1}</span>
                 {/* drag handle */}
-                <Button variant="ghost" size="icon" {...listeners} className="cursor-grab active:cursor-grabbing">
+                <Button
+                    variant="ghost"
+                    size="icon"
+                    {...attributes}
+                    {...listeners}
+                    className="cursor-grab active:cursor-grabbing"
+                >
                     <GripVertical className="h-4 w-4" />
                 </Button>
                 <span>Actions {actions.length}</span>

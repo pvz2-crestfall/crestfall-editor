@@ -31,7 +31,7 @@ export function PlantSelectionMethod() {
                     setSelectionMethod(val === 'disable' ? undefined : (val as SeedBankSelectionMethod))
                 }
             >
-                <SelectTrigger className="w-[120px]">
+                <SelectTrigger className="w-[35%]">
                     <SelectValue placeholder="Disabled" />
                 </SelectTrigger>
                 <SelectContent>

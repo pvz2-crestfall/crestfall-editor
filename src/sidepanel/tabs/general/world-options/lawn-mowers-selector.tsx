@@ -15,7 +15,7 @@ export function LawnMowersSelector({ value, onValueChange }: { value: string; on
         <div className="flex items-center justify-between rounded-md border px-4 py-2 font-mono text-sm w-full">
             <Label>Lawn Mowers</Label>
             <Select value={value ?? undefined} onValueChange={(val) => onValueChange(val)}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-[50%]">
                     <SelectValue placeholder="Mower Type" />
                 </SelectTrigger>
                 <SelectContent>

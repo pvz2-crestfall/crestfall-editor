@@ -15,15 +15,15 @@ function DataPreview() {
     const [, forceUpdate] = useReducer((x) => x + 1, 0);
 
     return (
-        <Card className="w-full max-w-3xl h-full">
-            <CardContent className="p-4 h-full overflow-auto">
-                <div className="flex flex-row justify-between">
-                    <h2 className="text-lg font-semibold mb-2">Level Data Preview</h2>
-                    <Button size={'lg'} onClick={forceUpdate}>
+        <Card className="w-full max-w-3xl">
+            <CardContent className="p-3 sm:p-4 flex flex-col gap-3">
+                <div className="flex flex-row items-center justify-between gap-2">
+                    <h2 className="text-base sm:text-lg font-semibold">Level Data Preview</h2>
+                    <Button size="sm" onClick={forceUpdate}>
                         Build
                     </Button>
                 </div>
-                <pre className="bg-background p-4 rounded-md text-sm overflow-auto h-full">
+                <pre className="bg-muted p-3 sm:p-4 rounded-md text-xs sm:text-sm overflow-x-auto max-h-[300px] sm:max-h-[400px] font-mono whitespace-pre-wrap break-all">
                     {JSON.stringify(levelBuilder.build(), null, 2)}
                 </pre>
             </CardContent>
@@ -49,16 +49,19 @@ function ThemeToggle() {
 }
 
 export default function App() {
-    const [isDev, setIsDev] = useState(import.meta.env.PROD ? false : true);
+    const [isDev, setIsDev] = useState(false);
     const levelBuilder = levelState((s) => s.levelBuilder);
 
     useOnPageLeave(() => autosave(levelBuilder));
 
     return (
         <div>
-            <div className="flex h-screen p-4 gap-4">
-                <div className="flex-1 flex flex-col items-center justify-center gap-4">
-                    <LevelPreview />
+            <div className="flex flex-col h-screen lg:flex-row p-4 gap-4 w-full">
+                <div className="flex-1 flex flex-col items-center justify-center gap-4 w-full">
+                    <div className="w-full flex justify-center ">
+                        <LevelPreview />
+                    </div>
+
                     <div className="flex-1 flex flex-row items-center justify-center gap-4">
                         <Label>Toggle Data Preview</Label>
                         <Switch defaultChecked={isDev} onCheckedChange={setIsDev} />
@@ -66,7 +69,7 @@ export default function App() {
                     </div>
                 </div>
 
-                <div className="w-lg">
+                <div className="w-full lg:w-lg min-w-0">
                     <SidePanel />
                 </div>
             </div>

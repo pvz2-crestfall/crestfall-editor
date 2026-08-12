@@ -1,4 +1,4 @@
-import React, { useEffect, useState, type CSSProperties } from 'react';
+import React, { useEffect, useState, useCallback, type CSSProperties } from 'react';
 import {
     DndContext,
     useDraggable,
@@ -22,6 +22,8 @@ type FloatingWindowProps = {
     children?: React.ReactNode;
 };
 
+const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+
 export function FloatingWindow({
     id,
     title = 'Window',
@@ -32,7 +34,19 @@ export function FloatingWindow({
     onFocusLost,
     children,
 }: FloatingWindowProps) {
-    const sensors = useSensors(useSensor(PointerSensor), useSensor(TouchSensor));
+    const sensors = useSensors(
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 5,
+            },
+        }),
+        useSensor(TouchSensor, {
+            activationConstraint: {
+                delay: 50,
+                tolerance: 5,
+            },
+        }),
+    );
 
     const { activeId, order, setActive, register, unregister } = windowManagerState();
     const isFocused = activeId === id;
@@ -46,7 +60,6 @@ export function FloatingWindow({
     const handleFocus = () => {
         if (!isFocused) {
             setActive(id);
-            console.log('Gained focus in', id);
         }
     };
 
@@ -60,32 +73,62 @@ export function FloatingWindow({
         setWasFocused(isFocused);
     }, [isFocused, wasFocused, onFocus, onFocusLost]);
 
-    // Load last position from localStorage if exists
+    // Position clamping helper
+    const getClampedPosition = useCallback(
+        (pos: { x: number; y: number }) => {
+            if (typeof window === 'undefined') return pos;
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const maxX = Math.max(0, vw - size.width);
+            const maxY = Math.max(0, vh - size.height);
+
+            return {
+                x: clamp(pos.x, 0, maxX),
+                y: clamp(pos.y, 0, maxY),
+            };
+        },
+        [size.width, size.height],
+    );
+
+    // Initial state with position clamping
     const [position, setPosition] = useState(() => {
+        let initialPos = defaultPosition;
         try {
             const stored = sessionStorage.getItem(`floatingWindow:${id}`);
-            return stored ? JSON.parse(stored) : defaultPosition;
+            if (stored) initialPos = JSON.parse(stored);
         } catch {
-            return defaultPosition;
+            initialPos = defaultPosition;
         }
+        return getClampedPosition(initialPos);
     });
 
-    const clamp = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
+    // Handle screen rotation / resize recalculations
+    useEffect(() => {
+        const handleResize = () => {
+            setPosition((prev) => {
+                const next = getClampedPosition(prev);
+                sessionStorage.setItem(`floatingWindow:${id}`, JSON.stringify(next));
+                return next;
+            });
+        };
+
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('orientationchange', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('orientationchange', handleResize);
+        };
+    }, [id, getClampedPosition]);
 
     const handleDragEnd = (event: DragEndEvent) => {
         const { delta } = event;
         setPosition((prev: { x: number; y: number }) => {
-            const vw = window.innerWidth;
-            const vh = window.innerHeight;
-            const maxX = vw - size.width;
-            const maxY = vh - size.height;
+            const next = getClampedPosition({
+                x: prev.x + delta.x,
+                y: prev.y + delta.y,
+            });
 
-            const next = {
-                x: clamp(prev.x + delta.x, 0, Math.max(0, maxX)),
-                y: clamp(prev.y + delta.y, 0, Math.max(0, maxY)),
-            };
-
-            // Save to localStorage
             sessionStorage.setItem(`floatingWindow:${id}`, JSON.stringify(next));
             return next;
         });
@@ -106,30 +149,32 @@ export function FloatingWindow({
             boxShadow: isFocused
                 ? '0 0 12px rgba(0, 0, 0, 0.8), 0 0 0 2px var(--accent)'
                 : '0 0 8px rgba(0, 0, 0, 0.2)',
-            transition: 'box-shadow 0.1s ease-in-out',
+            transition: transform ? 'none' : 'top 0.2s ease-out, left 0.2s ease-out, box-shadow 0.1s ease-in-out',
         };
 
         return (
             <div
-                onMouseDown={handleFocus}
-                onMouseUp={handleFocus}
+                onPointerDown={handleFocus}
                 ref={setNodeRef}
                 style={style}
-                className="rounded-lg border bg-background shadow-lg"
+                className="rounded-lg border bg-background shadow-lg overflow-hidden flex flex-col min-w-0"
             >
                 {/* Header with isolated drag handle */}
-                <div className="flex items-center justify-between border-b bg-muted rounded-t-md">
-                    {/* Drag handle */}
-                    <div {...listeners} {...attributes} className="flex-1 px-3 py-2 cursor-move select-none">
-                        <h4 className="text-sm font-semibold">{title}</h4>
+                <div className="flex items-center justify-between border-b bg-muted rounded-t-md shrink-0">
+                    <div
+                        {...listeners}
+                        {...attributes}
+                        className="flex-1 px-3 py-2 cursor-move select-none touch-none truncate"
+                    >
+                        <h4 className="text-sm font-semibold truncate">{title}</h4>
                     </div>
 
-                    {/* Close button */}
-                    <div className="px-2" id="floating-window-close-button">
+                    <div className="px-2 shrink-0" id="floating-window-close-button">
                         <button
                             id="floating-window-close-button"
                             type="button"
-                            onClick={() => {
+                            onClick={(e) => {
+                                e.stopPropagation();
                                 onFocusLost?.();
                                 onClose?.();
                             }}
@@ -140,7 +185,7 @@ export function FloatingWindow({
                     </div>
                 </div>
 
-                <div className="p-4 space-y-3 overflow-auto h-[calc(100%-2.5rem)]">{children}</div>
+                <div className="p-4 space-y-3 overflow-auto flex-1 min-w-0">{children}</div>
             </div>
         );
     }
